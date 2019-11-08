@@ -2,30 +2,243 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
+<!-- ETUSIVUN SISÄLTÖ ALKAA -->
+<!-- Students -->
+<section id="students">
+    <div class="container">
+        <div class="row">
+            <div class="students-col col d-flex flex-column justify-content-center align-items-center">
+                <h1>Työnhakijat</h1>
+                <span>— Tee profiili ja tule löydetyksi</span>
+                <p>
+                    Rekisteröidy työnhakijaksi
+                    <button type="button" class="btn btn-yellow">Tästä</button>
+                </p>
+            </div>
+            <div class="col d-flex align-items-center">
+                <p>
+                    Opiskelija – rekisteröityneenä käyttäjänä voitte luoda kaikille
+                    näkyvissä olevan henkilöprofiilin. Tämä edesauttaa
+                    mahdollisuuksianne työelämään siirtymisessä. Sivuston avulla
+                    löydätte monia mielenkiintoisia työpaikkoja ja se tarjoaa teille
+                    väylän ottaa ensikontakti työnantajaan.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+<!-- Empolyers -->
+<section id="employers">
+    <div class="container">
+        <div class="row">
+            <div class="students-col col d-flex flex-column justify-content-center align-items-center">
+                <h1>Työnantajat</h1>
+                <span>— Työllistä opiskelija yritykseesi</span>
+                <p>Rekisteröidy työnantajaksi</p>
+                <p>
+                    Rekisteröidy työnhakijaksi
+                    <button type="button" class="btn btn-yellow">Tästä</button>
+                </p>
+            </div>
+            <div class="students-col col d-flex flex-column justify-content-center align-items-center">
+                <p>
+                    Työnantaja – rekisteröityneenä käyttäjänä saatte suoran yhteyden
+                    sellaiseen henkilöön, kenen opiskelijaprofiili tuntuu täydentävän
+                    teidän yhtiönne tarpeita. Voitte rekisteröityneenä käyttäjänä
+                    täydentää myös yrityksenne profiilia helpottamaan opiskelijoiden
+                    kynnystä tarjota osaamistaan teille.
+                </p>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+</section>
+
+<!-- Intro -->
+<section id="intro">
+    <div class="container">
+        <div class="row">
+            <div class="col text-center mb-5">
+                <h2>{ JobApp } Pähkinänkuoressa</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col d-flex flex-column justify-content-center align-items-center">
+                <img src="~/Images/vapaapaikka.png" />
+            </div>
+            <div class="col d-flex flex-column justify-content-center align-items-center">
+                <p>
+                    Tervetuloa Careeria -oppilaitoksen ohjelmoinnin osaajien
+                    työnhakusivustolle.<br />
+
+                    Sivusto esittelee oppilaitoksen opiskelijoiden osaajaprofiileita.
+                    Sivusto on työkalu, jonka avulla työnantaja ja tulevaisuuden
+                    työntekijä löytävät toisensa.<br />
+
+                    Sivusto on toteutettu kouluprojektina ohjelmoinnin opiskelijoiden
+                    toimesta.
+                </p>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+</section>
+
+<!-- Testimonials -->
+<section id="testimonials">
+    <div class="container kontti">
+        <div class="row">
+            <div class="col-4 d-flex flex-column justify-content-center align-items-center">
+                <img src="~/Images/avatar.jpg"
+                     height="150px"
+                     class="testimonials-avatar" />
+                <p>Herra X</p>
+            </div>
+            <div class="col-6 d-flex flex-column justify-content-center">
+                <p>
+                    — Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+                    faucibus nulla in efficitur egestas. In semper et orci in auctor.
+                    Nulla facilisi. Sed sodales massa vitae dui sagittis, ac
+                    ullamcorper orci vehicula. Pellentesque tincidunt tellus lobortis
+                    consectetur maximus. Sed consequat sit amet neque in sagittis.
+                    Cras imperdiet libero sed lorem maximus dapibus. Integer vulputate
+                    urna vel cursus imperdiet.
+                </p>
+            </div>
+        </div>
     </div>
-</div>
+</section>
+
+<!-- Chapters -->
+<section id="chapters">
+    <div class="container">
+        <div class="row">
+            <div class="col text-center mb-5">
+                <h3>Työnantajan rekrytoinnin vaiheet:</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col d-flex flex-column justify-content-center align-items-center pallo-1">
+                Rekisteröidy työnantajaksi
+            </div>
+            <div class="col d-flex flex-column justify-content-center align-items-center pallo-2">
+                Täydennä profiili
+            </div>
+            <div class="col d-flex flex-column justify-content-center align-items-center pallo-3">
+                Selaa opiskelijoita
+            </div>
+            <div class="col d-flex flex-column justify-content-center align-items-center pallo-2">
+                Ota kuppi kahvia..
+            </div>
+            <div class="col d-flex flex-column justify-content-center align-items-center pallo-4">
+                ..ja tarjoa työtä
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Employers REG -->
+<section id="employers-reg">
+    <div class="container">
+        <div class="row">
+            <div class="col d-flex flex-column justify-content-center align-items-center">
+                <h3>
+                    Rekisteröidy työnantajaksi
+                    <button type="button" class="btn btn-outline-light">
+                        TÄSTÄ!
+                    </button>
+                </h3>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Students REG -->
+<section id="students-reg">
+    <div class="container">
+        <div class="row">
+            <div class="col students-reg-content">
+                <h3>Työpaikkaa vailla?</h3>
+                <p>
+                    Hyppää mukaan ja tule löydetyksi!
+                </p>
+                <button type="button" class="btn btn-yellow">Lue lisää</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Sponsors -->
+<section id="sponsors">
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <p class="display-4">
+                    Mukana menossa: <img src="~/Images/careeria-logo.png" />
+                    <img src="~/Images/ohjelmistoyrittajat-logo.png" />
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<section id="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col text-center mb-5">
+                <h2>{ JobApp }</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h5>Yhteystiedot</h5>
+                <ul>
+                    <li>Y-Tunnus: 123123</li>
+                    <li>
+                        Esimosoite 15, <br />
+                        01010 Kaupunki
+                    </li>
+                    <li>info@jobapp.com</li>
+                    <li>+358401231234</li>
+                </ul>
+            </div>
+            <div class="col">
+                <h5>Sivukartta</h5>
+                <ul>
+                    <li>Etusivu</li>
+                    <li>Työnhakijat</li>
+                    <li>Työnantajat</li>
+                    <li>Yhteystiedot</li>
+                </ul>
+            </div>
+            <div class="col">
+                <h5>Sosiaalinen Media</h5>
+                <ul>
+                    <li>Facebook</li>
+                    <li>Twitter</li>
+                    <li>Instagram</li>
+                    <li>Linkedin</li>
+                </ul>
+            </div>
+            <div class="col">
+                <h5>Ota yhteyttä!</h5>
+                <form>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Nimi" />
+                    </div>
+                    <div class="form-group">
+                        <input type="email"
+                               class="form-control"
+                               placeholder="Sähköpostiosoite" />
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control"
+                                  rows="2"
+                                  placeholder="Viesti"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-yellow">Lähetä</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,24 +1,133 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿.navbar {
+    min-height: 100px;
 }
 
-/* Set padding to keep content from hitting the edges */
-.body-content {
-    padding-left: 15px;
-    padding-right: 15px;
+#students {
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(../Images/tyonhakijoille.jpg) center center;
+    opacity: 1;
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 500px;
+    color: #fff;
 }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-.dl-horizontal dt {
-    white-space: normal;
+.students-col {
+    min-height: 500px;
 }
 
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
+#employers {
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(../Images/tyonantajille.jpg) center center;
+    opacity: 1;
+    background-size: cover;
+    background-repeat: no-repeat;
+    min-height: 500px;
+    color: #fff;
 }
+
+#intro {
+    margin: 100px;
+    color: #4b4b4b;
+}
+
+#testimonials {
+    padding: 100px;
+    background: #d7be71;
+    color: #fff;
+}
+
+.testimonials-avatar {
+    border-radius: 100%;
+    margin-bottom: 20px;
+}
+
+#chapters {
+    margin: 100px;
+    color: #4b4b4b;
+}
+
+    #chapters .pallo-1 {
+        background: url('../Images/pallo-1.png') center center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        height: 200px;
+        color: #fff;
+    }
+
+    #chapters .pallo-2 {
+        background: url('../Images/pallo-2.png') center center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        height: 200px;
+        color: #fff;
+    }
+
+    #chapters .pallo-3 {
+        background: url('../Images/pallo-3.png') center center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        height: 200px;
+        color: #fff;
+    }
+
+    #chapters .pallo-4 {
+        background: url('../Images/pallo-4.png') center center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        height: 200px;
+        color: #fff;
+    }
+
+#employers-reg {
+    padding: 100px;
+    background: #d7be71;
+    color: #fff;
+}
+
+#students-reg {
+    margin: 100px;
+    color: #4b4b4b;
+    background: url('../Images/footerbg.png') right bottom;
+    background-size: 800px 534px;
+    background-repeat: no-repeat;
+    min-height: 500px;
+}
+
+    #students-reg .students-reg-content {
+        margin-left: 150px;
+    }
+
+#sponsors {
+    margin: 100px;
+    color: #4b4b4b;
+}
+
+#footer {
+    margin: 100px;
+    color: #4b4b4b;
+}
+
+    #footer ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+.btn-outline-yellow {
+    color: #dfbe71;
+    border-color: #dfbe71;
+}
+
+    .btn-outline-yellow:hover {
+        color: #d7af4d;
+        border-color: #dfbe71;
+    }
+
+.btn-yellow {
+    color: #fff;
+    background-color: #dfbe71;
+}
+
+    .btn-yellow:hover {
+        color: #fff;
+        background-color: #d7af4d;
+    }
