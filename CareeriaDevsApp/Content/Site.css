@@ -1,9 +1,9 @@
-﻿﻿.navbar {
+﻿.navbar {
     min-height: 100px;
 }
 
 #students {
-    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('img/tyonhakijoille.jpg') center center;
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(../Images/tyonhakijoille.jpg) center center;
     opacity: 1;
     background-size: cover;
     background-repeat: no-repeat;
@@ -16,7 +16,7 @@
 }
 
 #employers {
-    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('img/tyonantajille.jpg') center center;
+    background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(../Images/tyonantajille.jpg) center center;
     opacity: 1;
     background-size: cover;
     background-repeat: no-repeat;
@@ -46,7 +46,7 @@
 }
 
     #chapters .pallo-1 {
-        background: url('img/pallo-1.png') center center;
+        background: url('../Images/pallo-1.png') center center;
         background-size: contain;
         background-repeat: no-repeat;
         height: 200px;
@@ -54,7 +54,7 @@
     }
 
     #chapters .pallo-2 {
-        background: url('img/pallo-2.png') center center;
+        background: url('../Images/pallo-2.png') center center;
         background-size: contain;
         background-repeat: no-repeat;
         height: 200px;
@@ -62,7 +62,7 @@
     }
 
     #chapters .pallo-3 {
-        background: url('img/pallo-3.png') center center;
+        background: url('../Images/pallo-3.png') center center;
         background-size: contain;
         background-repeat: no-repeat;
         height: 200px;
@@ -70,7 +70,7 @@
     }
 
     #chapters .pallo-4 {
-        background: url('img/pallo-4.png') center center;
+        background: url('../Images/pallo-4.png') center center;
         background-size: contain;
         background-repeat: no-repeat;
         height: 200px;
@@ -86,7 +86,7 @@
 #students-reg {
     margin: 100px;
     color: #4b4b4b;
-    background: url('img/footerbg.png') right bottom;
+    background: url('../Images/footerbg.png') right bottom;
     background-size: 800px 534px;
     background-repeat: no-repeat;
     min-height: 500px;
