@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="89f6c9d80a5d42b5b766ecca2b0383a6" Name="Diagram1">
+        <EntityTypeShape EntityType="CareeriaDevAppModel.Login" Width="1.5" PointX="12.5" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CareeriaDevAppModel.OmaSisalto" Width="1.5" PointX="8.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CareeriaDevAppModel.Opiskelija" Width="1.5" PointX="6.875" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CareeriaDevAppModel.PaaKayttaja" Width="1.5" PointX="5" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CareeriaDevAppModel.Postitoimipaikka" Width="1.5" PointX="0.5" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="CareeriaDevAppModel.PuhelinNumero" Width="1.5" PointX="3.875" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CareeriaDevAppModel.PuhelinTyyppi" Width="1.5" PointX="6" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CareeriaDevAppModel.Sahkoposti" Width="1.5" PointX="0.5" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CareeriaDevAppModel.Viesti" Width="1.5" PointX="12.5" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CareeriaDevAppModel.Yritys" Width="1.5" PointX="9.625" PointY="0.875" IsExpanded="true" />
+        <AssociationConnector Association="CareeriaDevAppModel.R_30" ManuallyRouted="false" />
+        <AssociationConnector Association="CareeriaDevAppModel.R_39" ManuallyRouted="false" />
+        <AssociationConnector Association="CareeriaDevAppModel.R_42" ManuallyRouted="false" />
+        <AssociationConnector Association="CareeriaDevAppModel.R_29" ManuallyRouted="false" />
+        <AssociationConnector Association="CareeriaDevAppModel.R_27" ManuallyRouted="false" />
+        <AssociationConnector Association="CareeriaDevAppModel.R_32" ManuallyRouted="false" />
+        <AssociationConnector Association="CareeriaDevAppModel.R_35" ManuallyRouted="false" />
+        <AssociationConnector Association="CareeriaDevAppModel.R_44" ManuallyRouted="false" />
+        <AssociationConnector Association="CareeriaDevAppModel.R_40" ManuallyRouted="false" />
+        <AssociationConnector Association="CareeriaDevAppModel.R_41" ManuallyRouted="false" />
+        <AssociationConnector Association="CareeriaDevAppModel.R_38" ManuallyRouted="false" />
+        <AssociationConnector Association="CareeriaDevAppModel.R_11" ManuallyRouted="false" />
+        <AssociationConnector Association="CareeriaDevAppModel.R_28" ManuallyRouted="false" />
+        <AssociationConnector Association="CareeriaDevAppModel.R_43" ManuallyRouted="false" />
+        <AssociationConnector Association="CareeriaDevAppModel.R_36" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

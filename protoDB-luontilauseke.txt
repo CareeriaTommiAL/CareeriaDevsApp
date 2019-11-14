@@ -1,0 +1,1771 @@
+
+CREATE TABLE [HenkilonNimi]
+( 
+	[henkilonNimi_Id]    integer  IDENTITY ( 1,1 )  NOT NULL ,
+	[etunimi]            nvarchar(25)  NOT NULL ,
+	[sukunimi]           nvarchar(30)  NOT NULL ,
+	[toimija_Id]         integer  NOT NULL 
+)
+go
+
+ALTER TABLE [HenkilonNimi]
+	ADD CONSTRAINT [XPKHenkilonNimi] PRIMARY KEY  CLUSTERED ([henkilonNimi_Id] ASC)
+go
+
+CREATE TABLE [Login]
+( 
+	[login_Id]           integer  IDENTITY ( 1,1 )  NOT NULL ,
+	[kayttajaNimi]       nvarchar(25)  NOT NULL ,
+	[salasana]           nvarchar(25)  NOT NULL 
+)
+go
+
+ALTER TABLE [Login]
+	ADD CONSTRAINT [XPKLogin] PRIMARY KEY  CLUSTERED ([login_Id] ASC)
+go
+
+CREATE TABLE [OmaSisalto]
+( 
+	[omaSisalto_Id]      integer  IDENTITY ( 1,1 )  NOT NULL ,
+	[omatAsetukset]      varbinary  NULL ,
+	[omaKuva]            varbinary  NULL ,
+	[omaTeksti]          varbinary  NULL ,
+	[toimija_Id]         integer  NOT NULL 
+)
+go
+
+ALTER TABLE [OmaSisalto]
+	ADD CONSTRAINT [XPKOmaSisalto] PRIMARY KEY  CLUSTERED ([omaSisalto_Id] ASC)
+go
+
+CREATE TABLE [Postitoimipaikka]
+( 
+	[postitoimipaikka_Id] integer  IDENTITY ( 1,1 )  NOT NULL ,
+	[postinumero]        nvarchar(8)  NOT NULL ,
+	[postitoimipaikka]   nvarchar(20)  NOT NULL 
+)
+go
+
+ALTER TABLE [Postitoimipaikka]
+	ADD CONSTRAINT [XPKPostitoimipaikka] PRIMARY KEY  CLUSTERED ([postitoimipaikka_Id] ASC)
+go
+
+CREATE TABLE [PuhelinNumero]
+( 
+	[puhelinNumero_Id]   integer  IDENTITY ( 1,1 )  NOT NULL ,
+	[numero]             nvarchar(25)  NOT NULL ,
+	[puhelinTyyppi_Id]   integer  NOT NULL ,
+	[yhteystieto_Id]     integer  NOT NULL 
+)
+go
+
+ALTER TABLE [PuhelinNumero]
+	ADD CONSTRAINT [XPKPuhelinNumero] PRIMARY KEY  CLUSTERED ([puhelinNumero_Id] ASC)
+go
+
+CREATE TABLE [PuhelinTyyppi]
+( 
+	[puhelinTyyppi_Id]   integer  IDENTITY ( 1,1 )  NOT NULL ,
+	[kuvaus]             nvarchar(30)  NOT NULL 
+)
+go
+
+ALTER TABLE [PuhelinTyyppi]
+	ADD CONSTRAINT [XPKPuhelinTyyppi] PRIMARY KEY  CLUSTERED ([puhelinTyyppi_Id] ASC)
+go
+
+CREATE TABLE [Sahkoposti]
+( 
+	[sahkoposti_Id]      integer  IDENTITY ( 1,1 )  NOT NULL ,
+	[sahkopostiOsoite]   nvarchar(30)  NOT NULL 
+)
+go
+
+ALTER TABLE [Sahkoposti]
+	ADD CONSTRAINT [XPKSahkoposti] PRIMARY KEY  CLUSTERED ([sahkoposti_Id] ASC)
+go
+
+CREATE TABLE [Toimija]
+( 
+	[toimija_Id]         integer  IDENTITY ( 1,1 )  NOT NULL ,
+	[yhteystieto_Id]     integer  NULL ,
+	[toimijatyyppi_Id]   integer  NOT NULL ,
+	[login_Id]           integer  NOT NULL ,
+	[omaSisalto_Id]      integer  NULL ,
+	[viesti_Id]          integer  NOT NULL 
+)
+go
+
+ALTER TABLE [Toimija]
+	ADD CONSTRAINT [XPKToimija] PRIMARY KEY  CLUSTERED ([toimija_Id] ASC)
+go
+
+CREATE TABLE [Toimijatyyppi]
+( 
+	[toimijatyyppi_Id]   integer  IDENTITY ( 1,1 )  NOT NULL ,
+	[kuvaus]             nvarchar(25)  NULL 
+)
+go
+
+ALTER TABLE [Toimijatyyppi]
+	ADD CONSTRAINT [XPKToimijatyyppi] PRIMARY KEY  CLUSTERED ([toimijatyyppi_Id] ASC)
+go
+
+CREATE TABLE [Viesti]
+( 
+	[viesti_Id]          integer  IDENTITY ( 1,1 )  NOT NULL ,
+	[inbox]              varbinary  NULL ,
+	[viestiLoki]         varbinary  NULL 
+)
+go
+
+ALTER TABLE [Viesti]
+	ADD CONSTRAINT [XPKViesti] PRIMARY KEY  CLUSTERED ([viesti_Id] ASC)
+go
+
+CREATE TABLE [Yhteystieto]
+( 
+	[postitoimipaikka_Id] integer  NOT NULL ,
+	[sahkoposti_Id]      integer  NULL ,
+	[yhteystieto_Id]     integer  IDENTITY ( 1,1 )  NOT NULL ,
+	[toimija_Id]         integer  NOT NULL 
+)
+go
+
+ALTER TABLE [Yhteystieto]
+	ADD CONSTRAINT [XPKYhteystieto] PRIMARY KEY  CLUSTERED ([yhteystieto_Id] ASC)
+go
+
+CREATE TABLE [YrityksenTieto]
+( 
+	[yrityksenTieto_Id]  integer  IDENTITY ( 1,1 )  NOT NULL ,
+	[yrityksenNimi]      nvarchar(25)  NOT NULL ,
+	[Y_tunnus]           nvarchar(20)  NOT NULL ,
+	[lahiosoite]         nvarchar(50)  NULL ,
+	[toimija_Id]         integer  NOT NULL 
+)
+go
+
+ALTER TABLE [YrityksenTieto]
+	ADD CONSTRAINT [XPKYrityksenTieto] PRIMARY KEY  CLUSTERED ([yrityksenTieto_Id] ASC)
+go
+
+
+ALTER TABLE [HenkilonNimi]
+	ADD CONSTRAINT [R_16] FOREIGN KEY ([toimija_Id]) REFERENCES [Toimija]([toimija_Id])
+		ON DELETE NO ACTION
+		ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE [OmaSisalto]
+	ADD CONSTRAINT [R_5] FOREIGN KEY ([toimija_Id]) REFERENCES [Toimija]([toimija_Id])
+		ON DELETE NO ACTION
+		ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE [PuhelinNumero]
+	ADD CONSTRAINT [R_11] FOREIGN KEY ([puhelinTyyppi_Id]) REFERENCES [PuhelinTyyppi]([puhelinTyyppi_Id])
+		ON DELETE NO ACTION
+		ON UPDATE NO ACTION
+go
+
+ALTER TABLE [PuhelinNumero]
+	ADD CONSTRAINT [R_22] FOREIGN KEY ([yhteystieto_Id]) REFERENCES [Yhteystieto]([yhteystieto_Id])
+		ON DELETE NO ACTION
+		ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE [Toimija]
+	ADD CONSTRAINT [R_3] FOREIGN KEY ([toimijatyyppi_Id]) REFERENCES [Toimijatyyppi]([toimijatyyppi_Id])
+		ON DELETE NO ACTION
+		ON UPDATE NO ACTION
+go
+
+ALTER TABLE [Toimija]
+	ADD CONSTRAINT [R_7] FOREIGN KEY ([viesti_Id]) REFERENCES [Viesti]([viesti_Id])
+		ON DELETE CASCADE
+		ON UPDATE NO ACTION
+go
+
+ALTER TABLE [Toimija]
+	ADD CONSTRAINT [R_10] FOREIGN KEY ([login_Id]) REFERENCES [Login]([login_Id])
+		ON DELETE CASCADE
+		ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE [Yhteystieto]
+	ADD CONSTRAINT [R_6] FOREIGN KEY ([toimija_Id]) REFERENCES [Toimija]([toimija_Id])
+		ON DELETE NO ACTION
+		ON UPDATE NO ACTION
+go
+
+ALTER TABLE [Yhteystieto]
+	ADD CONSTRAINT [R_19] FOREIGN KEY ([postitoimipaikka_Id]) REFERENCES [Postitoimipaikka]([postitoimipaikka_Id])
+		ON DELETE NO ACTION
+		ON UPDATE NO ACTION
+go
+
+ALTER TABLE [Yhteystieto]
+	ADD CONSTRAINT [R_21] FOREIGN KEY ([sahkoposti_Id]) REFERENCES [Sahkoposti]([sahkoposti_Id])
+		ON DELETE CASCADE
+		ON UPDATE NO ACTION
+go
+
+
+ALTER TABLE [YrityksenTieto]
+	ADD CONSTRAINT [R_4] FOREIGN KEY ([toimija_Id]) REFERENCES [Toimija]([toimija_Id])
+		ON DELETE NO ACTION
+		ON UPDATE NO ACTION
+go
+
+
+CREATE TRIGGER tD_HenkilonNimi ON HenkilonNimi FOR DELETE AS
+/* erwin Builtin Trigger */
+/* DELETE trigger on HenkilonNimi */
+BEGIN
+  DECLARE  @errno   int,
+           @severity int,
+           @state    int,
+           @errmsg  varchar(255)
+    /* erwin Builtin Trigger */
+    /* Toimija  HenkilonNimi on child delete cascade */
+    /* ERWIN_RELATION:CHECKSUM="00011a73", PARENT_OWNER="", PARENT_TABLE="Toimija"
+    CHILD_OWNER="", CHILD_TABLE="HenkilonNimi"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_16", FK_COLUMNS="toimija_Id" */
+    DELETE Toimija
+      FROM Toimija,deleted
+      WHERE
+        /* %JoinFKPK(deleted,Toimija," = "," AND") */
+        deleted.toimija_Id = Toimija.toimija_Id AND
+        NOT EXISTS (
+          SELECT * FROM HenkilonNimi
+          WHERE
+            /* %JoinFKPK(HenkilonNimi,Toimija," = "," AND") */
+            HenkilonNimi.toimija_Id = Toimija.toimija_Id
+        )
+
+
+    /* erwin Builtin Trigger */
+    RETURN
+error:
+   RAISERROR (@errmsg, -- Message text.
+              @severity, -- Severity (0~25).
+              @state) -- State (0~255).
+    rollback transaction
+END
+
+go
+
+
+CREATE TRIGGER tU_HenkilonNimi ON HenkilonNimi FOR UPDATE AS
+/* erwin Builtin Trigger */
+/* UPDATE trigger on HenkilonNimi */
+BEGIN
+  DECLARE  @numrows int,
+           @nullcnt int,
+           @validcnt int,
+           @inshenkilonNimi_Id integer,
+           @errno   int,
+           @severity int,
+           @state    int,
+           @errmsg  varchar(255)
+
+  SELECT @numrows = @@rowcount
+  /* erwin Builtin Trigger */
+  /* Toimija  HenkilonNimi on child update no action */
+  /* ERWIN_RELATION:CHECKSUM="00016792", PARENT_OWNER="", PARENT_TABLE="Toimija"
+    CHILD_OWNER="", CHILD_TABLE="HenkilonNimi"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_16", FK_COLUMNS="toimija_Id" */
+  IF
+    /* %ChildFK(" OR",UPDATE) */
+    UPDATE(toimija_Id)
+  BEGIN
+    SELECT @nullcnt = 0
+    SELECT @validcnt = count(*)
+      FROM inserted,Toimija
+        WHERE
+          /* %JoinFKPK(inserted,Toimija) */
+          inserted.toimija_Id = Toimija.toimija_Id
+    /* %NotnullFK(inserted," IS NULL","select @nullcnt = count(*) from inserted where"," AND") */
+    
+    IF @validcnt + @nullcnt != @numrows
+    BEGIN
+      SELECT @errno  = 30007,
+             @errmsg = 'Cannot update HenkilonNimi because Toimija does not exist.'
+      GOTO error
+    END
+  END
+
+
+  /* erwin Builtin Trigger */
+  RETURN
+error:
+   RAISERROR (@errmsg, -- Message text.
+              @severity, -- Severity (0~25).
+              @state) -- State (0~255).
+    rollback transaction
+END
+
+go
+
+
+
+
+CREATE TRIGGER tD_Login ON Login FOR DELETE AS
+/* erwin Builtin Trigger */
+/* DELETE trigger on Login */
+BEGIN
+  DECLARE  @errno   int,
+           @severity int,
+           @state    int,
+           @errmsg  varchar(255)
+    /* erwin Builtin Trigger */
+    /* Login  Toimija on parent delete cascade */
+    /* ERWIN_RELATION:CHECKSUM="0000d794", PARENT_OWNER="", PARENT_TABLE="Login"
+    CHILD_OWNER="", CHILD_TABLE="Toimija"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_10", FK_COLUMNS="login_Id" */
+    DELETE Toimija
+      FROM Toimija,deleted
+      WHERE
+        /*  %JoinFKPK(Toimija,deleted," = "," AND") */
+        Toimija.login_Id = deleted.login_Id
+
+
+    /* erwin Builtin Trigger */
+    RETURN
+error:
+   RAISERROR (@errmsg, -- Message text.
+              @severity, -- Severity (0~25).
+              @state) -- State (0~255).
+    rollback transaction
+END
+
+go
+
+
+CREATE TRIGGER tU_Login ON Login FOR UPDATE AS
+/* erwin Builtin Trigger */
+/* UPDATE trigger on Login */
+BEGIN
+  DECLARE  @numrows int,
+           @nullcnt int,
+           @validcnt int,
+           @inslogin_Id integer,
+           @errno   int,
+           @severity int,
+           @state    int,
+           @errmsg  varchar(255)
+
+  SELECT @numrows = @@rowcount
+  /* erwin Builtin Trigger */
+  /* Login  Toimija on parent update no action */
+  /* ERWIN_RELATION:CHECKSUM="00012c9e", PARENT_OWNER="", PARENT_TABLE="Login"
+    CHILD_OWNER="", CHILD_TABLE="Toimija"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_10", FK_COLUMNS="login_Id" */
+  IF
+    /* %ParentPK(" OR",UPDATE) */
+    UPDATE(login_Id)
+  BEGIN
+    IF EXISTS (
+      SELECT * FROM deleted,Toimija
+      WHERE
+        /*  %JoinFKPK(Toimija,deleted," = "," AND") */
+        Toimija.login_Id = deleted.login_Id
+    )
+    BEGIN
+      SELECT @errno  = 30005,
+             @errmsg = 'Cannot update Login because Toimija exists.'
+      GOTO error
+    END
+  END
+
+
+  /* erwin Builtin Trigger */
+  RETURN
+error:
+   RAISERROR (@errmsg, -- Message text.
+              @severity, -- Severity (0~25).
+              @state) -- State (0~255).
+    rollback transaction
+END
+
+go
+
+
+
+
+CREATE TRIGGER tD_OmaSisalto ON OmaSisalto FOR DELETE AS
+/* erwin Builtin Trigger */
+/* DELETE trigger on OmaSisalto */
+BEGIN
+  DECLARE  @errno   int,
+           @severity int,
+           @state    int,
+           @errmsg  varchar(255)
+    /* erwin Builtin Trigger */
+    /* Toimija  OmaSisalto on child delete cascade */
+    /* ERWIN_RELATION:CHECKSUM="0001261b", PARENT_OWNER="", PARENT_TABLE="Toimija"
+    CHILD_OWNER="", CHILD_TABLE="OmaSisalto"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_5", FK_COLUMNS="toimija_Id" */
+    DELETE Toimija
+      FROM Toimija,deleted
+      WHERE
+        /* %JoinFKPK(deleted,Toimija," = "," AND") */
+        deleted.toimija_Id = Toimija.toimija_Id AND
+        NOT EXISTS (
+          SELECT * FROM OmaSisalto
+          WHERE
+            /* %JoinFKPK(OmaSisalto,Toimija," = "," AND") */
+            OmaSisalto.toimija_Id = Toimija.toimija_Id
+        )
+
+
+    /* erwin Builtin Trigger */
+    RETURN
+error:
+   RAISERROR (@errmsg, -- Message text.
+              @severity, -- Severity (0~25).
+              @state) -- State (0~255).
+    rollback transaction
+END
+
+go
+
+
+CREATE TRIGGER tU_OmaSisalto ON OmaSisalto FOR UPDATE AS
+/* erwin Builtin Trigger */
+/* UPDATE trigger on OmaSisalto */
+BEGIN
+  DECLARE  @numrows int,
+           @nullcnt int,
+           @validcnt int,
+           @insomaSisalto_Id integer,
+           @errno   int,
+           @severity int,
+           @state    int,
+           @errmsg  varchar(255)
+
+  SELECT @numrows = @@rowcount
+  /* erwin Builtin Trigger */
+  /* Toimija  OmaSisalto on child update no action */
+  /* ERWIN_RELATION:CHECKSUM="0001636d", PARENT_OWNER="", PARENT_TABLE="Toimija"
+    CHILD_OWNER="", CHILD_TABLE="OmaSisalto"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_5", FK_COLUMNS="toimija_Id" */
+  IF
+    /* %ChildFK(" OR",UPDATE) */
+    UPDATE(toimija_Id)
+  BEGIN
+    SELECT @nullcnt = 0
+    SELECT @validcnt = count(*)
+      FROM inserted,Toimija
+        WHERE
+          /* %JoinFKPK(inserted,Toimija) */
+          inserted.toimija_Id = Toimija.toimija_Id
+    /* %NotnullFK(inserted," IS NULL","select @nullcnt = count(*) from inserted where"," AND") */
+    
+    IF @validcnt + @nullcnt != @numrows
+    BEGIN
+      SELECT @errno  = 30007,
+             @errmsg = 'Cannot update OmaSisalto because Toimija does not exist.'
+      GOTO error
+    END
+  END
+
+
+  /* erwin Builtin Trigger */
+  RETURN
+error:
+   RAISERROR (@errmsg, -- Message text.
+              @severity, -- Severity (0~25).
+              @state) -- State (0~255).
+    rollback transaction
+END
+
+go
+
+
+
+
+CREATE TRIGGER tD_Postitoimipaikka ON Postitoimipaikka FOR DELETE AS
+/* erwin Builtin Trigger */
+/* DELETE trigger on Postitoimipaikka */
+BEGIN
+  DECLARE  @errno   int,
+           @severity int,
+           @state    int,
+           @errmsg  varchar(255)
+    /* erwin Builtin Trigger */
+    /* Postitoimipaikka  Yhteystieto on parent delete no action */
+    /* ERWIN_RELATION:CHECKSUM="00012608", PARENT_OWNER="", PARENT_TABLE="Postitoimipaikka"
+    CHILD_OWNER="", CHILD_TABLE="Yhteystieto"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_19", FK_COLUMNS="postitoimipaikka_Id" */
+    IF EXISTS (
+      SELECT * FROM deleted,Yhteystieto
+      WHERE
+        /*  %JoinFKPK(Yhteystieto,deleted," = "," AND") */
+        Yhteystieto.postitoimipaikka_Id = deleted.postitoimipaikka_Id
+    )
+    BEGIN
+      SELECT @errno  = 30001,
+             @errmsg = 'Cannot delete Postitoimipaikka because Yhteystieto exists.'
+      GOTO error
+    END
+
+
+    /* erwin Builtin Trigger */
+    RETURN
+error:
+   RAISERROR (@errmsg, -- Message text.
+              @severity, -- Severity (0~25).
+              @state) -- State (0~255).
+    rollback transaction
+END
+
+go
+
+
+CREATE TRIGGER tU_Postitoimipaikka ON Postitoimipaikka FOR UPDATE AS
+/* erwin Builtin Trigger */
+/* UPDATE trigger on Postitoimipaikka */
+BEGIN
+  DECLARE  @numrows int,
+           @nullcnt int,
+           @validcnt int,
+           @inspostitoimipaikka_Id integer,
+           @errno   int,
+           @severity int,
+           @state    int,
+           @errmsg  varchar(255)
+
+  SELECT @numrows = @@rowcount
+  /* erwin Builtin Trigger */
+  /* Postitoimipaikka  Yhteystieto on parent update no action */
+  /* ERWIN_RELATION:CHECKSUM="00014771", PARENT_OWNER="", PARENT_TABLE="Postitoimipaikka"
+    CHILD_OWNER="", CHILD_TABLE="Yhteystieto"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_19", FK_COLUMNS="postitoimipaikka_Id" */
+  IF
+    /* %ParentPK(" OR",UPDATE) */
+    UPDATE(postitoimipaikka_Id)
+  BEGIN
+    IF EXISTS (
+      SELECT * FROM deleted,Yhteystieto
+      WHERE
+        /*  %JoinFKPK(Yhteystieto,deleted," = "," AND") */
+        Yhteystieto.postitoimipaikka_Id = deleted.postitoimipaikka_Id
+    )
+    BEGIN
+      SELECT @errno  = 30005,
+             @errmsg = 'Cannot update Postitoimipaikka because Yhteystieto exists.'
+      GOTO error
+    END
+  END
+
+
+  /* erwin Builtin Trigger */
+  RETURN
+error:
+   RAISERROR (@errmsg, -- Message text.
+              @severity, -- Severity (0~25).
+              @state) -- State (0~255).
+    rollback transaction
+END
+
+go
+
+
+
+
+CREATE TRIGGER tD_PuhelinNumero ON PuhelinNumero FOR DELETE AS
+/* erwin Builtin Trigger */
+/* DELETE trigger on PuhelinNumero */
+BEGIN
+  DECLARE  @errno   int,
+           @severity int,
+           @state    int,
+           @errmsg  varchar(255)
+    /* erwin Builtin Trigger */
+    /* Yhteystieto  PuhelinNumero on child delete cascade */
+    /* ERWIN_RELATION:CHECKSUM="000283d6", PARENT_OWNER="", PARENT_TABLE="Yhteystieto"
+    CHILD_OWNER="", CHILD_TABLE="PuhelinNumero"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_22", FK_COLUMNS="yhteystieto_Id" */
+    DELETE Yhteystieto
+      FROM Yhteystieto,deleted
+      WHERE
+        /* %JoinFKPK(deleted,Yhteystieto," = "," AND") */
+        deleted.yhteystieto_Id = Yhteystieto.yhteystieto_Id AND
+        NOT EXISTS (
+          SELECT * FROM PuhelinNumero
+          WHERE
+            /* %JoinFKPK(PuhelinNumero,Yhteystieto," = "," AND") */
+            PuhelinNumero.yhteystieto_Id = Yhteystieto.yhteystieto_Id
+        )
+
+    /* erwin Builtin Trigger */
+    /* PuhelinTyyppi  PuhelinNumero on child delete no action */
+    /* ERWIN_RELATION:CHECKSUM="00000000", PARENT_OWNER="", PARENT_TABLE="PuhelinTyyppi"
+    CHILD_OWNER="", CHILD_TABLE="PuhelinNumero"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_11", FK_COLUMNS="puhelinTyyppi_Id" */
+    IF EXISTS (SELECT * FROM deleted,PuhelinTyyppi
+      WHERE
+        /* %JoinFKPK(deleted,PuhelinTyyppi," = "," AND") */
+        deleted.puhelinTyyppi_Id = PuhelinTyyppi.puhelinTyyppi_Id AND
+        NOT EXISTS (
+          SELECT * FROM PuhelinNumero
+          WHERE
+            /* %JoinFKPK(PuhelinNumero,PuhelinTyyppi," = "," AND") */
+            PuhelinNumero.puhelinTyyppi_Id = PuhelinTyyppi.puhelinTyyppi_Id
+        )
+    )
+    BEGIN
+      SELECT @errno  = 30010,
+             @errmsg = 'Cannot delete last PuhelinNumero because PuhelinTyyppi exists.'
+      GOTO error
+    END
+
+
+    /* erwin Builtin Trigger */
+    RETURN
+error:
+   RAISERROR (@errmsg, -- Message text.
+              @severity, -- Severity (0~25).
+              @state) -- State (0~255).
+    rollback transaction
+END
+
+go
+
+
+CREATE TRIGGER tU_PuhelinNumero ON PuhelinNumero FOR UPDATE AS
+/* erwin Builtin Trigger */
+/* UPDATE trigger on PuhelinNumero */
+BEGIN
+  DECLARE  @numrows int,
+           @nullcnt int,
+           @validcnt int,
+           @inspuhelinNumero_Id integer,
+           @errno   int,
+           @severity int,
+           @state    int,
+           @errmsg  varchar(255)
+
+  SELECT @numrows = @@rowcount
+  /* erwin Builtin Trigger */
+  /* Yhteystieto  PuhelinNumero on child update no action */
+  /* ERWIN_RELATION:CHECKSUM="0002e693", PARENT_OWNER="", PARENT_TABLE="Yhteystieto"
+    CHILD_OWNER="", CHILD_TABLE="PuhelinNumero"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_22", FK_COLUMNS="yhteystieto_Id" */
+  IF
+    /* %ChildFK(" OR",UPDATE) */
+    UPDATE(yhteystieto_Id)
+  BEGIN
+    SELECT @nullcnt = 0
+    SELECT @validcnt = count(*)
+      FROM inserted,Yhteystieto
+        WHERE
+          /* %JoinFKPK(inserted,Yhteystieto) */
+          inserted.yhteystieto_Id = Yhteystieto.yhteystieto_Id
+    /* %NotnullFK(inserted," IS NULL","select @nullcnt = count(*) from inserted where"," AND") */
+    
+    IF @validcnt + @nullcnt != @numrows
+    BEGIN
+      SELECT @errno  = 30007,
+             @errmsg = 'Cannot update PuhelinNumero because Yhteystieto does not exist.'
+      GOTO error
+    END
+  END
+
+  /* erwin Builtin Trigger */
+  /* PuhelinTyyppi  PuhelinNumero on child update no action */
+  /* ERWIN_RELATION:CHECKSUM="00000000", PARENT_OWNER="", PARENT_TABLE="PuhelinTyyppi"
+    CHILD_OWNER="", CHILD_TABLE="PuhelinNumero"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_11", FK_COLUMNS="puhelinTyyppi_Id" */
+  IF
+    /* %ChildFK(" OR",UPDATE) */
+    UPDATE(puhelinTyyppi_Id)
+  BEGIN
+    SELECT @nullcnt = 0
+    SELECT @validcnt = count(*)
+      FROM inserted,PuhelinTyyppi
+        WHERE
+          /* %JoinFKPK(inserted,PuhelinTyyppi) */
+          inserted.puhelinTyyppi_Id = PuhelinTyyppi.puhelinTyyppi_Id
+    /* %NotnullFK(inserted," IS NULL","select @nullcnt = count(*) from inserted where"," AND") */
+    
+    IF @validcnt + @nullcnt != @numrows
+    BEGIN
+      SELECT @errno  = 30007,
+             @errmsg = 'Cannot update PuhelinNumero because PuhelinTyyppi does not exist.'
+      GOTO error
+    END
+  END
+
+
+  /* erwin Builtin Trigger */
+  RETURN
+error:
+   RAISERROR (@errmsg, -- Message text.
+              @severity, -- Severity (0~25).
+              @state) -- State (0~255).
+    rollback transaction
+END
+
+go
+
+
+
+
+CREATE TRIGGER tD_PuhelinTyyppi ON PuhelinTyyppi FOR DELETE AS
+/* erwin Builtin Trigger */
+/* DELETE trigger on PuhelinTyyppi */
+BEGIN
+  DECLARE  @errno   int,
+           @severity int,
+           @state    int,
+           @errmsg  varchar(255)
+    /* erwin Builtin Trigger */
+    /* PuhelinTyyppi  PuhelinNumero on parent delete no action */
+    /* ERWIN_RELATION:CHECKSUM="00012450", PARENT_OWNER="", PARENT_TABLE="PuhelinTyyppi"
+    CHILD_OWNER="", CHILD_TABLE="PuhelinNumero"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_11", FK_COLUMNS="puhelinTyyppi_Id" */
+    IF EXISTS (
+      SELECT * FROM deleted,PuhelinNumero
+      WHERE
+        /*  %JoinFKPK(PuhelinNumero,deleted," = "," AND") */
+        PuhelinNumero.puhelinTyyppi_Id = deleted.puhelinTyyppi_Id
+    )
+    BEGIN
+      SELECT @errno  = 30001,
+             @errmsg = 'Cannot delete PuhelinTyyppi because PuhelinNumero exists.'
+      GOTO error
+    END
+
+
+    /* erwin Builtin Trigger */
+    RETURN
+error:
+   RAISERROR (@errmsg, -- Message text.
+              @severity, -- Severity (0~25).
+              @state) -- State (0~255).
+    rollback transaction
+END
+
+go
+
+
+CREATE TRIGGER tU_PuhelinTyyppi ON PuhelinTyyppi FOR UPDATE AS
+/* erwin Builtin Trigger */
+/* UPDATE trigger on PuhelinTyyppi */
+BEGIN
+  DECLARE  @numrows int,
+           @nullcnt int,
+           @validcnt int,
+           @inspuhelinTyyppi_Id integer,
+           @errno   int,
+           @severity int,
+           @state    int,
+           @errmsg  varchar(255)
+
+  SELECT @numrows = @@rowcount
+  /* erwin Builtin Trigger */
+  /* PuhelinTyyppi  PuhelinNumero on parent update no action */
+  /* ERWIN_RELATION:CHECKSUM="000147a3", PARENT_OWNER="", PARENT_TABLE="PuhelinTyyppi"
+    CHILD_OWNER="", CHILD_TABLE="PuhelinNumero"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_11", FK_COLUMNS="puhelinTyyppi_Id" */
+  IF
+    /* %ParentPK(" OR",UPDATE) */
+    UPDATE(puhelinTyyppi_Id)
+  BEGIN
+    IF EXISTS (
+      SELECT * FROM deleted,PuhelinNumero
+      WHERE
+        /*  %JoinFKPK(PuhelinNumero,deleted," = "," AND") */
+        PuhelinNumero.puhelinTyyppi_Id = deleted.puhelinTyyppi_Id
+    )
+    BEGIN
+      SELECT @errno  = 30005,
+             @errmsg = 'Cannot update PuhelinTyyppi because PuhelinNumero exists.'
+      GOTO error
+    END
+  END
+
+
+  /* erwin Builtin Trigger */
+  RETURN
+error:
+   RAISERROR (@errmsg, -- Message text.
+              @severity, -- Severity (0~25).
+              @state) -- State (0~255).
+    rollback transaction
+END
+
+go
+
+
+
+
+CREATE TRIGGER tD_Sahkoposti ON Sahkoposti FOR DELETE AS
+/* erwin Builtin Trigger */
+/* DELETE trigger on Sahkoposti */
+BEGIN
+  DECLARE  @errno   int,
+           @severity int,
+           @state    int,
+           @errmsg  varchar(255)
+    /* erwin Builtin Trigger */
+    /* Sahkoposti  Yhteystieto on parent delete cascade */
+    /* ERWIN_RELATION:CHECKSUM="0000f432", PARENT_OWNER="", PARENT_TABLE="Sahkoposti"
+    CHILD_OWNER="", CHILD_TABLE="Yhteystieto"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_21", FK_COLUMNS="sahkoposti_Id" */
+    DELETE Yhteystieto
+      FROM Yhteystieto,deleted
+      WHERE
+        /*  %JoinFKPK(Yhteystieto,deleted," = "," AND") */
+        Yhteystieto.sahkoposti_Id = deleted.sahkoposti_Id
+
+
+    /* erwin Builtin Trigger */
+    RETURN
+error:
+   RAISERROR (@errmsg, -- Message text.
+              @severity, -- Severity (0~25).
+              @state) -- State (0~255).
+    rollback transaction
+END
+
+go
+
+
+CREATE TRIGGER tU_Sahkoposti ON Sahkoposti FOR UPDATE AS
+/* erwin Builtin Trigger */
+/* UPDATE trigger on Sahkoposti */
+BEGIN
+  DECLARE  @numrows int,
+           @nullcnt int,
+           @validcnt int,
+           @inssahkoposti_Id integer,
+           @errno   int,
+           @severity int,
+           @state    int,
+           @errmsg  varchar(255)
+
+  SELECT @numrows = @@rowcount
+  /* erwin Builtin Trigger */
+  /* Sahkoposti  Yhteystieto on parent update no action */
+  /* ERWIN_RELATION:CHECKSUM="000143b6", PARENT_OWNER="", PARENT_TABLE="Sahkoposti"
+    CHILD_OWNER="", CHILD_TABLE="Yhteystieto"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_21", FK_COLUMNS="sahkoposti_Id" */
+  IF
+    /* %ParentPK(" OR",UPDATE) */
+    UPDATE(sahkoposti_Id)
+  BEGIN
+    IF EXISTS (
+      SELECT * FROM deleted,Yhteystieto
+      WHERE
+        /*  %JoinFKPK(Yhteystieto,deleted," = "," AND") */
+        Yhteystieto.sahkoposti_Id = deleted.sahkoposti_Id
+    )
+    BEGIN
+      SELECT @errno  = 30005,
+             @errmsg = 'Cannot update Sahkoposti because Yhteystieto exists.'
+      GOTO error
+    END
+  END
+
+
+  /* erwin Builtin Trigger */
+  RETURN
+error:
+   RAISERROR (@errmsg, -- Message text.
+              @severity, -- Severity (0~25).
+              @state) -- State (0~255).
+    rollback transaction
+END
+
+go
+
+
+
+
+CREATE TRIGGER tD_Toimija ON Toimija FOR DELETE AS
+/* erwin Builtin Trigger */
+/* DELETE trigger on Toimija */
+BEGIN
+  DECLARE  @errno   int,
+           @severity int,
+           @state    int,
+           @errmsg  varchar(255)
+    /* erwin Builtin Trigger */
+    /* Toimija  HenkilonNimi on parent delete no action */
+    /* ERWIN_RELATION:CHECKSUM="00075b02", PARENT_OWNER="", PARENT_TABLE="Toimija"
+    CHILD_OWNER="", CHILD_TABLE="HenkilonNimi"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_16", FK_COLUMNS="toimija_Id" */
+    IF EXISTS (
+      SELECT * FROM deleted,HenkilonNimi
+      WHERE
+        /*  %JoinFKPK(HenkilonNimi,deleted," = "," AND") */
+        HenkilonNimi.toimija_Id = deleted.toimija_Id
+    )
+    BEGIN
+      SELECT @errno  = 30001,
+             @errmsg = 'Cannot delete Toimija because HenkilonNimi exists.'
+      GOTO error
+    END
+
+    /* erwin Builtin Trigger */
+    /* Toimija  Yhteystieto on parent delete no action */
+    /* ERWIN_RELATION:CHECKSUM="00000000", PARENT_OWNER="", PARENT_TABLE="Toimija"
+    CHILD_OWNER="", CHILD_TABLE="Yhteystieto"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_6", FK_COLUMNS="toimija_Id" */
+    IF EXISTS (
+      SELECT * FROM deleted,Yhteystieto
+      WHERE
+        /*  %JoinFKPK(Yhteystieto,deleted," = "," AND") */
+        Yhteystieto.toimija_Id = deleted.toimija_Id
+    )
+    BEGIN
+      SELECT @errno  = 30001,
+             @errmsg = 'Cannot delete Toimija because Yhteystieto exists.'
+      GOTO error
+    END
+
+    /* erwin Builtin Trigger */
+    /* Toimija  OmaSisalto on parent delete no action */
+    /* ERWIN_RELATION:CHECKSUM="00000000", PARENT_OWNER="", PARENT_TABLE="Toimija"
+    CHILD_OWNER="", CHILD_TABLE="OmaSisalto"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_5", FK_COLUMNS="toimija_Id" */
+    IF EXISTS (
+      SELECT * FROM deleted,OmaSisalto
+      WHERE
+        /*  %JoinFKPK(OmaSisalto,deleted," = "," AND") */
+        OmaSisalto.toimija_Id = deleted.toimija_Id
+    )
+    BEGIN
+      SELECT @errno  = 30001,
+             @errmsg = 'Cannot delete Toimija because OmaSisalto exists.'
+      GOTO error
+    END
+
+    /* erwin Builtin Trigger */
+    /* Toimija  YrityksenTieto on parent delete no action */
+    /* ERWIN_RELATION:CHECKSUM="00000000", PARENT_OWNER="", PARENT_TABLE="Toimija"
+    CHILD_OWNER="", CHILD_TABLE="YrityksenTieto"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_4", FK_COLUMNS="toimija_Id" */
+    IF EXISTS (
+      SELECT * FROM deleted,YrityksenTieto
+      WHERE
+        /*  %JoinFKPK(YrityksenTieto,deleted," = "," AND") */
+        YrityksenTieto.toimija_Id = deleted.toimija_Id
+    )
+    BEGIN
+      SELECT @errno  = 30001,
+             @errmsg = 'Cannot delete Toimija because YrityksenTieto exists.'
+      GOTO error
+    END
+
+    /* erwin Builtin Trigger */
+    /* Login  Toimija on child delete no action */
+    /* ERWIN_RELATION:CHECKSUM="00000000", PARENT_OWNER="", PARENT_TABLE="Login"
+    CHILD_OWNER="", CHILD_TABLE="Toimija"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_10", FK_COLUMNS="login_Id" */
+    IF EXISTS (SELECT * FROM deleted,Login
+      WHERE
+        /* %JoinFKPK(deleted,Login," = "," AND") */
+        deleted.login_Id = Login.login_Id AND
+        NOT EXISTS (
+          SELECT * FROM Toimija
+          WHERE
+            /* %JoinFKPK(Toimija,Login," = "," AND") */
+            Toimija.login_Id = Login.login_Id
+        )
+    )
+    BEGIN
+      SELECT @errno  = 30010,
+             @errmsg = 'Cannot delete last Toimija because Login exists.'
+      GOTO error
+    END
+
+    /* erwin Builtin Trigger */
+    /* Viesti  Toimija on child delete no action */
+    /* ERWIN_RELATION:CHECKSUM="00000000", PARENT_OWNER="", PARENT_TABLE="Viesti"
+    CHILD_OWNER="", CHILD_TABLE="Toimija"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_7", FK_COLUMNS="viesti_Id" */
+    IF EXISTS (SELECT * FROM deleted,Viesti
+      WHERE
+        /* %JoinFKPK(deleted,Viesti," = "," AND") */
+        deleted.viesti_Id = Viesti.viesti_Id AND
+        NOT EXISTS (
+          SELECT * FROM Toimija
+          WHERE
+            /* %JoinFKPK(Toimija,Viesti," = "," AND") */
+            Toimija.viesti_Id = Viesti.viesti_Id
+        )
+    )
+    BEGIN
+      SELECT @errno  = 30010,
+             @errmsg = 'Cannot delete last Toimija because Viesti exists.'
+      GOTO error
+    END
+
+    /* erwin Builtin Trigger */
+    /* Toimijatyyppi  Toimija on child delete no action */
+    /* ERWIN_RELATION:CHECKSUM="00000000", PARENT_OWNER="", PARENT_TABLE="Toimijatyyppi"
+    CHILD_OWNER="", CHILD_TABLE="Toimija"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_3", FK_COLUMNS="toimijatyyppi_Id" */
+    IF EXISTS (SELECT * FROM deleted,Toimijatyyppi
+      WHERE
+        /* %JoinFKPK(deleted,Toimijatyyppi," = "," AND") */
+        deleted.toimijatyyppi_Id = Toimijatyyppi.toimijatyyppi_Id AND
+        NOT EXISTS (
+          SELECT * FROM Toimija
+          WHERE
+            /* %JoinFKPK(Toimija,Toimijatyyppi," = "," AND") */
+            Toimija.toimijatyyppi_Id = Toimijatyyppi.toimijatyyppi_Id
+        )
+    )
+    BEGIN
+      SELECT @errno  = 30010,
+             @errmsg = 'Cannot delete last Toimija because Toimijatyyppi exists.'
+      GOTO error
+    END
+
+
+    /* erwin Builtin Trigger */
+    RETURN
+error:
+   RAISERROR (@errmsg, -- Message text.
+              @severity, -- Severity (0~25).
+              @state) -- State (0~255).
+    rollback transaction
+END
+
+go
+
+
+CREATE TRIGGER tU_Toimija ON Toimija FOR UPDATE AS
+/* erwin Builtin Trigger */
+/* UPDATE trigger on Toimija */
+BEGIN
+  DECLARE  @numrows int,
+           @nullcnt int,
+           @validcnt int,
+           @instoimija_Id integer,
+           @errno   int,
+           @severity int,
+           @state    int,
+           @errmsg  varchar(255)
+
+  SELECT @numrows = @@rowcount
+  /* erwin Builtin Trigger */
+  /* Toimija  HenkilonNimi on parent update no action */
+  /* ERWIN_RELATION:CHECKSUM="000822b0", PARENT_OWNER="", PARENT_TABLE="Toimija"
+    CHILD_OWNER="", CHILD_TABLE="HenkilonNimi"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_16", FK_COLUMNS="toimija_Id" */
+  IF
+    /* %ParentPK(" OR",UPDATE) */
+    UPDATE(toimija_Id)
+  BEGIN
+    IF EXISTS (
+      SELECT * FROM deleted,HenkilonNimi
+      WHERE
+        /*  %JoinFKPK(HenkilonNimi,deleted," = "," AND") */
+        HenkilonNimi.toimija_Id = deleted.toimija_Id
+    )
+    BEGIN
+      SELECT @errno  = 30005,
+             @errmsg = 'Cannot update Toimija because HenkilonNimi exists.'
+      GOTO error
+    END
+  END
+
+  /* erwin Builtin Trigger */
+  /* Toimija  Yhteystieto on parent update no action */
+  /* ERWIN_RELATION:CHECKSUM="00000000", PARENT_OWNER="", PARENT_TABLE="Toimija"
+    CHILD_OWNER="", CHILD_TABLE="Yhteystieto"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_6", FK_COLUMNS="toimija_Id" */
+  IF
+    /* %ParentPK(" OR",UPDATE) */
+    UPDATE(toimija_Id)
+  BEGIN
+    IF EXISTS (
+      SELECT * FROM deleted,Yhteystieto
+      WHERE
+        /*  %JoinFKPK(Yhteystieto,deleted," = "," AND") */
+        Yhteystieto.toimija_Id = deleted.toimija_Id
+    )
+    BEGIN
+      SELECT @errno  = 30005,
+             @errmsg = 'Cannot update Toimija because Yhteystieto exists.'
+      GOTO error
+    END
+  END
+
+  /* erwin Builtin Trigger */
+  /* Toimija  OmaSisalto on parent update no action */
+  /* ERWIN_RELATION:CHECKSUM="00000000", PARENT_OWNER="", PARENT_TABLE="Toimija"
+    CHILD_OWNER="", CHILD_TABLE="OmaSisalto"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_5", FK_COLUMNS="toimija_Id" */
+  IF
+    /* %ParentPK(" OR",UPDATE) */
+    UPDATE(toimija_Id)
+  BEGIN
+    IF EXISTS (
+      SELECT * FROM deleted,OmaSisalto
+      WHERE
+        /*  %JoinFKPK(OmaSisalto,deleted," = "," AND") */
+        OmaSisalto.toimija_Id = deleted.toimija_Id
+    )
+    BEGIN
+      SELECT @errno  = 30005,
+             @errmsg = 'Cannot update Toimija because OmaSisalto exists.'
+      GOTO error
+    END
+  END
+
+  /* erwin Builtin Trigger */
+  /* Toimija  YrityksenTieto on parent update no action */
+  /* ERWIN_RELATION:CHECKSUM="00000000", PARENT_OWNER="", PARENT_TABLE="Toimija"
+    CHILD_OWNER="", CHILD_TABLE="YrityksenTieto"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_4", FK_COLUMNS="toimija_Id" */
+  IF
+    /* %ParentPK(" OR",UPDATE) */
+    UPDATE(toimija_Id)
+  BEGIN
+    IF EXISTS (
+      SELECT * FROM deleted,YrityksenTieto
+      WHERE
+        /*  %JoinFKPK(YrityksenTieto,deleted," = "," AND") */
+        YrityksenTieto.toimija_Id = deleted.toimija_Id
+    )
+    BEGIN
+      SELECT @errno  = 30005,
+             @errmsg = 'Cannot update Toimija because YrityksenTieto exists.'
+      GOTO error
+    END
+  END
+
+  /* erwin Builtin Trigger */
+  /* Login  Toimija on child update no action */
+  /* ERWIN_RELATION:CHECKSUM="00000000", PARENT_OWNER="", PARENT_TABLE="Login"
+    CHILD_OWNER="", CHILD_TABLE="Toimija"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_10", FK_COLUMNS="login_Id" */
+  IF
+    /* %ChildFK(" OR",UPDATE) */
+    UPDATE(login_Id)
+  BEGIN
+    SELECT @nullcnt = 0
+    SELECT @validcnt = count(*)
+      FROM inserted,Login
+        WHERE
+          /* %JoinFKPK(inserted,Login) */
+          inserted.login_Id = Login.login_Id
+    /* %NotnullFK(inserted," IS NULL","select @nullcnt = count(*) from inserted where"," AND") */
+    
+    IF @validcnt + @nullcnt != @numrows
+    BEGIN
+      SELECT @errno  = 30007,
+             @errmsg = 'Cannot update Toimija because Login does not exist.'
+      GOTO error
+    END
+  END
+
+  /* erwin Builtin Trigger */
+  /* Viesti  Toimija on child update no action */
+  /* ERWIN_RELATION:CHECKSUM="00000000", PARENT_OWNER="", PARENT_TABLE="Viesti"
+    CHILD_OWNER="", CHILD_TABLE="Toimija"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_7", FK_COLUMNS="viesti_Id" */
+  IF
+    /* %ChildFK(" OR",UPDATE) */
+    UPDATE(viesti_Id)
+  BEGIN
+    SELECT @nullcnt = 0
+    SELECT @validcnt = count(*)
+      FROM inserted,Viesti
+        WHERE
+          /* %JoinFKPK(inserted,Viesti) */
+          inserted.viesti_Id = Viesti.viesti_Id
+    /* %NotnullFK(inserted," IS NULL","select @nullcnt = count(*) from inserted where"," AND") */
+    
+    IF @validcnt + @nullcnt != @numrows
+    BEGIN
+      SELECT @errno  = 30007,
+             @errmsg = 'Cannot update Toimija because Viesti does not exist.'
+      GOTO error
+    END
+  END
+
+  /* erwin Builtin Trigger */
+  /* Toimijatyyppi  Toimija on child update no action */
+  /* ERWIN_RELATION:CHECKSUM="00000000", PARENT_OWNER="", PARENT_TABLE="Toimijatyyppi"
+    CHILD_OWNER="", CHILD_TABLE="Toimija"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_3", FK_COLUMNS="toimijatyyppi_Id" */
+  IF
+    /* %ChildFK(" OR",UPDATE) */
+    UPDATE(toimijatyyppi_Id)
+  BEGIN
+    SELECT @nullcnt = 0
+    SELECT @validcnt = count(*)
+      FROM inserted,Toimijatyyppi
+        WHERE
+          /* %JoinFKPK(inserted,Toimijatyyppi) */
+          inserted.toimijatyyppi_Id = Toimijatyyppi.toimijatyyppi_Id
+    /* %NotnullFK(inserted," IS NULL","select @nullcnt = count(*) from inserted where"," AND") */
+    
+    IF @validcnt + @nullcnt != @numrows
+    BEGIN
+      SELECT @errno  = 30007,
+             @errmsg = 'Cannot update Toimija because Toimijatyyppi does not exist.'
+      GOTO error
+    END
+  END
+
+
+  /* erwin Builtin Trigger */
+  RETURN
+error:
+   RAISERROR (@errmsg, -- Message text.
+              @severity, -- Severity (0~25).
+              @state) -- State (0~255).
+    rollback transaction
+END
+
+go
+
+
+
+
+CREATE TRIGGER tD_Toimijatyyppi ON Toimijatyyppi FOR DELETE AS
+/* erwin Builtin Trigger */
+/* DELETE trigger on Toimijatyyppi */
+BEGIN
+  DECLARE  @errno   int,
+           @severity int,
+           @state    int,
+           @errmsg  varchar(255)
+    /* erwin Builtin Trigger */
+    /* Toimijatyyppi  Toimija on parent delete no action */
+    /* ERWIN_RELATION:CHECKSUM="0001210f", PARENT_OWNER="", PARENT_TABLE="Toimijatyyppi"
+    CHILD_OWNER="", CHILD_TABLE="Toimija"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_3", FK_COLUMNS="toimijatyyppi_Id" */
+    IF EXISTS (
+      SELECT * FROM deleted,Toimija
+      WHERE
+        /*  %JoinFKPK(Toimija,deleted," = "," AND") */
+        Toimija.toimijatyyppi_Id = deleted.toimijatyyppi_Id
+    )
+    BEGIN
+      SELECT @errno  = 30001,
+             @errmsg = 'Cannot delete Toimijatyyppi because Toimija exists.'
+      GOTO error
+    END
+
+
+    /* erwin Builtin Trigger */
+    RETURN
+error:
+   RAISERROR (@errmsg, -- Message text.
+              @severity, -- Severity (0~25).
+              @state) -- State (0~255).
+    rollback transaction
+END
+
+go
+
+
+CREATE TRIGGER tU_Toimijatyyppi ON Toimijatyyppi FOR UPDATE AS
+/* erwin Builtin Trigger */
+/* UPDATE trigger on Toimijatyyppi */
+BEGIN
+  DECLARE  @numrows int,
+           @nullcnt int,
+           @validcnt int,
+           @instoimijatyyppi_Id integer,
+           @errno   int,
+           @severity int,
+           @state    int,
+           @errmsg  varchar(255)
+
+  SELECT @numrows = @@rowcount
+  /* erwin Builtin Trigger */
+  /* Toimijatyyppi  Toimija on parent update no action */
+  /* ERWIN_RELATION:CHECKSUM="0001376f", PARENT_OWNER="", PARENT_TABLE="Toimijatyyppi"
+    CHILD_OWNER="", CHILD_TABLE="Toimija"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_3", FK_COLUMNS="toimijatyyppi_Id" */
+  IF
+    /* %ParentPK(" OR",UPDATE) */
+    UPDATE(toimijatyyppi_Id)
+  BEGIN
+    IF EXISTS (
+      SELECT * FROM deleted,Toimija
+      WHERE
+        /*  %JoinFKPK(Toimija,deleted," = "," AND") */
+        Toimija.toimijatyyppi_Id = deleted.toimijatyyppi_Id
+    )
+    BEGIN
+      SELECT @errno  = 30005,
+             @errmsg = 'Cannot update Toimijatyyppi because Toimija exists.'
+      GOTO error
+    END
+  END
+
+
+  /* erwin Builtin Trigger */
+  RETURN
+error:
+   RAISERROR (@errmsg, -- Message text.
+              @severity, -- Severity (0~25).
+              @state) -- State (0~255).
+    rollback transaction
+END
+
+go
+
+
+
+
+CREATE TRIGGER tD_Viesti ON Viesti FOR DELETE AS
+/* erwin Builtin Trigger */
+/* DELETE trigger on Viesti */
+BEGIN
+  DECLARE  @errno   int,
+           @severity int,
+           @state    int,
+           @errmsg  varchar(255)
+    /* erwin Builtin Trigger */
+    /* Viesti  Toimija on parent delete cascade */
+    /* ERWIN_RELATION:CHECKSUM="0000d7e3", PARENT_OWNER="", PARENT_TABLE="Viesti"
+    CHILD_OWNER="", CHILD_TABLE="Toimija"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_7", FK_COLUMNS="viesti_Id" */
+    DELETE Toimija
+      FROM Toimija,deleted
+      WHERE
+        /*  %JoinFKPK(Toimija,deleted," = "," AND") */
+        Toimija.viesti_Id = deleted.viesti_Id
+
+
+    /* erwin Builtin Trigger */
+    RETURN
+error:
+   RAISERROR (@errmsg, -- Message text.
+              @severity, -- Severity (0~25).
+              @state) -- State (0~255).
+    rollback transaction
+END
+
+go
+
+
+CREATE TRIGGER tU_Viesti ON Viesti FOR UPDATE AS
+/* erwin Builtin Trigger */
+/* UPDATE trigger on Viesti */
+BEGIN
+  DECLARE  @numrows int,
+           @nullcnt int,
+           @validcnt int,
+           @insviesti_Id integer,
+           @errno   int,
+           @severity int,
+           @state    int,
+           @errmsg  varchar(255)
+
+  SELECT @numrows = @@rowcount
+  /* erwin Builtin Trigger */
+  /* Viesti  Toimija on parent update no action */
+  /* ERWIN_RELATION:CHECKSUM="00013064", PARENT_OWNER="", PARENT_TABLE="Viesti"
+    CHILD_OWNER="", CHILD_TABLE="Toimija"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_7", FK_COLUMNS="viesti_Id" */
+  IF
+    /* %ParentPK(" OR",UPDATE) */
+    UPDATE(viesti_Id)
+  BEGIN
+    IF EXISTS (
+      SELECT * FROM deleted,Toimija
+      WHERE
+        /*  %JoinFKPK(Toimija,deleted," = "," AND") */
+        Toimija.viesti_Id = deleted.viesti_Id
+    )
+    BEGIN
+      SELECT @errno  = 30005,
+             @errmsg = 'Cannot update Viesti because Toimija exists.'
+      GOTO error
+    END
+  END
+
+
+  /* erwin Builtin Trigger */
+  RETURN
+error:
+   RAISERROR (@errmsg, -- Message text.
+              @severity, -- Severity (0~25).
+              @state) -- State (0~255).
+    rollback transaction
+END
+
+go
+
+
+
+
+CREATE TRIGGER tD_Yhteystieto ON Yhteystieto FOR DELETE AS
+/* erwin Builtin Trigger */
+/* DELETE trigger on Yhteystieto */
+BEGIN
+  DECLARE  @errno   int,
+           @severity int,
+           @state    int,
+           @errmsg  varchar(255)
+    /* erwin Builtin Trigger */
+    /* Yhteystieto  PuhelinNumero on parent delete no action */
+    /* ERWIN_RELATION:CHECKSUM="0004cfe6", PARENT_OWNER="", PARENT_TABLE="Yhteystieto"
+    CHILD_OWNER="", CHILD_TABLE="PuhelinNumero"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_22", FK_COLUMNS="yhteystieto_Id" */
+    IF EXISTS (
+      SELECT * FROM deleted,PuhelinNumero
+      WHERE
+        /*  %JoinFKPK(PuhelinNumero,deleted," = "," AND") */
+        PuhelinNumero.yhteystieto_Id = deleted.yhteystieto_Id
+    )
+    BEGIN
+      SELECT @errno  = 30001,
+             @errmsg = 'Cannot delete Yhteystieto because PuhelinNumero exists.'
+      GOTO error
+    END
+
+    /* erwin Builtin Trigger */
+    /* Sahkoposti  Yhteystieto on child delete no action */
+    /* ERWIN_RELATION:CHECKSUM="00000000", PARENT_OWNER="", PARENT_TABLE="Sahkoposti"
+    CHILD_OWNER="", CHILD_TABLE="Yhteystieto"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_21", FK_COLUMNS="sahkoposti_Id" */
+    IF EXISTS (SELECT * FROM deleted,Sahkoposti
+      WHERE
+        /* %JoinFKPK(deleted,Sahkoposti," = "," AND") */
+        deleted.sahkoposti_Id = Sahkoposti.sahkoposti_Id AND
+        NOT EXISTS (
+          SELECT * FROM Yhteystieto
+          WHERE
+            /* %JoinFKPK(Yhteystieto,Sahkoposti," = "," AND") */
+            Yhteystieto.sahkoposti_Id = Sahkoposti.sahkoposti_Id
+        )
+    )
+    BEGIN
+      SELECT @errno  = 30010,
+             @errmsg = 'Cannot delete last Yhteystieto because Sahkoposti exists.'
+      GOTO error
+    END
+
+    /* erwin Builtin Trigger */
+    /* Postitoimipaikka  Yhteystieto on child delete no action */
+    /* ERWIN_RELATION:CHECKSUM="00000000", PARENT_OWNER="", PARENT_TABLE="Postitoimipaikka"
+    CHILD_OWNER="", CHILD_TABLE="Yhteystieto"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_19", FK_COLUMNS="postitoimipaikka_Id" */
+    IF EXISTS (SELECT * FROM deleted,Postitoimipaikka
+      WHERE
+        /* %JoinFKPK(deleted,Postitoimipaikka," = "," AND") */
+        deleted.postitoimipaikka_Id = Postitoimipaikka.postitoimipaikka_Id AND
+        NOT EXISTS (
+          SELECT * FROM Yhteystieto
+          WHERE
+            /* %JoinFKPK(Yhteystieto,Postitoimipaikka," = "," AND") */
+            Yhteystieto.postitoimipaikka_Id = Postitoimipaikka.postitoimipaikka_Id
+        )
+    )
+    BEGIN
+      SELECT @errno  = 30010,
+             @errmsg = 'Cannot delete last Yhteystieto because Postitoimipaikka exists.'
+      GOTO error
+    END
+
+    /* erwin Builtin Trigger */
+    /* Toimija  Yhteystieto on child delete cascade */
+    /* ERWIN_RELATION:CHECKSUM="00000000", PARENT_OWNER="", PARENT_TABLE="Toimija"
+    CHILD_OWNER="", CHILD_TABLE="Yhteystieto"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_6", FK_COLUMNS="toimija_Id" */
+    DELETE Toimija
+      FROM Toimija,deleted
+      WHERE
+        /* %JoinFKPK(deleted,Toimija," = "," AND") */
+        deleted.toimija_Id = Toimija.toimija_Id AND
+        NOT EXISTS (
+          SELECT * FROM Yhteystieto
+          WHERE
+            /* %JoinFKPK(Yhteystieto,Toimija," = "," AND") */
+            Yhteystieto.toimija_Id = Toimija.toimija_Id
+        )
+
+
+    /* erwin Builtin Trigger */
+    RETURN
+error:
+   RAISERROR (@errmsg, -- Message text.
+              @severity, -- Severity (0~25).
+              @state) -- State (0~255).
+    rollback transaction
+END
+
+go
+
+
+CREATE TRIGGER tU_Yhteystieto ON Yhteystieto FOR UPDATE AS
+/* erwin Builtin Trigger */
+/* UPDATE trigger on Yhteystieto */
+BEGIN
+  DECLARE  @numrows int,
+           @nullcnt int,
+           @validcnt int,
+           @insyhteystieto_Id integer,
+           @errno   int,
+           @severity int,
+           @state    int,
+           @errmsg  varchar(255)
+
+  SELECT @numrows = @@rowcount
+  /* erwin Builtin Trigger */
+  /* Yhteystieto  PuhelinNumero on parent update no action */
+  /* ERWIN_RELATION:CHECKSUM="000575b1", PARENT_OWNER="", PARENT_TABLE="Yhteystieto"
+    CHILD_OWNER="", CHILD_TABLE="PuhelinNumero"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_22", FK_COLUMNS="yhteystieto_Id" */
+  IF
+    /* %ParentPK(" OR",UPDATE) */
+    UPDATE(yhteystieto_Id)
+  BEGIN
+    IF EXISTS (
+      SELECT * FROM deleted,PuhelinNumero
+      WHERE
+        /*  %JoinFKPK(PuhelinNumero,deleted," = "," AND") */
+        PuhelinNumero.yhteystieto_Id = deleted.yhteystieto_Id
+    )
+    BEGIN
+      SELECT @errno  = 30005,
+             @errmsg = 'Cannot update Yhteystieto because PuhelinNumero exists.'
+      GOTO error
+    END
+  END
+
+  /* erwin Builtin Trigger */
+  /* Sahkoposti  Yhteystieto on child update no action */
+  /* ERWIN_RELATION:CHECKSUM="00000000", PARENT_OWNER="", PARENT_TABLE="Sahkoposti"
+    CHILD_OWNER="", CHILD_TABLE="Yhteystieto"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_21", FK_COLUMNS="sahkoposti_Id" */
+  IF
+    /* %ChildFK(" OR",UPDATE) */
+    UPDATE(sahkoposti_Id)
+  BEGIN
+    SELECT @nullcnt = 0
+    SELECT @validcnt = count(*)
+      FROM inserted,Sahkoposti
+        WHERE
+          /* %JoinFKPK(inserted,Sahkoposti) */
+          inserted.sahkoposti_Id = Sahkoposti.sahkoposti_Id
+    /* %NotnullFK(inserted," IS NULL","select @nullcnt = count(*) from inserted where"," AND") */
+    select @nullcnt = count(*) from inserted where
+      inserted.sahkoposti_Id IS NULL
+    IF @validcnt + @nullcnt != @numrows
+    BEGIN
+      SELECT @errno  = 30007,
+             @errmsg = 'Cannot update Yhteystieto because Sahkoposti does not exist.'
+      GOTO error
+    END
+  END
+
+  /* erwin Builtin Trigger */
+  /* Postitoimipaikka  Yhteystieto on child update no action */
+  /* ERWIN_RELATION:CHECKSUM="00000000", PARENT_OWNER="", PARENT_TABLE="Postitoimipaikka"
+    CHILD_OWNER="", CHILD_TABLE="Yhteystieto"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_19", FK_COLUMNS="postitoimipaikka_Id" */
+  IF
+    /* %ChildFK(" OR",UPDATE) */
+    UPDATE(postitoimipaikka_Id)
+  BEGIN
+    SELECT @nullcnt = 0
+    SELECT @validcnt = count(*)
+      FROM inserted,Postitoimipaikka
+        WHERE
+          /* %JoinFKPK(inserted,Postitoimipaikka) */
+          inserted.postitoimipaikka_Id = Postitoimipaikka.postitoimipaikka_Id
+    /* %NotnullFK(inserted," IS NULL","select @nullcnt = count(*) from inserted where"," AND") */
+    
+    IF @validcnt + @nullcnt != @numrows
+    BEGIN
+      SELECT @errno  = 30007,
+             @errmsg = 'Cannot update Yhteystieto because Postitoimipaikka does not exist.'
+      GOTO error
+    END
+  END
+
+  /* erwin Builtin Trigger */
+  /* Toimija  Yhteystieto on child update no action */
+  /* ERWIN_RELATION:CHECKSUM="00000000", PARENT_OWNER="", PARENT_TABLE="Toimija"
+    CHILD_OWNER="", CHILD_TABLE="Yhteystieto"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_6", FK_COLUMNS="toimija_Id" */
+  IF
+    /* %ChildFK(" OR",UPDATE) */
+    UPDATE(toimija_Id)
+  BEGIN
+    SELECT @nullcnt = 0
+    SELECT @validcnt = count(*)
+      FROM inserted,Toimija
+        WHERE
+          /* %JoinFKPK(inserted,Toimija) */
+          inserted.toimija_Id = Toimija.toimija_Id
+    /* %NotnullFK(inserted," IS NULL","select @nullcnt = count(*) from inserted where"," AND") */
+    
+    IF @validcnt + @nullcnt != @numrows
+    BEGIN
+      SELECT @errno  = 30007,
+             @errmsg = 'Cannot update Yhteystieto because Toimija does not exist.'
+      GOTO error
+    END
+  END
+
+
+  /* erwin Builtin Trigger */
+  RETURN
+error:
+   RAISERROR (@errmsg, -- Message text.
+              @severity, -- Severity (0~25).
+              @state) -- State (0~255).
+    rollback transaction
+END
+
+go
+
+
+
+
+CREATE TRIGGER tD_YrityksenTieto ON YrityksenTieto FOR DELETE AS
+/* erwin Builtin Trigger */
+/* DELETE trigger on YrityksenTieto */
+BEGIN
+  DECLARE  @errno   int,
+           @severity int,
+           @state    int,
+           @errmsg  varchar(255)
+    /* erwin Builtin Trigger */
+    /* Toimija  YrityksenTieto on child delete cascade */
+    /* ERWIN_RELATION:CHECKSUM="00012247", PARENT_OWNER="", PARENT_TABLE="Toimija"
+    CHILD_OWNER="", CHILD_TABLE="YrityksenTieto"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_4", FK_COLUMNS="toimija_Id" */
+    DELETE Toimija
+      FROM Toimija,deleted
+      WHERE
+        /* %JoinFKPK(deleted,Toimija," = "," AND") */
+        deleted.toimija_Id = Toimija.toimija_Id AND
+        NOT EXISTS (
+          SELECT * FROM YrityksenTieto
+          WHERE
+            /* %JoinFKPK(YrityksenTieto,Toimija," = "," AND") */
+            YrityksenTieto.toimija_Id = Toimija.toimija_Id
+        )
+
+
+    /* erwin Builtin Trigger */
+    RETURN
+error:
+   RAISERROR (@errmsg, -- Message text.
+              @severity, -- Severity (0~25).
+              @state) -- State (0~255).
+    rollback transaction
+END
+
+go
+
+
+CREATE TRIGGER tU_YrityksenTieto ON YrityksenTieto FOR UPDATE AS
+/* erwin Builtin Trigger */
+/* UPDATE trigger on YrityksenTieto */
+BEGIN
+  DECLARE  @numrows int,
+           @nullcnt int,
+           @validcnt int,
+           @insyrityksenTieto_Id integer,
+           @errno   int,
+           @severity int,
+           @state    int,
+           @errmsg  varchar(255)
+
+  SELECT @numrows = @@rowcount
+  /* erwin Builtin Trigger */
+  /* Toimija  YrityksenTieto on child update no action */
+  /* ERWIN_RELATION:CHECKSUM="00016ef5", PARENT_OWNER="", PARENT_TABLE="Toimija"
+    CHILD_OWNER="", CHILD_TABLE="YrityksenTieto"
+    P2C_VERB_PHRASE="", C2P_VERB_PHRASE="", 
+    FK_CONSTRAINT="R_4", FK_COLUMNS="toimija_Id" */
+  IF
+    /* %ChildFK(" OR",UPDATE) */
+    UPDATE(toimija_Id)
+  BEGIN
+    SELECT @nullcnt = 0
+    SELECT @validcnt = count(*)
+      FROM inserted,Toimija
+        WHERE
+          /* %JoinFKPK(inserted,Toimija) */
+          inserted.toimija_Id = Toimija.toimija_Id
+    /* %NotnullFK(inserted," IS NULL","select @nullcnt = count(*) from inserted where"," AND") */
+    
+    IF @validcnt + @nullcnt != @numrows
+    BEGIN
+      SELECT @errno  = 30007,
+             @errmsg = 'Cannot update YrityksenTieto because Toimija does not exist.'
+      GOTO error
+    END
+  END
+
+
+  /* erwin Builtin Trigger */
+  RETURN
+error:
+   RAISERROR (@errmsg, -- Message text.
+              @severity, -- Severity (0~25).
+              @state) -- State (0~255).
+    rollback transaction
+END
+
+go
+
+

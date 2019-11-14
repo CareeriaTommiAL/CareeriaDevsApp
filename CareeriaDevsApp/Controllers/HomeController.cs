@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CareeriaDevsApp.Databases;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,8 +11,36 @@ namespace CareeriaDevsApp.Controllers
     {
         public ActionResult Index()
         {
+            //login tiedot näkyville
+            if (Session["Username"] == null)
+            {
+                Session["LoggedStatus"] = "out";
+            }
+            else
+            {
+                Session["LoggedStatus"] = "in";
+
+            }
+
             return View();
         }
+        //**********************************************************************************************************
+        //tämän joutuu lisäämään joka controlleriin erikseen, jotta saadaan näkyviin ja jotta se toimisi oikein
+        /*
+         * 
+            if (Session["Username"] == null)
+            {
+                return RedirectToAction("login", "home");
+            }
+            else
+            {
+                Session["LoggedStatus"] = "in";
+                return View();
+            }
+
+         */
+        //**********************************************************************************************************
+
 
         public ActionResult About()
         {
@@ -26,5 +55,42 @@ namespace CareeriaDevsApp.Controllers
 
             return View();
         }
+
+        //Login-----------------------------------------------------------------------------------------------------------------------
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Authorize(Login LoginModel)
+        {
+            CareeriaDevsApp.Databases.CareeriaDevAppEntities db = new CareeriaDevsApp.Databases.CareeriaDevAppEntities();
+            //Haetaan käyttäjän/Loginin tiedot annetuilla tunnustiedoilla tietokannasta LINQ -kyselyllä
+            var LoggedUser = db.Login.SingleOrDefault(x => x.kayttajaNimi == LoginModel.kayttajaNimi && x.salasana == LoginModel.salasana);
+            if (LoggedUser != null)
+            {
+                ViewBag.LoginMessage = "Successfull login";
+                Session["LoggedStatus"] = "in";
+                Session["Username"] = LoggedUser.kayttajaNimi;
+                return RedirectToAction("Index", "Home"); //Tässä määritellään mihin onnistunut kirjautuminen johtaa --> Home/Index
+            }
+            else
+            {
+                ViewBag.LoginMessage = "Login unsuccessfull";
+                Session["LoggedStatus"] = "out";
+                LoginModel.LoginVirhe = "Tuntematon käyttäjänimi tai salasana.";
+                return View("Home", LoginModel);
+            }
+        }
+        public ActionResult LogOut()
+        {
+            Session.Abandon();
+            ViewBag.LoggedStatus = "out";
+            return RedirectToAction("Index", "Home"); //Uloskirjautumisen jälkeen pääsivulle
+        }
+
+
+
     }
 }
