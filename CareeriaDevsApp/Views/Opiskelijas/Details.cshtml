@@ -1,0 +1,42 @@
+﻿@model CareeriaDevsApp.Opiskelija
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Opiskelija</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.etunimi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.etunimi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.sukunimi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.sukunimi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Postitoimipaikka.postinumero)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Postitoimipaikka.postinumero)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.opiskelija_Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

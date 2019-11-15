@@ -1,0 +1,58 @@
+﻿@model CareeriaDevsApp.Login
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Login</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.kayttajaNimi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.kayttajaNimi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.salasana)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.salasana)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Opiskelija.etunimi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Opiskelija.etunimi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Yritys.yrityksenNimi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Yritys.yrityksenNimi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PaaKayttaja.nimi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaaKayttaja.nimi)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.login_Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
