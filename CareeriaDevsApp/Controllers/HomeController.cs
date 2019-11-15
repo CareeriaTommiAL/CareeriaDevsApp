@@ -14,11 +14,11 @@ namespace CareeriaDevsApp.Controllers
             //login tiedot näkyville
             if (Session["Username"] == null)
             {
-                Session["LoggedStatus"] = "out";
+                Session["LoggedStatus"] = "uloskirjautuneena";
             }
             else
             {
-                Session["LoggedStatus"] = "in";
+                Session["LoggedStatus"] = "sisäänkirjautuneena";
 
             }
 
@@ -70,15 +70,15 @@ namespace CareeriaDevsApp.Controllers
             var LoggedUser = db.Login.SingleOrDefault(x => x.kayttajaNimi == LoginModel.kayttajaNimi && x.salasana == LoginModel.salasana);
             if (LoggedUser != null)
             {
-                ViewBag.LoginMessage = "Successfull login";
-                Session["LoggedStatus"] = "in";
+                ViewBag.LoginMessage = "Sisäänkirjautuminen onnistui";
+                Session["LoggedStatus"] = "sisäänkirjautuneena";
                 Session["Username"] = LoggedUser.kayttajaNimi;
                 return RedirectToAction("Index", "Home"); //Tässä määritellään mihin onnistunut kirjautuminen johtaa --> Home/Index
             }
             else
             {
-                ViewBag.LoginMessage = "Login unsuccessfull";
-                Session["LoggedStatus"] = "out";
+                ViewBag.LoginMessage = "Kirjautuminen epäonnistui";
+                Session["LoggedStatus"] = "uloskirjautuneena";
                 LoginModel.LoginVirhe = "Tuntematon käyttäjänimi tai salasana.";
                 return View("Home", LoginModel);
             }
@@ -86,7 +86,7 @@ namespace CareeriaDevsApp.Controllers
         public ActionResult LogOut()
         {
             Session.Abandon();
-            ViewBag.LoggedStatus = "out";
+            ViewBag.LoggedStatus = "uloskirjautuneena";
             return RedirectToAction("Index", "Home"); //Uloskirjautumisen jälkeen pääsivulle
         }
 
