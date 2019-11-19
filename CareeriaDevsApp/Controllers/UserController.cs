@@ -167,7 +167,7 @@ namespace CareeriaDevsApp.Controllers
 
 
                 #region Save to Database
-                using (CareeriaDevAppEntities dc = new CareeriaDevAppEntities())
+                using (Stud1Entities dc = new Stud1Entities())
                 {
                     //Tietojen tallennus modelista tietokantaan...
                     Yritys uusiYrit = new Yritys();

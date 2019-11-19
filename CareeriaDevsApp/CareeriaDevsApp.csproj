@@ -280,8 +280,14 @@
     <Compile Include="Controllers\PaaKayttajasController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\YritysController.cs" />
+    <Compile Include="database_firewall_rules.cs">
+      <DependentUpon>TyonhakuModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Login.cs">
+      <DependentUpon>TyonhakuModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\OpiskelijaModel.cs" />
@@ -290,7 +296,53 @@
     <Compile Include="Models\SahkopostiModel.cs" />
     <Compile Include="Models\UserLogin.cs" />
     <Compile Include="Models\YritysModel.cs" />
+    <Compile Include="OmaSisalto.cs">
+      <DependentUpon>TyonhakuModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Opiskelija.cs">
+      <DependentUpon>TyonhakuModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PaaKayttaja.cs">
+      <DependentUpon>TyonhakuModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Postitoimipaikka.cs">
+      <DependentUpon>TyonhakuModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PuhelinNumero.cs">
+      <DependentUpon>TyonhakuModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PuhelinTyyppi.cs">
+      <DependentUpon>TyonhakuModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sahkoposti.cs">
+      <DependentUpon>TyonhakuModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TyonhakuModel.Context1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TyonhakuModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TyonhakuModel.cs" />
+    <Compile Include="TyonhakuModel.Designer.cs">
+      <DependentUpon>TyonhakuModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TyonhakuModel1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TyonhakuModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TyonhakuModel1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TyonhakuModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Viesti.cs">
+      <DependentUpon>TyonhakuModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Yritys.cs">
+      <DependentUpon>TyonhakuModel.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -347,6 +399,14 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="TyonhakuModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TyonhakuModel.Context1.cs</LastGenOutput>
+    </Content>
+    <Content Include="TyonhakuModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TyonhakuModel1.cs</LastGenOutput>
+    </Content>
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -395,6 +455,13 @@
     <Content Include="Views\Logins\OppilasRekisterointi.cshtml" />
     <Content Include="Views\Logins\VerifyAccount.cshtml" />
     <Content Include="Views\Logins\YritysRekisterointi.cshtml" />
+    <EntityDeploy Include="TyonhakuModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>TyonhakuModel1.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="TyonhakuModel.edmx.diagram">
+      <DependentUpon>TyonhakuModel.edmx</DependentUpon>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
