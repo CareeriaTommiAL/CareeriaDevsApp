@@ -25,6 +25,12 @@ namespace CareeriaDevsApp.Controllers
 
             return View();
         }
+
+        public ActionResult Register()
+        {
+            return View();
+        }
+
         //**********************************************************************************************************
         //tämän joutuu lisäämään joka controlleriin erikseen, jotta saadaan näkyviin ja jotta se toimisi oikein
         /*
@@ -64,11 +70,11 @@ namespace CareeriaDevsApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult Authorize(Login LoginModel)
+        public ActionResult Authorize(Login LoginModeli)
         {
             CareeriaDevsApp.Stud1Entities db = new CareeriaDevsApp.Stud1Entities();
             //Haetaan käyttäjän/Loginin tiedot annetuilla tunnustiedoilla tietokannasta LINQ -kyselyllä
-            var LoggedUser = db.Login.SingleOrDefault(x => x.kayttajaNimi == LoginModel.kayttajaNimi && x.salasana == LoginModel.salasana);
+            var LoggedUser = db.Login.SingleOrDefault(x => x.kayttajaNimi == LoginModeli.kayttajaNimi && x.salasana == LoginModeli.salasana);
             if (LoggedUser != null)
             {
                 ViewBag.LoginMessage = "Sisäänkirjautuminen onnistui";
@@ -81,7 +87,7 @@ namespace CareeriaDevsApp.Controllers
                 ViewBag.LoginMessage = "Kirjautuminen epäonnistui";
                 Session["LoggedStatus"] = "uloskirjautuneena";
                 //LoginModel.LoginVirhe = "Tuntematon käyttäjänimi tai salasana.";
-                return View("Home", LoginModel);
+                return View("Home", LoginModeli);
             }
         }
         public ActionResult LogOut()
