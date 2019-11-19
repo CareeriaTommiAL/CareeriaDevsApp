@@ -5,7 +5,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-
 namespace CareeriaDevsApp.Controllers
 {
     public class HomeController : Controller
@@ -80,7 +79,7 @@ namespace CareeriaDevsApp.Controllers
             {
                 ViewBag.LoginMessage = "Kirjautuminen epäonnistui";
                 Session["LoggedStatus"] = "uloskirjautuneena";
-                //LoginModel.LoginVirhe = "Tuntematon käyttäjänimi tai salasana.";
+                LoginModel.LoginVirhe = "Tuntematon käyttäjänimi tai salasana.";
                 return View("Home", LoginModel);
             }
         }
