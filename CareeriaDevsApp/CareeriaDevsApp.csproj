@@ -278,8 +278,8 @@
     <Compile Include="Controllers\LoginsController.cs" />
     <Compile Include="Controllers\OpiskelijasController.cs" />
     <Compile Include="Controllers\PaaKayttajasController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\YritysController.cs" />
+    <Compile Include="Crypto.cs" />
     <Compile Include="database_firewall_rules.cs">
       <DependentUpon>TyonhakuModel.tt</DependentUpon>
     </Compile>
