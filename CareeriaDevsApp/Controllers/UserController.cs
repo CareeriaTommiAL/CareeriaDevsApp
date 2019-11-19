@@ -64,7 +64,7 @@ namespace CareeriaDevsApp.Controllers
 
 
                 #region Tallennus tietokantaan
-                using (CareeriaDevAppEntities dc = new CareeriaDevAppEntities())
+                using (Stud1Entities dc = new Stud1Entities())
                 {
                     //Tietojen tallennus modelista tietokantaan...
                     Opiskelija uusiOpis = new Opiskelija();
@@ -222,7 +222,7 @@ namespace CareeriaDevsApp.Controllers
         public ActionResult VerifyAccount(string id)
         {
             bool Status = false;
-            using (CareeriaDevAppEntities dc = new CareeriaDevAppEntities())
+            using (Stud1Entities dc = new Stud1Entities())
             {
                 dc.Configuration.ValidateOnSaveEnabled = false; //SaveChanges();
 
@@ -256,7 +256,7 @@ namespace CareeriaDevsApp.Controllers
         public ActionResult Login(UserLogin login, string ReturnUrl = "")
         {
             string message = "";
-            using (CareeriaDevAppEntities dc = new CareeriaDevAppEntities())
+            using (Stud1Entities dc = new Stud1Entities())
             {
                 var v = dc.Login.Where(a => a.kayttajaNimi == login.EmailID).FirstOrDefault();
                 if (v != null)
@@ -321,7 +321,7 @@ namespace CareeriaDevsApp.Controllers
         [NonAction]
         public bool IsEmailExist(string emailID)
         {
-            using (CareeriaDevAppEntities dc = new CareeriaDevAppEntities())
+            using (Stud1Entities dc = new Stud1Entities())
             {
                 var v = dc.Login.Where(a => a.kayttajaNimi == emailID).FirstOrDefault();
                 return v != null;

@@ -1,4 +1,4 @@
-﻿using CareeriaDevsApp.Databases;
+﻿using CareeriaDevsApp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,7 +66,7 @@ namespace CareeriaDevsApp.Controllers
         [HttpPost]
         public ActionResult Authorize(Login LoginModel)
         {
-            CareeriaDevsApp.Databases.CareeriaDevAppEntities db = new CareeriaDevsApp.Databases.CareeriaDevAppEntities();
+            CareeriaDevsApp.Stud1Entities db = new CareeriaDevsApp.Stud1Entities();
             //Haetaan käyttäjän/Loginin tiedot annetuilla tunnustiedoilla tietokannasta LINQ -kyselyllä
             var LoggedUser = db.Login.SingleOrDefault(x => x.kayttajaNimi == LoginModel.kayttajaNimi && x.salasana == LoginModel.salasana);
             if (LoggedUser != null)
