@@ -80,7 +80,15 @@ namespace CareeriaDevsApp.Controllers
                 ViewBag.LoginMessage = "Sisäänkirjautuminen onnistui";
                 Session["LoggedStatus"] = "sisäänkirjautuneena";
                 Session["Username"] = LoggedUser.kayttajaNimi;
-                return RedirectToAction("Index", "Home"); //Tässä määritellään mihin onnistunut kirjautuminen johtaa --> Home/Index
+                if (LoggedUser.opiskelija_Id != null)
+                {
+                    System.Diagnostics.Debug.WriteLine("tämä käyttäjä on opiskelija");
+                }
+                if (LoggedUser.yritys_Id != null)
+                {
+                    System.Diagnostics.Debug.WriteLine("tämä käyttäjä on yritys");
+                }
+                return RedirectToAction("Index", "Home"); //Tässä määritellään mihin onnistunut kirjautuminen johtaa
             }
             else
             {

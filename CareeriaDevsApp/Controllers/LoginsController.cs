@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using CareeriaDevsApp;
 using CareeriaDevsApp.Models;
 using System.Web.Security;
+using System.Globalization;
 
 namespace CareeriaDevsApp.Controllers
 {
@@ -208,7 +209,9 @@ namespace CareeriaDevsApp.Controllers
                     //Tietojen tallennus modelista tietokantaan...
                     Opiskelija uusiOpis = new Opiskelija();
                     uusiOpis.etunimi = opiskelija.etunimi;
+                    uusiOpis.etunimi = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(uusiOpis.etunimi.ToLower()); //muutetaan ensimmäinen kirjain isoksi, koska käyttäjä
                     uusiOpis.sukunimi = opiskelija.sukunimi;
+                    uusiOpis.sukunimi = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(uusiOpis.sukunimi.ToLower()); //muutetaan ensimmäinen kirjain isoksi, koska käyttäjä
                     uusiOpis.opiskelija_Id = opiskelija.opiskelija_Id;
 
                     Login uusiKirj = new Login();
@@ -311,6 +314,7 @@ namespace CareeriaDevsApp.Controllers
                     //Tietojen tallennus modelista tietokantaan...
                     Yritys uusiYrit = new Yritys();
                     uusiYrit.yrityksenNimi = yritys.yrityksenNimi;
+                    uusiYrit.yrityksenNimi = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(uusiYrit.yrityksenNimi.ToLower()); //muutetaan ensimmäinen kirjain isoksi, koska käyttäjä
                     uusiYrit.Y_tunnus = yritys.Y_tunnus;
                     uusiYrit.lahiosoite = yritys.lahiosoite;
 
@@ -400,6 +404,17 @@ namespace CareeriaDevsApp.Controllers
                 var v = dc.Login.Where(a => a.kayttajaNimi == login.EmailID).FirstOrDefault();
                 if (v != null)
                 {
+                    //**************************************************
+                    //******käyttäjän tunnnistus loginista**************
+                    //**************************************************
+                    if (v.opiskelija_Id != null) //jos käyttäjällä on login -taulun opiskelija_id:ssä tietoa, niin käyttäjä tunnistetaan opiskelijaksi.
+                    {
+                        System.Diagnostics.Debug.WriteLine("tämä käyttäjä on opiskelija");
+                    }
+                    if (v.yritys_Id != null) //jos käyttäjällä on login -taulun yritys_id:ssä tietoa, niin käyttäjä tunnistetaan yritykseksi.
+                    {
+                        System.Diagnostics.Debug.WriteLine("tämä käyttäjä on yritys");
+                    }
                     //if (!v.onkoEmailAktivoitu) //jos email-osoitetta ei ole aktivoitu niin:
                     //{
                     //    ViewBag.Message = "Olkaa hyvä ja vahvistakaa sähköpostiosoitteenne"; //ei välttämätön, mutta aika yleinen, jos jää aikaa niin toteutetaan
