@@ -351,6 +351,13 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\avatar.jpg" />
+    <Content Include="Content\Images\careeria-logo.png" />
+    <Content Include="Content\Images\footerbg.png" />
+    <Content Include="Content\Images\ohjelmistoyrittajat-logo.png" />
+    <Content Include="Content\Images\tyonantajille.jpg" />
+    <Content Include="Content\Images\tyonhakijoille.jpg" />
+    <Content Include="Content\Images\vapaapaikka.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -476,7 +483,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\Images\" />
     <Folder Include="Databases\" />
   </ItemGroup>
   <ItemGroup>
