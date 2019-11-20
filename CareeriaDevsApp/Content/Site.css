@@ -1,4 +1,4 @@
-﻿.navbar {
+﻿﻿.navbar {
     min-height: 100px;
 }
 
@@ -45,37 +45,37 @@
     color: #4b4b4b;
 }
 
-#chapters .pallo-1 {
-    background: url('img/pallo-1.png') center center;
-    background-size: contain;
-    background-repeat: no-repeat;
-    height: 200px;
-    color: #fff;
-}
+    #chapters .pallo-1 {
+        background: url('img/pallo-1.png') center center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        height: 200px;
+        color: #fff;
+    }
 
-#chapters .pallo-2 {
-    background: url('img/pallo-2.png') center center;
-    background-size: contain;
-    background-repeat: no-repeat;
-    height: 200px;
-    color: #fff;
-}
+    #chapters .pallo-2 {
+        background: url('img/pallo-2.png') center center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        height: 200px;
+        color: #fff;
+    }
 
-#chapters .pallo-3 {
-    background: url('img/pallo-3.png') center center;
-    background-size: contain;
-    background-repeat: no-repeat;
-    height: 200px;
-    color: #fff;
-}
+    #chapters .pallo-3 {
+        background: url('img/pallo-3.png') center center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        height: 200px;
+        color: #fff;
+    }
 
-#chapters .pallo-4 {
-    background: url('img/pallo-4.png') center center;
-    background-size: contain;
-    background-repeat: no-repeat;
-    height: 200px;
-    color: #fff;
-}
+    #chapters .pallo-4 {
+        background: url('img/pallo-4.png') center center;
+        background-size: contain;
+        background-repeat: no-repeat;
+        height: 200px;
+        color: #fff;
+    }
 
 #employers-reg {
     padding: 100px;
@@ -92,9 +92,9 @@
     min-height: 500px;
 }
 
-#students-reg .students-reg-content {
-    margin-left: 150px;
-}
+    #students-reg .students-reg-content {
+        margin-left: 150px;
+    }
 
 #sponsors {
     margin: 100px;
@@ -106,28 +106,28 @@
     color: #4b4b4b;
 }
 
-#footer ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
+    #footer ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
 
 .btn-outline-yellow {
     color: #dfbe71;
     border-color: #dfbe71;
 }
 
-.btn-outline-yellow:hover {
-    color: #d7af4d;
-    border-color: #dfbe71;
-}
+    .btn-outline-yellow:hover {
+        color: #d7af4d;
+        border-color: #dfbe71;
+    }
 
 .btn-yellow {
     color: #fff;
     background-color: #dfbe71;
 }
 
-.btn-yellow:hover {
-    color: #fff;
-    background-color: #d7af4d;
-}
+    .btn-yellow:hover {
+        color: #fff;
+        background-color: #d7af4d;
+    }
