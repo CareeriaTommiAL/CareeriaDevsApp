@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Stud1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Stud1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Login">
           <Key>
             <PropertyRef Name="login_Id" />
@@ -15,6 +15,8 @@
           <Property Name="opiskelija_Id" Type="int" />
           <Property Name="yritys_Id" Type="int" />
           <Property Name="paaKayttaja_Id" Type="int" />
+          <Property Name="aktivointiKoodi" Type="uniqueidentifier" />
+          <Property Name="onkoEmailAktivoitu" Type="bit" />
         </EntityType>
         <EntityType Name="OmaSisalto">
           <Key>
@@ -378,8 +380,7 @@ warning 6002: The table/view 'Stud1.sys.database_firewall_rules' does not have a
             <End Role="Sahkoposti" EntitySet="Sahkoposti" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Stud1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -396,6 +397,8 @@ warning 6002: The table/view 'Stud1.sys.database_firewall_rules' does not have a
           <NavigationProperty Name="Opiskelija" Relationship="Self.R_30" FromRole="Login" ToRole="Opiskelija" />
           <NavigationProperty Name="Yritys" Relationship="Self.R_39" FromRole="Login" ToRole="Yritys" />
           <NavigationProperty Name="PaaKayttaja" Relationship="Self.R_42" FromRole="Login" ToRole="PaaKayttaja" />
+          <Property Name="aktivointiKoodi" Type="Guid" />
+          <Property Name="onkoEmailAktivoitu" Type="Boolean" />
         </EntityType>
         <EntityType Name="OmaSisalto">
           <Key>
@@ -784,6 +787,8 @@ warning 6002: The table/view 'Stud1.sys.database_firewall_rules' does not have a
           <EntitySetMapping Name="Login">
             <EntityTypeMapping TypeName="Stud1Model.Login">
               <MappingFragment StoreEntitySet="Login">
+                <ScalarProperty Name="onkoEmailAktivoitu" ColumnName="onkoEmailAktivoitu" />
+                <ScalarProperty Name="aktivointiKoodi" ColumnName="aktivointiKoodi" />
                 <ScalarProperty Name="login_Id" ColumnName="login_Id" />
                 <ScalarProperty Name="kayttajaNimi" ColumnName="kayttajaNimi" />
                 <ScalarProperty Name="salasana" ColumnName="salasana" />

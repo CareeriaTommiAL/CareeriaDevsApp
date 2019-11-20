@@ -1,0 +1,865 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="CareeriaDevAppModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="login_Id" />
+          </Key>
+          <Property Name="login_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="kayttajaNimi" Type="nvarchar" MaxLength="25" />
+          <Property Name="salasana" Type="nvarchar" MaxLength="25" />
+          <Property Name="opiskelija_Id" Type="int" />
+          <Property Name="yritys_Id" Type="int" />
+          <Property Name="paaKayttaja_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="OmaSisalto">
+          <Key>
+            <PropertyRef Name="omaSisalto_Id" />
+          </Key>
+          <Property Name="omaSisalto_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="omatAsetukset" Type="varbinary" MaxLength="1" />
+          <Property Name="omaKuva" Type="varbinary" MaxLength="1" />
+          <Property Name="omaTeksti" Type="varbinary" MaxLength="1" />
+          <Property Name="opiskelija_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="Opiskelija">
+          <Key>
+            <PropertyRef Name="opiskelija_Id" />
+          </Key>
+          <Property Name="opiskelija_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="etunimi" Type="nvarchar" MaxLength="25" />
+          <Property Name="sukunimi" Type="nvarchar" MaxLength="30" />
+          <Property Name="postitoimipaikka_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="PaaKayttaja">
+          <Key>
+            <PropertyRef Name="paaKayttaja_Id" />
+          </Key>
+          <Property Name="paaKayttaja_Id" Type="int" Nullable="false" />
+          <Property Name="nimi" Type="nvarchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="Postitoimipaikka">
+          <Key>
+            <PropertyRef Name="postitoimipaikka_Id" />
+          </Key>
+          <Property Name="postitoimipaikka_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="postinumero" Type="nvarchar" MaxLength="8" />
+          <Property Name="postitoimipaikka" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="PuhelinNumero">
+          <Key>
+            <PropertyRef Name="puhelinNumero_Id" />
+          </Key>
+          <Property Name="puhelinNumero_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="numero" Type="nvarchar" MaxLength="25" />
+          <Property Name="puhelinTyyppi_Id" Type="int" />
+          <Property Name="opiskelija_Id" Type="int" />
+          <Property Name="yritys_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="PuhelinTyyppi">
+          <Key>
+            <PropertyRef Name="puhelinTyyppi_Id" />
+          </Key>
+          <Property Name="puhelinTyyppi_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="kuvaus" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Sahkoposti">
+          <Key>
+            <PropertyRef Name="sahkoposti_Id" />
+          </Key>
+          <Property Name="sahkoposti_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="sahkopostiOsoite" Type="nvarchar" MaxLength="30" />
+          <Property Name="paaKayttaja_Id" Type="int" />
+          <Property Name="yritys_Id" Type="int" />
+          <Property Name="opiskelija_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="Viesti">
+          <Key>
+            <PropertyRef Name="viesti_Id" />
+          </Key>
+          <Property Name="viesti_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="inbox" Type="varbinary" MaxLength="1" />
+          <Property Name="viestiLoki" Type="varbinary" MaxLength="1" />
+          <Property Name="opiskelija_Id" Type="int" />
+          <Property Name="yritys_Id" Type="int" />
+          <Property Name="paaKayttaja_Id" Type="int" />
+        </EntityType>
+        <EntityType Name="Yritys">
+          <Key>
+            <PropertyRef Name="yritys_Id" />
+          </Key>
+          <Property Name="yritys_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="yrityksenNimi" Type="nvarchar" MaxLength="25" />
+          <Property Name="Y_tunnus" Type="nvarchar" MaxLength="20" />
+          <Property Name="lahiosoite" Type="nvarchar" MaxLength="50" />
+          <Property Name="postitoimipaikka_Id" Type="int" />
+        </EntityType>
+        <Association Name="R_11">
+          <End Role="PuhelinTyyppi" Type="Self.PuhelinTyyppi" Multiplicity="0..1" />
+          <End Role="PuhelinNumero" Type="Self.PuhelinNumero" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PuhelinTyyppi">
+              <PropertyRef Name="puhelinTyyppi_Id" />
+            </Principal>
+            <Dependent Role="PuhelinNumero">
+              <PropertyRef Name="puhelinTyyppi_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_27">
+          <End Role="Opiskelija" Type="Self.Opiskelija" Multiplicity="0..1" />
+          <End Role="PuhelinNumero" Type="Self.PuhelinNumero" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Opiskelija">
+              <PropertyRef Name="opiskelija_Id" />
+            </Principal>
+            <Dependent Role="PuhelinNumero">
+              <PropertyRef Name="opiskelija_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_28">
+          <End Role="Yritys" Type="Self.Yritys" Multiplicity="0..1" />
+          <End Role="PuhelinNumero" Type="Self.PuhelinNumero" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Yritys">
+              <PropertyRef Name="yritys_Id" />
+            </Principal>
+            <Dependent Role="PuhelinNumero">
+              <PropertyRef Name="yritys_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_29">
+          <End Role="Opiskelija" Type="Self.Opiskelija" Multiplicity="0..1" />
+          <End Role="OmaSisalto" Type="Self.OmaSisalto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Opiskelija">
+              <PropertyRef Name="opiskelija_Id" />
+            </Principal>
+            <Dependent Role="OmaSisalto">
+              <PropertyRef Name="opiskelija_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_30">
+          <End Role="Opiskelija" Type="Self.Opiskelija" Multiplicity="0..1" />
+          <End Role="Login" Type="Self.Login" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Opiskelija">
+              <PropertyRef Name="opiskelija_Id" />
+            </Principal>
+            <Dependent Role="Login">
+              <PropertyRef Name="opiskelija_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_32">
+          <End Role="Postitoimipaikka" Type="Self.Postitoimipaikka" Multiplicity="0..1" />
+          <End Role="Opiskelija" Type="Self.Opiskelija" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Postitoimipaikka">
+              <PropertyRef Name="postitoimipaikka_Id" />
+            </Principal>
+            <Dependent Role="Opiskelija">
+              <PropertyRef Name="postitoimipaikka_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_35">
+          <End Role="Opiskelija" Type="Self.Opiskelija" Multiplicity="0..1" />
+          <End Role="Viesti" Type="Self.Viesti" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Opiskelija">
+              <PropertyRef Name="opiskelija_Id" />
+            </Principal>
+            <Dependent Role="Viesti">
+              <PropertyRef Name="opiskelija_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_36">
+          <End Role="Yritys" Type="Self.Yritys" Multiplicity="0..1" />
+          <End Role="Viesti" Type="Self.Viesti" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Yritys">
+              <PropertyRef Name="yritys_Id" />
+            </Principal>
+            <Dependent Role="Viesti">
+              <PropertyRef Name="yritys_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_38">
+          <End Role="Postitoimipaikka" Type="Self.Postitoimipaikka" Multiplicity="0..1" />
+          <End Role="Yritys" Type="Self.Yritys" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Postitoimipaikka">
+              <PropertyRef Name="postitoimipaikka_Id" />
+            </Principal>
+            <Dependent Role="Yritys">
+              <PropertyRef Name="postitoimipaikka_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_39">
+          <End Role="Yritys" Type="Self.Yritys" Multiplicity="0..1" />
+          <End Role="Login" Type="Self.Login" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Yritys">
+              <PropertyRef Name="yritys_Id" />
+            </Principal>
+            <Dependent Role="Login">
+              <PropertyRef Name="yritys_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_40">
+          <End Role="PaaKayttaja" Type="Self.PaaKayttaja" Multiplicity="0..1" />
+          <End Role="Viesti" Type="Self.Viesti" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaaKayttaja">
+              <PropertyRef Name="paaKayttaja_Id" />
+            </Principal>
+            <Dependent Role="Viesti">
+              <PropertyRef Name="paaKayttaja_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_41">
+          <End Role="PaaKayttaja" Type="Self.PaaKayttaja" Multiplicity="0..1" />
+          <End Role="Sahkoposti" Type="Self.Sahkoposti" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaaKayttaja">
+              <PropertyRef Name="paaKayttaja_Id" />
+            </Principal>
+            <Dependent Role="Sahkoposti">
+              <PropertyRef Name="paaKayttaja_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_42">
+          <End Role="PaaKayttaja" Type="Self.PaaKayttaja" Multiplicity="0..1" />
+          <End Role="Login" Type="Self.Login" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaaKayttaja">
+              <PropertyRef Name="paaKayttaja_Id" />
+            </Principal>
+            <Dependent Role="Login">
+              <PropertyRef Name="paaKayttaja_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_43">
+          <End Role="Yritys" Type="Self.Yritys" Multiplicity="0..1" />
+          <End Role="Sahkoposti" Type="Self.Sahkoposti" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Yritys">
+              <PropertyRef Name="yritys_Id" />
+            </Principal>
+            <Dependent Role="Sahkoposti">
+              <PropertyRef Name="yritys_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_44">
+          <End Role="Opiskelija" Type="Self.Opiskelija" Multiplicity="0..1" />
+          <End Role="Sahkoposti" Type="Self.Sahkoposti" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Opiskelija">
+              <PropertyRef Name="opiskelija_Id" />
+            </Principal>
+            <Dependent Role="Sahkoposti">
+              <PropertyRef Name="opiskelija_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CareeriaDevAppModelStoreContainer">
+          <EntitySet Name="Login" EntityType="Self.Login" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OmaSisalto" EntityType="Self.OmaSisalto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Opiskelija" EntityType="Self.Opiskelija" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PaaKayttaja" EntityType="Self.PaaKayttaja" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Postitoimipaikka" EntityType="Self.Postitoimipaikka" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PuhelinNumero" EntityType="Self.PuhelinNumero" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PuhelinTyyppi" EntityType="Self.PuhelinTyyppi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sahkoposti" EntityType="Self.Sahkoposti" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Viesti" EntityType="Self.Viesti" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Yritys" EntityType="Self.Yritys" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="R_11" Association="Self.R_11">
+            <End Role="PuhelinTyyppi" EntitySet="PuhelinTyyppi" />
+            <End Role="PuhelinNumero" EntitySet="PuhelinNumero" />
+          </AssociationSet>
+          <AssociationSet Name="R_27" Association="Self.R_27">
+            <End Role="Opiskelija" EntitySet="Opiskelija" />
+            <End Role="PuhelinNumero" EntitySet="PuhelinNumero" />
+          </AssociationSet>
+          <AssociationSet Name="R_28" Association="Self.R_28">
+            <End Role="Yritys" EntitySet="Yritys" />
+            <End Role="PuhelinNumero" EntitySet="PuhelinNumero" />
+          </AssociationSet>
+          <AssociationSet Name="R_29" Association="Self.R_29">
+            <End Role="Opiskelija" EntitySet="Opiskelija" />
+            <End Role="OmaSisalto" EntitySet="OmaSisalto" />
+          </AssociationSet>
+          <AssociationSet Name="R_30" Association="Self.R_30">
+            <End Role="Opiskelija" EntitySet="Opiskelija" />
+            <End Role="Login" EntitySet="Login" />
+          </AssociationSet>
+          <AssociationSet Name="R_32" Association="Self.R_32">
+            <End Role="Postitoimipaikka" EntitySet="Postitoimipaikka" />
+            <End Role="Opiskelija" EntitySet="Opiskelija" />
+          </AssociationSet>
+          <AssociationSet Name="R_35" Association="Self.R_35">
+            <End Role="Opiskelija" EntitySet="Opiskelija" />
+            <End Role="Viesti" EntitySet="Viesti" />
+          </AssociationSet>
+          <AssociationSet Name="R_36" Association="Self.R_36">
+            <End Role="Yritys" EntitySet="Yritys" />
+            <End Role="Viesti" EntitySet="Viesti" />
+          </AssociationSet>
+          <AssociationSet Name="R_38" Association="Self.R_38">
+            <End Role="Postitoimipaikka" EntitySet="Postitoimipaikka" />
+            <End Role="Yritys" EntitySet="Yritys" />
+          </AssociationSet>
+          <AssociationSet Name="R_39" Association="Self.R_39">
+            <End Role="Yritys" EntitySet="Yritys" />
+            <End Role="Login" EntitySet="Login" />
+          </AssociationSet>
+          <AssociationSet Name="R_40" Association="Self.R_40">
+            <End Role="PaaKayttaja" EntitySet="PaaKayttaja" />
+            <End Role="Viesti" EntitySet="Viesti" />
+          </AssociationSet>
+          <AssociationSet Name="R_41" Association="Self.R_41">
+            <End Role="PaaKayttaja" EntitySet="PaaKayttaja" />
+            <End Role="Sahkoposti" EntitySet="Sahkoposti" />
+          </AssociationSet>
+          <AssociationSet Name="R_42" Association="Self.R_42">
+            <End Role="PaaKayttaja" EntitySet="PaaKayttaja" />
+            <End Role="Login" EntitySet="Login" />
+          </AssociationSet>
+          <AssociationSet Name="R_43" Association="Self.R_43">
+            <End Role="Yritys" EntitySet="Yritys" />
+            <End Role="Sahkoposti" EntitySet="Sahkoposti" />
+          </AssociationSet>
+          <AssociationSet Name="R_44" Association="Self.R_44">
+            <End Role="Opiskelija" EntitySet="Opiskelija" />
+            <End Role="Sahkoposti" EntitySet="Sahkoposti" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CareeriaDevAppModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Login">
+          <Key>
+            <PropertyRef Name="login_Id" />
+          </Key>
+          <Property Name="login_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="kayttajaNimi" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="salasana" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="opiskelija_Id" Type="Int32" />
+          <Property Name="yritys_Id" Type="Int32" />
+          <Property Name="paaKayttaja_Id" Type="Int32" />
+          <NavigationProperty Name="Opiskelija" Relationship="Self.R_30" FromRole="Login" ToRole="Opiskelija" />
+          <NavigationProperty Name="Yritys" Relationship="Self.R_39" FromRole="Login" ToRole="Yritys" />
+          <NavigationProperty Name="PaaKayttaja" Relationship="Self.R_42" FromRole="Login" ToRole="PaaKayttaja" />
+        </EntityType>
+        <EntityType Name="OmaSisalto">
+          <Key>
+            <PropertyRef Name="omaSisalto_Id" />
+          </Key>
+          <Property Name="omaSisalto_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="omatAsetukset" Type="Binary" MaxLength="1" FixedLength="false" />
+          <Property Name="omaKuva" Type="Binary" MaxLength="1" FixedLength="false" />
+          <Property Name="omaTeksti" Type="Binary" MaxLength="1" FixedLength="false" />
+          <Property Name="opiskelija_Id" Type="Int32" />
+          <NavigationProperty Name="Opiskelija" Relationship="Self.R_29" FromRole="OmaSisalto" ToRole="Opiskelija" />
+        </EntityType>
+        <EntityType Name="Opiskelija">
+          <Key>
+            <PropertyRef Name="opiskelija_Id" />
+          </Key>
+          <Property Name="opiskelija_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="etunimi" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="sukunimi" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="postitoimipaikka_Id" Type="Int32" />
+          <NavigationProperty Name="Login" Relationship="Self.R_30" FromRole="Opiskelija" ToRole="Login" />
+          <NavigationProperty Name="OmaSisalto" Relationship="Self.R_29" FromRole="Opiskelija" ToRole="OmaSisalto" />
+          <NavigationProperty Name="PuhelinNumero" Relationship="Self.R_27" FromRole="Opiskelija" ToRole="PuhelinNumero" />
+          <NavigationProperty Name="Postitoimipaikka" Relationship="Self.R_32" FromRole="Opiskelija" ToRole="Postitoimipaikka" />
+          <NavigationProperty Name="Viesti" Relationship="Self.R_35" FromRole="Opiskelija" ToRole="Viesti" />
+          <NavigationProperty Name="Sahkoposti" Relationship="Self.R_44" FromRole="Opiskelija" ToRole="Sahkoposti" />
+        </EntityType>
+        <EntityType Name="PaaKayttaja">
+          <Key>
+            <PropertyRef Name="paaKayttaja_Id" />
+          </Key>
+          <Property Name="paaKayttaja_Id" Type="Int32" Nullable="false" />
+          <Property Name="nimi" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Login" Relationship="Self.R_42" FromRole="PaaKayttaja" ToRole="Login" />
+          <NavigationProperty Name="Viesti" Relationship="Self.R_40" FromRole="PaaKayttaja" ToRole="Viesti" />
+          <NavigationProperty Name="Sahkoposti" Relationship="Self.R_41" FromRole="PaaKayttaja" ToRole="Sahkoposti" />
+        </EntityType>
+        <EntityType Name="Postitoimipaikka">
+          <Key>
+            <PropertyRef Name="postitoimipaikka_Id" />
+          </Key>
+          <Property Name="postitoimipaikka_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="postinumero" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <Property Name="postitoimipaikka1" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Opiskelija" Relationship="Self.R_32" FromRole="Postitoimipaikka" ToRole="Opiskelija" />
+          <NavigationProperty Name="Yritys" Relationship="Self.R_38" FromRole="Postitoimipaikka" ToRole="Yritys" />
+        </EntityType>
+        <EntityType Name="PuhelinNumero">
+          <Key>
+            <PropertyRef Name="puhelinNumero_Id" />
+          </Key>
+          <Property Name="puhelinNumero_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="numero" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="puhelinTyyppi_Id" Type="Int32" />
+          <Property Name="opiskelija_Id" Type="Int32" />
+          <Property Name="yritys_Id" Type="Int32" />
+          <NavigationProperty Name="Opiskelija" Relationship="Self.R_27" FromRole="PuhelinNumero" ToRole="Opiskelija" />
+          <NavigationProperty Name="PuhelinTyyppi" Relationship="Self.R_11" FromRole="PuhelinNumero" ToRole="PuhelinTyyppi" />
+          <NavigationProperty Name="Yritys" Relationship="Self.R_28" FromRole="PuhelinNumero" ToRole="Yritys" />
+        </EntityType>
+        <EntityType Name="PuhelinTyyppi">
+          <Key>
+            <PropertyRef Name="puhelinTyyppi_Id" />
+          </Key>
+          <Property Name="puhelinTyyppi_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="kuvaus" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="PuhelinNumero" Relationship="Self.R_11" FromRole="PuhelinTyyppi" ToRole="PuhelinNumero" />
+        </EntityType>
+        <EntityType Name="Sahkoposti">
+          <Key>
+            <PropertyRef Name="sahkoposti_Id" />
+          </Key>
+          <Property Name="sahkoposti_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="sahkopostiOsoite" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="paaKayttaja_Id" Type="Int32" />
+          <Property Name="yritys_Id" Type="Int32" />
+          <Property Name="opiskelija_Id" Type="Int32" />
+          <NavigationProperty Name="Opiskelija" Relationship="Self.R_44" FromRole="Sahkoposti" ToRole="Opiskelija" />
+          <NavigationProperty Name="PaaKayttaja" Relationship="Self.R_41" FromRole="Sahkoposti" ToRole="PaaKayttaja" />
+          <NavigationProperty Name="Yritys" Relationship="Self.R_43" FromRole="Sahkoposti" ToRole="Yritys" />
+        </EntityType>
+        <EntityType Name="Viesti">
+          <Key>
+            <PropertyRef Name="viesti_Id" />
+          </Key>
+          <Property Name="viesti_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="inbox" Type="Binary" MaxLength="1" FixedLength="false" />
+          <Property Name="viestiLoki" Type="Binary" MaxLength="1" FixedLength="false" />
+          <Property Name="opiskelija_Id" Type="Int32" />
+          <Property Name="yritys_Id" Type="Int32" />
+          <Property Name="paaKayttaja_Id" Type="Int32" />
+          <NavigationProperty Name="Opiskelija" Relationship="Self.R_35" FromRole="Viesti" ToRole="Opiskelija" />
+          <NavigationProperty Name="PaaKayttaja" Relationship="Self.R_40" FromRole="Viesti" ToRole="PaaKayttaja" />
+          <NavigationProperty Name="Yritys" Relationship="Self.R_36" FromRole="Viesti" ToRole="Yritys" />
+        </EntityType>
+        <EntityType Name="Yritys">
+          <Key>
+            <PropertyRef Name="yritys_Id" />
+          </Key>
+          <Property Name="yritys_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="yrityksenNimi" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="Y_tunnus" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="lahiosoite" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="postitoimipaikka_Id" Type="Int32" />
+          <NavigationProperty Name="Login" Relationship="Self.R_39" FromRole="Yritys" ToRole="Login" />
+          <NavigationProperty Name="Postitoimipaikka" Relationship="Self.R_38" FromRole="Yritys" ToRole="Postitoimipaikka" />
+          <NavigationProperty Name="PuhelinNumero" Relationship="Self.R_28" FromRole="Yritys" ToRole="PuhelinNumero" />
+          <NavigationProperty Name="Sahkoposti" Relationship="Self.R_43" FromRole="Yritys" ToRole="Sahkoposti" />
+          <NavigationProperty Name="Viesti" Relationship="Self.R_36" FromRole="Yritys" ToRole="Viesti" />
+        </EntityType>
+        <Association Name="R_30">
+          <End Role="Opiskelija" Type="Self.Opiskelija" Multiplicity="0..1" />
+          <End Role="Login" Type="Self.Login" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Opiskelija">
+              <PropertyRef Name="opiskelija_Id" />
+            </Principal>
+            <Dependent Role="Login">
+              <PropertyRef Name="opiskelija_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_39">
+          <End Role="Yritys" Type="Self.Yritys" Multiplicity="0..1" />
+          <End Role="Login" Type="Self.Login" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Yritys">
+              <PropertyRef Name="yritys_Id" />
+            </Principal>
+            <Dependent Role="Login">
+              <PropertyRef Name="yritys_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_42">
+          <End Role="PaaKayttaja" Type="Self.PaaKayttaja" Multiplicity="0..1" />
+          <End Role="Login" Type="Self.Login" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaaKayttaja">
+              <PropertyRef Name="paaKayttaja_Id" />
+            </Principal>
+            <Dependent Role="Login">
+              <PropertyRef Name="paaKayttaja_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_29">
+          <End Role="Opiskelija" Type="Self.Opiskelija" Multiplicity="0..1" />
+          <End Role="OmaSisalto" Type="Self.OmaSisalto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Opiskelija">
+              <PropertyRef Name="opiskelija_Id" />
+            </Principal>
+            <Dependent Role="OmaSisalto">
+              <PropertyRef Name="opiskelija_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_27">
+          <End Role="Opiskelija" Type="Self.Opiskelija" Multiplicity="0..1" />
+          <End Role="PuhelinNumero" Type="Self.PuhelinNumero" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Opiskelija">
+              <PropertyRef Name="opiskelija_Id" />
+            </Principal>
+            <Dependent Role="PuhelinNumero">
+              <PropertyRef Name="opiskelija_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_32">
+          <End Role="Postitoimipaikka" Type="Self.Postitoimipaikka" Multiplicity="0..1" />
+          <End Role="Opiskelija" Type="Self.Opiskelija" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Postitoimipaikka">
+              <PropertyRef Name="postitoimipaikka_Id" />
+            </Principal>
+            <Dependent Role="Opiskelija">
+              <PropertyRef Name="postitoimipaikka_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_35">
+          <End Role="Opiskelija" Type="Self.Opiskelija" Multiplicity="0..1" />
+          <End Role="Viesti" Type="Self.Viesti" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Opiskelija">
+              <PropertyRef Name="opiskelija_Id" />
+            </Principal>
+            <Dependent Role="Viesti">
+              <PropertyRef Name="opiskelija_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_44">
+          <End Role="Opiskelija" Type="Self.Opiskelija" Multiplicity="0..1" />
+          <End Role="Sahkoposti" Type="Self.Sahkoposti" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Opiskelija">
+              <PropertyRef Name="opiskelija_Id" />
+            </Principal>
+            <Dependent Role="Sahkoposti">
+              <PropertyRef Name="opiskelija_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_40">
+          <End Role="PaaKayttaja" Type="Self.PaaKayttaja" Multiplicity="0..1" />
+          <End Role="Viesti" Type="Self.Viesti" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaaKayttaja">
+              <PropertyRef Name="paaKayttaja_Id" />
+            </Principal>
+            <Dependent Role="Viesti">
+              <PropertyRef Name="paaKayttaja_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_41">
+          <End Role="PaaKayttaja" Type="Self.PaaKayttaja" Multiplicity="0..1" />
+          <End Role="Sahkoposti" Type="Self.Sahkoposti" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PaaKayttaja">
+              <PropertyRef Name="paaKayttaja_Id" />
+            </Principal>
+            <Dependent Role="Sahkoposti">
+              <PropertyRef Name="paaKayttaja_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_38">
+          <End Role="Postitoimipaikka" Type="Self.Postitoimipaikka" Multiplicity="0..1" />
+          <End Role="Yritys" Type="Self.Yritys" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Postitoimipaikka">
+              <PropertyRef Name="postitoimipaikka_Id" />
+            </Principal>
+            <Dependent Role="Yritys">
+              <PropertyRef Name="postitoimipaikka_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_11">
+          <End Role="PuhelinTyyppi" Type="Self.PuhelinTyyppi" Multiplicity="0..1" />
+          <End Role="PuhelinNumero" Type="Self.PuhelinNumero" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PuhelinTyyppi">
+              <PropertyRef Name="puhelinTyyppi_Id" />
+            </Principal>
+            <Dependent Role="PuhelinNumero">
+              <PropertyRef Name="puhelinTyyppi_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_28">
+          <End Role="Yritys" Type="Self.Yritys" Multiplicity="0..1" />
+          <End Role="PuhelinNumero" Type="Self.PuhelinNumero" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Yritys">
+              <PropertyRef Name="yritys_Id" />
+            </Principal>
+            <Dependent Role="PuhelinNumero">
+              <PropertyRef Name="yritys_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_43">
+          <End Role="Yritys" Type="Self.Yritys" Multiplicity="0..1" />
+          <End Role="Sahkoposti" Type="Self.Sahkoposti" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Yritys">
+              <PropertyRef Name="yritys_Id" />
+            </Principal>
+            <Dependent Role="Sahkoposti">
+              <PropertyRef Name="yritys_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="R_36">
+          <End Role="Yritys" Type="Self.Yritys" Multiplicity="0..1" />
+          <End Role="Viesti" Type="Self.Viesti" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Yritys">
+              <PropertyRef Name="yritys_Id" />
+            </Principal>
+            <Dependent Role="Viesti">
+              <PropertyRef Name="yritys_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CareeriaDevAppEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Login" EntityType="Self.Login" />
+          <EntitySet Name="OmaSisalto" EntityType="Self.OmaSisalto" />
+          <EntitySet Name="Opiskelija" EntityType="Self.Opiskelija" />
+          <EntitySet Name="PaaKayttaja" EntityType="Self.PaaKayttaja" />
+          <EntitySet Name="Postitoimipaikka" EntityType="Self.Postitoimipaikka" />
+          <EntitySet Name="PuhelinNumero" EntityType="Self.PuhelinNumero" />
+          <EntitySet Name="PuhelinTyyppi" EntityType="Self.PuhelinTyyppi" />
+          <EntitySet Name="Sahkoposti" EntityType="Self.Sahkoposti" />
+          <EntitySet Name="Viesti" EntityType="Self.Viesti" />
+          <EntitySet Name="Yritys" EntityType="Self.Yritys" />
+          <AssociationSet Name="R_30" Association="Self.R_30">
+            <End Role="Opiskelija" EntitySet="Opiskelija" />
+            <End Role="Login" EntitySet="Login" />
+          </AssociationSet>
+          <AssociationSet Name="R_39" Association="Self.R_39">
+            <End Role="Yritys" EntitySet="Yritys" />
+            <End Role="Login" EntitySet="Login" />
+          </AssociationSet>
+          <AssociationSet Name="R_42" Association="Self.R_42">
+            <End Role="PaaKayttaja" EntitySet="PaaKayttaja" />
+            <End Role="Login" EntitySet="Login" />
+          </AssociationSet>
+          <AssociationSet Name="R_29" Association="Self.R_29">
+            <End Role="Opiskelija" EntitySet="Opiskelija" />
+            <End Role="OmaSisalto" EntitySet="OmaSisalto" />
+          </AssociationSet>
+          <AssociationSet Name="R_27" Association="Self.R_27">
+            <End Role="Opiskelija" EntitySet="Opiskelija" />
+            <End Role="PuhelinNumero" EntitySet="PuhelinNumero" />
+          </AssociationSet>
+          <AssociationSet Name="R_32" Association="Self.R_32">
+            <End Role="Postitoimipaikka" EntitySet="Postitoimipaikka" />
+            <End Role="Opiskelija" EntitySet="Opiskelija" />
+          </AssociationSet>
+          <AssociationSet Name="R_35" Association="Self.R_35">
+            <End Role="Opiskelija" EntitySet="Opiskelija" />
+            <End Role="Viesti" EntitySet="Viesti" />
+          </AssociationSet>
+          <AssociationSet Name="R_44" Association="Self.R_44">
+            <End Role="Opiskelija" EntitySet="Opiskelija" />
+            <End Role="Sahkoposti" EntitySet="Sahkoposti" />
+          </AssociationSet>
+          <AssociationSet Name="R_40" Association="Self.R_40">
+            <End Role="PaaKayttaja" EntitySet="PaaKayttaja" />
+            <End Role="Viesti" EntitySet="Viesti" />
+          </AssociationSet>
+          <AssociationSet Name="R_41" Association="Self.R_41">
+            <End Role="PaaKayttaja" EntitySet="PaaKayttaja" />
+            <End Role="Sahkoposti" EntitySet="Sahkoposti" />
+          </AssociationSet>
+          <AssociationSet Name="R_38" Association="Self.R_38">
+            <End Role="Postitoimipaikka" EntitySet="Postitoimipaikka" />
+            <End Role="Yritys" EntitySet="Yritys" />
+          </AssociationSet>
+          <AssociationSet Name="R_11" Association="Self.R_11">
+            <End Role="PuhelinTyyppi" EntitySet="PuhelinTyyppi" />
+            <End Role="PuhelinNumero" EntitySet="PuhelinNumero" />
+          </AssociationSet>
+          <AssociationSet Name="R_28" Association="Self.R_28">
+            <End Role="Yritys" EntitySet="Yritys" />
+            <End Role="PuhelinNumero" EntitySet="PuhelinNumero" />
+          </AssociationSet>
+          <AssociationSet Name="R_43" Association="Self.R_43">
+            <End Role="Yritys" EntitySet="Yritys" />
+            <End Role="Sahkoposti" EntitySet="Sahkoposti" />
+          </AssociationSet>
+          <AssociationSet Name="R_36" Association="Self.R_36">
+            <End Role="Yritys" EntitySet="Yritys" />
+            <End Role="Viesti" EntitySet="Viesti" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CareeriaDevAppModelStoreContainer" CdmEntityContainer="CareeriaDevAppEntities">
+          <EntitySetMapping Name="Login">
+            <EntityTypeMapping TypeName="CareeriaDevAppModel.Login">
+              <MappingFragment StoreEntitySet="Login">
+                <ScalarProperty Name="login_Id" ColumnName="login_Id" />
+                <ScalarProperty Name="kayttajaNimi" ColumnName="kayttajaNimi" />
+                <ScalarProperty Name="salasana" ColumnName="salasana" />
+                <ScalarProperty Name="opiskelija_Id" ColumnName="opiskelija_Id" />
+                <ScalarProperty Name="yritys_Id" ColumnName="yritys_Id" />
+                <ScalarProperty Name="paaKayttaja_Id" ColumnName="paaKayttaja_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OmaSisalto">
+            <EntityTypeMapping TypeName="CareeriaDevAppModel.OmaSisalto">
+              <MappingFragment StoreEntitySet="OmaSisalto">
+                <ScalarProperty Name="omaSisalto_Id" ColumnName="omaSisalto_Id" />
+                <ScalarProperty Name="omatAsetukset" ColumnName="omatAsetukset" />
+                <ScalarProperty Name="omaKuva" ColumnName="omaKuva" />
+                <ScalarProperty Name="omaTeksti" ColumnName="omaTeksti" />
+                <ScalarProperty Name="opiskelija_Id" ColumnName="opiskelija_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Opiskelija">
+            <EntityTypeMapping TypeName="CareeriaDevAppModel.Opiskelija">
+              <MappingFragment StoreEntitySet="Opiskelija">
+                <ScalarProperty Name="opiskelija_Id" ColumnName="opiskelija_Id" />
+                <ScalarProperty Name="etunimi" ColumnName="etunimi" />
+                <ScalarProperty Name="sukunimi" ColumnName="sukunimi" />
+                <ScalarProperty Name="postitoimipaikka_Id" ColumnName="postitoimipaikka_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PaaKayttaja">
+            <EntityTypeMapping TypeName="CareeriaDevAppModel.PaaKayttaja">
+              <MappingFragment StoreEntitySet="PaaKayttaja">
+                <ScalarProperty Name="paaKayttaja_Id" ColumnName="paaKayttaja_Id" />
+                <ScalarProperty Name="nimi" ColumnName="nimi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Postitoimipaikka">
+            <EntityTypeMapping TypeName="CareeriaDevAppModel.Postitoimipaikka">
+              <MappingFragment StoreEntitySet="Postitoimipaikka">
+                <ScalarProperty Name="postitoimipaikka_Id" ColumnName="postitoimipaikka_Id" />
+                <ScalarProperty Name="postinumero" ColumnName="postinumero" />
+                <ScalarProperty Name="postitoimipaikka1" ColumnName="postitoimipaikka" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PuhelinNumero">
+            <EntityTypeMapping TypeName="CareeriaDevAppModel.PuhelinNumero">
+              <MappingFragment StoreEntitySet="PuhelinNumero">
+                <ScalarProperty Name="puhelinNumero_Id" ColumnName="puhelinNumero_Id" />
+                <ScalarProperty Name="numero" ColumnName="numero" />
+                <ScalarProperty Name="puhelinTyyppi_Id" ColumnName="puhelinTyyppi_Id" />
+                <ScalarProperty Name="opiskelija_Id" ColumnName="opiskelija_Id" />
+                <ScalarProperty Name="yritys_Id" ColumnName="yritys_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PuhelinTyyppi">
+            <EntityTypeMapping TypeName="CareeriaDevAppModel.PuhelinTyyppi">
+              <MappingFragment StoreEntitySet="PuhelinTyyppi">
+                <ScalarProperty Name="puhelinTyyppi_Id" ColumnName="puhelinTyyppi_Id" />
+                <ScalarProperty Name="kuvaus" ColumnName="kuvaus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sahkoposti">
+            <EntityTypeMapping TypeName="CareeriaDevAppModel.Sahkoposti">
+              <MappingFragment StoreEntitySet="Sahkoposti">
+                <ScalarProperty Name="sahkoposti_Id" ColumnName="sahkoposti_Id" />
+                <ScalarProperty Name="sahkopostiOsoite" ColumnName="sahkopostiOsoite" />
+                <ScalarProperty Name="paaKayttaja_Id" ColumnName="paaKayttaja_Id" />
+                <ScalarProperty Name="yritys_Id" ColumnName="yritys_Id" />
+                <ScalarProperty Name="opiskelija_Id" ColumnName="opiskelija_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Viesti">
+            <EntityTypeMapping TypeName="CareeriaDevAppModel.Viesti">
+              <MappingFragment StoreEntitySet="Viesti">
+                <ScalarProperty Name="viesti_Id" ColumnName="viesti_Id" />
+                <ScalarProperty Name="inbox" ColumnName="inbox" />
+                <ScalarProperty Name="viestiLoki" ColumnName="viestiLoki" />
+                <ScalarProperty Name="opiskelija_Id" ColumnName="opiskelija_Id" />
+                <ScalarProperty Name="yritys_Id" ColumnName="yritys_Id" />
+                <ScalarProperty Name="paaKayttaja_Id" ColumnName="paaKayttaja_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Yritys">
+            <EntityTypeMapping TypeName="CareeriaDevAppModel.Yritys">
+              <MappingFragment StoreEntitySet="Yritys">
+                <ScalarProperty Name="yritys_Id" ColumnName="yritys_Id" />
+                <ScalarProperty Name="yrityksenNimi" ColumnName="yrityksenNimi" />
+                <ScalarProperty Name="Y_tunnus" ColumnName="Y_tunnus" />
+                <ScalarProperty Name="lahiosoite" ColumnName="lahiosoite" />
+                <ScalarProperty Name="postitoimipaikka_Id" ColumnName="postitoimipaikka_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

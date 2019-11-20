@@ -12,7 +12,8 @@
                 <span>— Tee profiili ja tule löydetyksi</span>
                 <p>
                     Rekisteröidy työnhakijaksi
-                    <button type="button" class="btn btn-yellow">Tästä</button>
+                    @*<button type="button" class="btn btn-yellow">Tästä</button>*@
+                    <input type="button" class="btn btn-yellow" value="Tästä" onclick='window.location.href = "@Url.Action("OppilasRekisterointi", "Logins", routeValues: null)"'/>
                 </p>
             </div>
             <div class="col d-flex align-items-center">
@@ -38,7 +39,8 @@
                 <p>Rekisteröidy työnantajaksi</p>
                 <p>
                     Rekisteröidy työnhakijaksi
-                    <button type="button" class="btn btn-yellow">Tästä</button>
+                    @*<button type="button" class="btn btn-yellow">Tästä</button>*@
+                    <input type="button" class="btn btn-yellow" value="Tästä" onclick='window.location.href = "@Url.Action("YritysRekisterointi", "Logins", routeValues: null)"' />
                 </p>
             </div>
             <div class="students-col col d-flex flex-column justify-content-center align-items-center">
