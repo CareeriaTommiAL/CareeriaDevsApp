@@ -354,6 +354,17 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\avatar.jpg" />
+    <Content Include="Images\careeria-logo.png" />
+    <Content Include="Images\footerbg.png" />
+    <Content Include="Images\ohjelmistoyrittajat-logo.png" />
+    <Content Include="Images\pallo-1.png" />
+    <Content Include="Images\pallo-2.png" />
+    <Content Include="Images\pallo-3.png" />
+    <Content Include="Images\pallo-4.png" />
+    <Content Include="Images\tyonantajille.jpg" />
+    <Content Include="Images\tyonhakijoille.jpg" />
+    <Content Include="Images\vapaapaikka.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />

@@ -15,11 +15,11 @@
             @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
 
             @*<a class="navbar-brand" href="#">
-                <img src="https://getbootstrap.com/docs/4.3/assets/brand/bootstrap-solid.svg"
-                     width="30"
-                     height="30"
-                     alt="" />
-            </a>*@
+                    <img src="https://getbootstrap.com/docs/4.3/assets/brand/bootstrap-solid.svg"
+                         width="30"
+                         height="30"
+                         alt="" />
+                </a>*@
 
             <button class="navbar-toggler"
                     type="button"
@@ -54,26 +54,30 @@
 
 
     @*<div class="navbar navbar-expand-lg navbar-light" style="background-color: #fff;">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    </ul>
+                </div>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>
-            </div>
-        </div>
-    </div>*@
+        </div>*@
 
-
+    <!--LOGIN START-->
+    <a class="" href="Home/Login">Kirjaudu sisään</a><br />
+    Olet @Session["LoggedStatus"]<br />
+    <a class="" href="/Home/Logout">Kirjaudu ulos</a><br />
+    <!--LOGIN END-->
     @RenderBody()
 
 
