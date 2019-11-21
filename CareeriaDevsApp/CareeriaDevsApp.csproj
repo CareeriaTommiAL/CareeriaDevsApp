@@ -355,6 +355,10 @@
     <Content Include="Content\Images\careeria-logo.png" />
     <Content Include="Content\Images\footerbg.png" />
     <Content Include="Content\Images\ohjelmistoyrittajat-logo.png" />
+    <Content Include="Content\Images\pallo-1.png" />
+    <Content Include="Content\Images\pallo-2.png" />
+    <Content Include="Content\Images\pallo-3.png" />
+    <Content Include="Content\Images\pallo-4.png" />
     <Content Include="Content\Images\tyonantajille.jpg" />
     <Content Include="Content\Images\tyonhakijoille.jpg" />
     <Content Include="Content\Images\vapaapaikka.png" />
