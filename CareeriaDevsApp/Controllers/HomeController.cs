@@ -12,17 +12,6 @@ namespace CareeriaDevsApp.Controllers
     {
         public ActionResult Index()
         {
-            //login tiedot näkyville
-            if (Session["Username"] == null)
-            {
-                Session["LoggedStatus"] = "uloskirjautuneena";
-            }
-            else
-            {
-                Session["LoggedStatus"] = "sisäänkirjautuneena";
-
-            }
-
             return View();
         }
 
@@ -30,24 +19,6 @@ namespace CareeriaDevsApp.Controllers
         {
             return View();
         }
-
-        //**********************************************************************************************************
-        //tämän joutuu lisäämään joka controlleriin erikseen, jotta saadaan näkyviin ja jotta se toimisi oikein
-        /*
-         * 
-            if (Session["Username"] == null)
-            {
-                return RedirectToAction("login", "home");
-            }
-            else
-            {
-                Session["LoggedStatus"] = "in";
-                return View();
-            }
-
-         */
-        //**********************************************************************************************************
-
 
         public ActionResult About()
         {
@@ -68,44 +39,6 @@ namespace CareeriaDevsApp.Controllers
         {
             return View();
         }
-
-        [HttpPost]
-        public ActionResult Authorize(Login LoginModeli)
-        {
-            CareeriaDevsApp.Stud1Entities db = new CareeriaDevsApp.Stud1Entities();
-            //Haetaan käyttäjän/Loginin tiedot annetuilla tunnustiedoilla tietokannasta LINQ -kyselyllä
-            var LoggedUser = db.Login.SingleOrDefault(x => x.kayttajaNimi == LoginModeli.kayttajaNimi && x.salasana == LoginModeli.salasana);
-            if (LoggedUser != null)
-            {
-                ViewBag.LoginMessage = "Sisäänkirjautuminen onnistui";
-                Session["LoggedStatus"] = "sisäänkirjautuneena";
-                Session["Username"] = LoggedUser.kayttajaNimi;
-                if (LoggedUser.opiskelija_Id != null)
-                {
-                    System.Diagnostics.Debug.WriteLine("tämä käyttäjä on opiskelija");
-                }
-                if (LoggedUser.yritys_Id != null)
-                {
-                    System.Diagnostics.Debug.WriteLine("tämä käyttäjä on yritys");
-                }
-                return RedirectToAction("Index", "Home"); //Tässä määritellään mihin onnistunut kirjautuminen johtaa
-            }
-            else
-            {
-                ViewBag.LoginMessage = "Kirjautuminen epäonnistui";
-                Session["LoggedStatus"] = "uloskirjautuneena";
-                //LoginModel.LoginVirhe = "Tuntematon käyttäjänimi tai salasana.";
-                return View("Home", LoginModeli);
-            }
-        }
-        public ActionResult LogOut()
-        {
-            Session.Abandon();
-            ViewBag.LoggedStatus = "uloskirjautuneena";
-            return RedirectToAction("Index", "Home"); //Uloskirjautumisen jälkeen pääsivulle
-        }
-
-
 
     }
 }
