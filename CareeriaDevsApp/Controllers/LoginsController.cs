@@ -305,7 +305,7 @@ namespace CareeriaDevsApp.Controllers
                 ////salasanan tarkastus user.cs -tiedostosta (en tiedä miten toimii)
                 //confirm.ConfirmPassword = Crypto.Hash(confirm.ConfirmPassword); //
                 //#endregion
-                //yriKirjautuminen.onkoEmailAktivoitu = true;//muutettu trueksi koska helpompi kehittäessä...
+                yriKirjautuminen.onkoEmailAktivoitu = true;//muutettu trueksi koska helpompi kehittäessä...
 
 
                 #region Save to Database

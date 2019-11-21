@@ -12,10 +12,12 @@ namespace CareeriaDevsApp.Models
 
         [Display(Name = "Etunimi")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Etunimi puuttuu")]
+        [RegularExpression(@"^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{1,}$", ErrorMessage = "Syötä kelvollinen etunimi")]
         public string etunimi { get; set; }
 
         [Display(Name = "Sukunimi")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Sukunimi puuttuu")]
+        [RegularExpression(@"^[\w'\-,.][^0-9_!¡?÷?¿/\\+=@#$%ˆ&*(){}|~<>;:[\]]{1,}$", ErrorMessage = "Syötä kelvollinen sukunimi")]
         public string sukunimi { get; set; }
         public Nullable<int> postitoimipaikka_Id { get; set; }
 
