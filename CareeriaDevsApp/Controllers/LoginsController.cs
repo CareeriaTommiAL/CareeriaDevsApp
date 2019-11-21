@@ -163,6 +163,8 @@ namespace CareeriaDevsApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
 
+
+        //OppilasRekisterointi.cshtml käyttää Tuple -määritystä modeleihin(luokkiin) kirjoittamista varten ja ne ovar array -muodossa(Item1,Item2,Item3 jne.)
         //Määritellään OppilasRekisterointi.cshtml syötettyjen tietojen tallennuspaikka (luokkaan)...
         public ActionResult OppilasRekisterointi(
             [Bind(Prefix = "Item1")] LoginModel oppkirjautuminen,
@@ -178,8 +180,6 @@ namespace CareeriaDevsApp.Controllers
             {
 
                 #region //Email already Exist 
-
-
                 //Login oppTarkastus = new Login();
                 var isExist = IsEmailExist(oppkirjautuminen.kayttajaNimi);
                 if (isExist)
