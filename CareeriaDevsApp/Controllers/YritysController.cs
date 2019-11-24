@@ -115,6 +115,20 @@ namespace CareeriaDevsApp.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Yritys yritys = db.Yritys.Find(id);
+            var poistettavaYritys = from l in db.Login where l.yritys_Id == id select l; //Hakee login taulusta poistettavan yrityksen loginin
+
+            foreach (var l in poistettavaYritys)
+            {
+                db.Login.Remove(l);  //Poistaa yrityksen rivin login talulusta yritys_id -perusteella
+            }
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return HttpNotFound();
+            }
             db.Yritys.Remove(yritys);
             db.SaveChanges();
             return RedirectToAction("Index");

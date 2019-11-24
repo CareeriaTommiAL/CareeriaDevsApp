@@ -4,24 +4,24 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Yritykset</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Luo uusi", "Create")
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.yrityksenNimi)
+            Yrityksen nimi
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Y_tunnus)
+            Y-tunnus
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.lahiosoite)
+            Lähiosoite
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Postitoimipaikka.postinumero)
+            Paikkakunta
         </th>
         <th></th>
     </tr>
@@ -38,12 +38,12 @@
             @Html.DisplayFor(modelItem => item.lahiosoite)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Postitoimipaikka.postinumero)
+            @Html.DisplayFor(modelItem => item.Postitoimipaikka.postitoimipaikka1)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.yritys_Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.yritys_Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.yritys_Id })
+            @Html.ActionLink("Muokkaa", "Edit", new { id=item.yritys_Id }) |
+            @*@Html.ActionLink("Details", "Details", new { id=item.yritys_Id }) | *@
+            @Html.ActionLink("Poista", "Delete", new { id=item.yritys_Id })
         </td>
     </tr>
 }

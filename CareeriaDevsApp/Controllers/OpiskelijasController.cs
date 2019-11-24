@@ -50,14 +50,15 @@ namespace CareeriaDevsApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "opiskelija_Id,etunimi,sukunimi,postitoimipaikka_Id")] Opiskelija opiskelija)
         {
+       
             if (ModelState.IsValid)
             {
                 db.Opiskelija.Add(opiskelija);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
-            ViewBag.postitoimipaikka_Id = new SelectList(db.Postitoimipaikka, "postitoimipaikka_Id", "postinumero", opiskelija.postitoimipaikka_Id);
+            
+            ViewBag.postitoimipaikka_Id = new SelectList(db.Postitoimipaikka, "postitoimipaikka_Id", "postinumero");
             return View(opiskelija);
         }
 
@@ -115,6 +116,21 @@ namespace CareeriaDevsApp.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Opiskelija opiskelija = db.Opiskelija.Find(id);
+            
+            var poistettavaOpiskelija = from l in db.Login where l.opiskelija_Id == id select l; //Hakee login taulusta poistettavan opiskelijan loginin
+            
+            foreach (var l in poistettavaOpiskelija)
+            {
+                db.Login.Remove(l);  //Poistaa opiskelijan rivin login talulusta opiskelija_Id -perusteella
+            }
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return HttpNotFound();
+            }
             db.Opiskelija.Remove(opiskelija);
             db.SaveChanges();
             return RedirectToAction("Index");
