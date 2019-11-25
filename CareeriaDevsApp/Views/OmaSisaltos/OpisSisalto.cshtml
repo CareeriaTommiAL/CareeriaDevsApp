@@ -1,0 +1,26 @@
+﻿@model IEnumerable<CareeriaDevsApp.OmaSisalto>
+
+
+@{
+    ViewBag.Title = "OpisSisalto";
+}
+
+@if (Session["student_id"] != null)
+{
+    //*****************************************
+    //nämä ovat vain kehitystä varten:
+    <p>Tervetuloa kirjautunut käyttäjä: @Session["student_kayttajaNimi"].ToString()</p>
+    <p>Opiskelija id: @Session["student_id"].ToString()</p>
+    //*****************************************
+    //*****************************************
+
+
+    foreach (var item in Model)
+    {
+        @Html.Raw(HttpUtility.HtmlDecode(item.omaTeksti));
+    }
+
+}
+
+
+@Html.ActionLink("Muokkaa profiilia", "Edit", new { id = Session["student_id"] })

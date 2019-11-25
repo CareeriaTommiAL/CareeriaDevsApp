@@ -1,0 +1,50 @@
+﻿@model CareeriaDevsApp.OmaSisalto
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>OmaSisalto</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.omatAsetukset)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.omatAsetukset)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.omaKuva)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.omaKuva)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.omaTeksti)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.omaTeksti)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Opiskelija.etunimi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Opiskelija.etunimi)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.omaSisalto_Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

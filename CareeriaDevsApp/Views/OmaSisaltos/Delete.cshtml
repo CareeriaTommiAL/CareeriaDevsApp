@@ -1,0 +1,56 @@
+﻿@model CareeriaDevsApp.OmaSisalto
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>OmaSisalto</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.omatAsetukset)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.omatAsetukset)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.omaKuva)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.omaKuva)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.omaTeksti)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.omaTeksti)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Opiskelija.etunimi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Opiskelija.etunimi)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

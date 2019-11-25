@@ -11,7 +11,7 @@
           </Key>
           <Property Name="login_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="kayttajaNimi" Type="nvarchar" MaxLength="25" />
-          <Property Name="salasana" Type="nvarchar" MaxLength="25" />
+          <Property Name="salasana" Type="nvarchar(max)" />
           <Property Name="opiskelija_Id" Type="int" />
           <Property Name="yritys_Id" Type="int" />
           <Property Name="paaKayttaja_Id" Type="int" />
@@ -25,7 +25,7 @@
           <Property Name="omaSisalto_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="omatAsetukset" Type="varbinary" MaxLength="1" />
           <Property Name="omaKuva" Type="varbinary" MaxLength="1" />
-          <Property Name="omaTeksti" Type="varbinary" MaxLength="1" />
+          <Property Name="omaTeksti" Type="nvarchar(max)" />
           <Property Name="opiskelija_Id" Type="int" />
         </EntityType>
         <EntityType Name="Opiskelija">
@@ -101,7 +101,7 @@
           <Property Name="postitoimipaikka_Id" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'Stud1.sys.database_firewall_rules' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'CareeriaDevApp.sys.database_firewall_rules' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="database_firewall_rules">
           <Key>
             <PropertyRef Name="id" />
@@ -390,7 +390,7 @@ warning 6002: The table/view 'Stud1.sys.database_firewall_rules' does not have a
           </Key>
           <Property Name="login_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="kayttajaNimi" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
-          <Property Name="salasana" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="salasana" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="opiskelija_Id" Type="Int32" />
           <Property Name="yritys_Id" Type="Int32" />
           <Property Name="paaKayttaja_Id" Type="Int32" />
@@ -407,7 +407,7 @@ warning 6002: The table/view 'Stud1.sys.database_firewall_rules' does not have a
           <Property Name="omaSisalto_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="omatAsetukset" Type="Binary" MaxLength="1" FixedLength="false" />
           <Property Name="omaKuva" Type="Binary" MaxLength="1" FixedLength="false" />
-          <Property Name="omaTeksti" Type="Binary" MaxLength="1" FixedLength="false" />
+          <Property Name="omaTeksti" Type="String" />
           <Property Name="opiskelija_Id" Type="Int32" />
           <NavigationProperty Name="Opiskelija" Relationship="Self.R_29" FromRole="OmaSisalto" ToRole="Opiskelija" />
         </EntityType>

@@ -1,0 +1,50 @@
+﻿@model IEnumerable<CareeriaDevsApp.OmaSisalto>
+
+
+@{
+    ViewBag.Title = "YritysSisalto";
+}
+
+<h2>Osaajaprofiilien selaus</h2>
+
+<table class="table">
+    <tr>
+        @*<th>
+            <p>Omat Asetukset</p>
+        </th>*@
+        <th>
+            <p>Kuva</p>
+        </th>
+        <th>
+            <p>Nimi</p>
+        </th>
+        <th>
+            <p>Oma esittely</p>
+        </th>
+
+        <th></th>
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+<tr>
+    @*<td>
+            @Html.DisplayFor(modelItem => item.omatAsetukset)
+        </td>*@
+    <td>
+        @Html.DisplayFor(modelItem => item.omaKuva)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Opiskelija.etunimi) @Html.DisplayFor(modelItem => item.Opiskelija.sukunimi)
+    </td>
+    <td>
+        @Html.Raw(HttpUtility.HtmlDecode(item.omaTeksti))
+    </td>
+
+</tr>
+
+    }
+
+</table>
+
