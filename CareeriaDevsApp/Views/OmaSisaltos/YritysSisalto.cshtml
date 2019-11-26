@@ -34,12 +34,15 @@
         </td>*@
     <td>
         @*@Html.DisplayFor(modelItem => item.omaKuva)*@
+        @*Näytetään opiskelijan omaKuva -tietokannasta <img> sisään:*@
         <p><img src="@Html.Raw(HttpUtility.HtmlDecode(item.omaKuva))" width="200"></p>
     </td>
     <td>
+        @*Näytetään opiskelijan koko nimi:*@
         @Html.DisplayFor(modelItem => item.Opiskelija.etunimi) @Html.DisplayFor(modelItem => item.Opiskelija.sukunimi)
     </td>
     <td>
+        @*Näytetään opiskelijan itsemuokkaama "profiili":*@
         @Html.Raw(HttpUtility.HtmlDecode(item.omaTeksti))
     </td>
 

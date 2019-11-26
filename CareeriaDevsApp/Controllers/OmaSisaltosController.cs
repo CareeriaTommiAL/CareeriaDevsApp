@@ -21,7 +21,7 @@ namespace CareeriaDevsApp.Controllers
         {
             //jos admin ei ole kirjautunut, niin opiskelijaprofiilien adminsivua ei näytetä
             if (Convert.ToInt32(Session["admin_id"]) != 1) //muista muuttaa Session["admin_id"]) != 1 kaikkialle jos muutetaan paakayttaja_id Login-tauluun,
-                                                           //tämä pitää laittaa databaseen kiinteäksi id:ksi (eli vain 1 admin tällä hetkellä)!!!!!!!!!!!!!!!!!!!
+                                                           //tämä on databasessa kiinteänä id:nä (eli vain 1 admin tällä hetkellä)!!!!!!!!!!!!!!!!!!!
             {
                 //jos käyttäjällä on Session["student_id"], niin opiskelija ohjataan suoraan omaan profiiliin
                 var opislogid = Session["student_id"];
@@ -29,13 +29,13 @@ namespace CareeriaDevsApp.Controllers
                 {
                     return RedirectToAction("OpisSisalto", "OmaSisaltos");
                 }
-                //jos käyttäjällä on Session["student_id"], niin opiskelija ohjataan suoraan omaan profiiliin
+                //jos käyttäjällä on Session["corporate_id"], niin yritys ohjataan suoraan samanlaiseen näkymään kuin adminilla, mutta ilman toimintoja
                 var yrityslogid = Session["corporate_id"];
                 if (yrityslogid != null)
                 {
                     return RedirectToAction("YritysSisalto", "OmaSisaltos");
                 }
-                return RedirectToAction("Login", "Logins");
+                return RedirectToAction("Login", "Logins");//jos mikään ylläolevista ei toteudu niin käyttäjä ohjataan login -viewiin.
             }
 
 
@@ -101,8 +101,8 @@ namespace CareeriaDevsApp.Controllers
 
 
 
-        // Uuden omasisällön luonti. (Joutuu luomaan olemassa olevaan id:hen, mahdollisesti kaatuu jos tietoja olemassa) EI TESTATTU
-        //***************************************************************************************************************************
+        // Uuden omasisällön luonti. (Joutuu luomaan olemassa olevaan id:hen, mahdollisesti kaatuu jos tietoja olemassa) EI TESTATTU HOX! EI TESTATTU!
+        //********************************************************************************************************************************************
         public ActionResult Create()
         {
             if (Convert.ToInt32(Session["admin_id"]) != 1)
@@ -134,8 +134,8 @@ namespace CareeriaDevsApp.Controllers
 
 
 
-        // Omansisällön muokkaus
-        //**********************
+        // Omansisällön muokkaus...missa (int? id) = opiskelija_Id
+        //*********************************************************
         public ActionResult Edit(int? id)
         {
             //adminin pitäisi aina päästä muokkaamaan...
@@ -153,7 +153,6 @@ namespace CareeriaDevsApp.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            //OmaSisalto omaSisalto = db.OmaSisalto.Find(id);
             OmaSisalto omaSisalto = db.OmaSisalto.Where(c => c.opiskelija_Id == id).SingleOrDefault();
             if (omaSisalto == null)
             {

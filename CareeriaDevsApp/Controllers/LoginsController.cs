@@ -453,15 +453,15 @@ namespace CareeriaDevsApp.Controllers
                         }
                         else
                         {
-                            if (v.opiskelija_Id != null)
+                            if (v.opiskelija_Id != null) //kirjautunut opiskelija ohjataan omaan näkymäänsä
                             {
                                 return RedirectToAction("OpisSisalto", "Omasisaltos");
                             }
-                            if (v.yritys_Id != null)
+                            if (v.yritys_Id != null) //kirjautunut yritys ohjataan omaan näkymäänsä
                             {
                                 return RedirectToAction("YritysSisalto", "Omasisaltos");
                             }
-                            if (v.paaKayttaja_Id != null)
+                            if (v.paaKayttaja_Id != null) //kirjautunut pääkäyttäjä(admin) ohjataan omaan näkymäänsä
                             {
                                 return RedirectToAction("Index", "Omasisaltos");
                             }
