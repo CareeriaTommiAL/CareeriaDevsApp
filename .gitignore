@@ -342,3 +342,4 @@ healthchecksdb
 #ignore these files:
 .web.config
 Web.config
+.Web.config
