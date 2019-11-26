@@ -7,9 +7,9 @@
 
 <h2>Opiskelijaprofiilit(Admin)</h2>
 
-@*<p>
-    @Html.ActionLink("Create New", "Create")
-</p>*@
+<p>
+    @Html.ActionLink("Luo uusi", "Create")
+</p>
 <table class="table">
     <tr>
         @*<th>
@@ -47,8 +47,8 @@
     </td>
 
     <td>
-        @Html.ActionLink("Edit", "Edit", new { id = item.omaSisalto_Id }) |
-        @Html.ActionLink("Delete", "Delete", new { id = item.omaSisalto_Id })
+        @Html.ActionLink("Edit", "Edit", new { id = item.opiskelija_Id }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.opiskelija_Id})
     </td>
 </tr>
         

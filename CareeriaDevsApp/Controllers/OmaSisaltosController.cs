@@ -15,12 +15,13 @@ namespace CareeriaDevsApp.Controllers
     {
         private Stud1Entities db = new Stud1Entities();
 
-        //index joka pitää näkyä vain pääkäyttäjälle
-        //*******************************************************
+        //Adminin näkymä Index.cshtml, ja vain adminin
+        //********************************************
         public ActionResult Index()
         {
             //jos admin ei ole kirjautunut, niin opiskelijaprofiilien adminsivua ei näytetä
-            if (Convert.ToInt32(Session["admin_id"]) != 1) //muista muuttaa admin_id kaikkialle, tämä pitää laittaa databaseen kiinteäksi.!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            if (Convert.ToInt32(Session["admin_id"]) != 1) //muista muuttaa Session["admin_id"]) != 1 kaikkialle jos muutetaan paakayttaja_id Login-tauluun,
+                                                           //tämä pitää laittaa databaseen kiinteäksi id:ksi (eli vain 1 admin tällä hetkellä)!!!!!!!!!!!!!!!!!!!
             {
                 //jos käyttäjällä on Session["student_id"], niin opiskelija ohjataan suoraan omaan profiiliin
                 var opislogid = Session["student_id"];
@@ -42,8 +43,11 @@ namespace CareeriaDevsApp.Controllers
             return View(omaSisalto.ToList());
         }
 
-        //Haetaan tietty opiskelija_id
-        //*******************************************************
+
+
+
+        //Haetaan tietty opiskelija_id ja listataan ko. id:n näkymä OpisSisalto.cshtml
+        //****************************************************************************
         public ActionResult OpisSisalto()
         {
             var opislogid = Session["student_id"];
@@ -60,8 +64,11 @@ namespace CareeriaDevsApp.Controllers
             return View(opisTeksti.ToList());
         }
 
-        //haetaan tietty yritys_id
-        //**********************************************************
+
+
+
+        //haetaan tietty yritys_id ja listataan ko. id:n näkymä YritysSisalto.cshtml
+        //**************************************************************************
         public ActionResult YritysSisalto()
         {
             var yrityslogid = Session["corporate_id"];
@@ -73,22 +80,29 @@ namespace CareeriaDevsApp.Controllers
             return View(omaSisalto.ToList());
         }
 
-        // GET: OmaSisaltos/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            OmaSisalto omaSisalto = db.OmaSisalto.Find(id);
-            if (omaSisalto == null)
-            {
-                return HttpNotFound();
-            }
-            return View(omaSisalto);
-        }
 
-        // GET: OmaSisaltos/Create
+
+
+        //// Details haku...en tiedä onko välttämätön tämä enää kun on yrityksille ja opiskelijoille oma view samoilla tiedoilla...
+        //public ActionResult Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    OmaSisalto omaSisalto = db.OmaSisalto.Find(id);
+        //    if (omaSisalto == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(omaSisalto);
+        //}
+
+
+
+
+        // Uuden omasisällön luonti. (Joutuu luomaan olemassa olevaan id:hen, mahdollisesti kaatuu jos tietoja olemassa) EI TESTATTU
+        //***************************************************************************************************************************
         public ActionResult Create()
         {
             if (Convert.ToInt32(Session["admin_id"]) != 1)
@@ -117,24 +131,30 @@ namespace CareeriaDevsApp.Controllers
             return View(omaSisalto);
         }
 
-        // GET: OmaSisaltos/Edit/5
+
+
+
+        // Omansisällön muokkaus
+        //**********************
         public ActionResult Edit(int? id)
         {
             //adminin pitäisi aina päästä muokkaamaan...
-            //käyttäjä ei pääse muokkaamaan omasisältöä, jos loginissa saatu Session["student_id"] ei vastaa edittiin menossa olevaa opiskelija_id:tä
             if (Convert.ToInt32(Session["admin_id"]) != 1)
             {
+                //käyttäjä ei pääse muokkaamaan omasisältöä, jos loginissa saatu Session["student_id"] ei vastaa edittiin menossa olevaa opiskelija_id:tä
                 if (Convert.ToInt32(Session["student_id"]) != id)
                 {
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
                 }
             }
 
-                if (id == null)
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            OmaSisalto omaSisalto = db.OmaSisalto.Find(id);
+
+            //OmaSisalto omaSisalto = db.OmaSisalto.Find(id);
+            OmaSisalto omaSisalto = db.OmaSisalto.Where(c => c.opiskelija_Id == id).SingleOrDefault();
             if (omaSisalto == null)
             {
                 return HttpNotFound();
@@ -142,9 +162,6 @@ namespace CareeriaDevsApp.Controllers
             ViewBag.opiskelija_Id = new SelectList(db.Opiskelija, "opiskelija_Id", "etunimi", omaSisalto.opiskelija_Id);
 
             return View(omaSisalto);
-
-
-
         }
 
         // POST: OmaSisaltos/Edit/5
@@ -165,7 +182,11 @@ namespace CareeriaDevsApp.Controllers
             return View(omaSisalto);
         }
 
-        // GET: OmaSisaltos/Delete/5
+
+
+
+        // Omasisällön poisto-oikeus vain adminilla (taulujen linkkaukset tuo varmasti omat ongelmansa) EI TESTATTU
+        //**********************************************************************************************************
         public ActionResult Delete(int? id)
         {
             if (Convert.ToInt32(Session["admin_id"]) != 1)
