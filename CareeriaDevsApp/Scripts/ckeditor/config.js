@@ -21,7 +21,8 @@ CKEDITOR.editorConfig = function (config) {
         { name: 'about', groups: ['about'] }
     ];
 
-    config.removeButtons = 'NewPage,Preview,Print,Templates,Find,Replace,Radio,Checkbox,Form,TextField,Textarea,Select,Button,ImageButton,HiddenField,CopyFormatting,RemoveFormat,Flash,PageBreak,ShowBlocks,Maximize, Language';
+    config.removeButtons = 'NewPage,Preview,Print,Templates,Find,Replace,Radio,Checkbox,Form,TextField,Textarea,Select,Button,ImageButton,HiddenField,CopyFormatting,RemoveFormat,Flash,PageBreak,ShowBlocks,Maximize,Language';
+    config.language = 'fi'
 };
 
 

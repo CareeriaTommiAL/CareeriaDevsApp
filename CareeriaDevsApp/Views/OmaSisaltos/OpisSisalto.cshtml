@@ -17,7 +17,10 @@
 
     foreach (var item in Model)
     {
+        <p><img src="@Html.Raw(HttpUtility.HtmlDecode(item.omaKuva))" width="200"></p>
+        <hr />
         @Html.Raw(HttpUtility.HtmlDecode(item.omaTeksti));
+        <hr />
     }
 
 }

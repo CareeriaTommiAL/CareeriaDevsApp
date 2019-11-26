@@ -7,15 +7,12 @@
         <script src="~/Scripts/ckeditor/ckeditor.js"></script>
         <script src="~/Scripts/ckeditor/samples/js/sample.js"></script>
 
-        <h2>Edit</h2>
-
-
         @using (Html.BeginForm())
         {
             @Html.AntiForgeryToken()
 
             <div class="form-horizontal">
-                <h4>OmaSisalto</h4>
+                <h4>OmaSisalto(Edit)</h4>
                 <hr />
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 @Html.HiddenFor(model => model.omaSisalto_Id)
@@ -29,15 +26,15 @@
                 </div>*@
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.omaKuva, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <p class="control-label col-md-2">Lisää  kuvasi url-osoite alla olevaan kenttään:</p>
                     <div class="col-md-10">
-                        @Html.TextBoxFor(model => model.omaKuva, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.EditorFor(model => model.omaKuva, new { htmlAttributes = new { @class = "form-control", @id = "addimage" } })
                         @Html.ValidationMessageFor(model => model.omaKuva, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
                 <div class="form-group">
-                    @Html.LabelFor(model => model.omaTeksti, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <p class="control-label col-md-2">Oma esittely:</p>
                     <div class="col-md-10">
                         @Html.TextAreaFor(model => model.omaTeksti, new { htmlAttributes = new { @class = "form-control" } })
                         @Html.ValidationMessageFor(model => model.omaTeksti, "", new { @class = "text-danger" })

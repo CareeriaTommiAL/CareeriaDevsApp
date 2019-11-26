@@ -16,7 +16,7 @@ namespace CareeriaDevsApp
     {
         public int omaSisalto_Id { get; set; }
         public byte[] omatAsetukset { get; set; }
-        public byte[] omaKuva { get; set; }
+        public string omaKuva { get; set; }
         public string omaTeksti { get; set; }
         public Nullable<int> opiskelija_Id { get; set; }
     

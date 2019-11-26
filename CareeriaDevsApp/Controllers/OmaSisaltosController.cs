@@ -19,16 +19,24 @@ namespace CareeriaDevsApp.Controllers
         //*******************************************************
         public ActionResult Index()
         {
-            var opislogid = Session["student_id"];
-            if (opislogid != null)
+            //jos admin ei ole kirjautunut, niin opiskelijaprofiilien adminsivua ei näytetä
+            if (Convert.ToInt32(Session["admin_id"]) != 1) //muista muuttaa admin_id kaikkialle, tämä pitää laittaa databaseen kiinteäksi.!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             {
-                return RedirectToAction("OpisSisalto", "OmaSisaltos");
+                //jos käyttäjällä on Session["student_id"], niin opiskelija ohjataan suoraan omaan profiiliin
+                var opislogid = Session["student_id"];
+                if (opislogid != null)
+                {
+                    return RedirectToAction("OpisSisalto", "OmaSisaltos");
+                }
+                //jos käyttäjällä on Session["student_id"], niin opiskelija ohjataan suoraan omaan profiiliin
+                var yrityslogid = Session["corporate_id"];
+                if (yrityslogid != null)
+                {
+                    return RedirectToAction("YritysSisalto", "OmaSisaltos");
+                }
+                return RedirectToAction("Login", "Logins");
             }
-            var yrityslogid = Session["corporate_id"];
-            if (yrityslogid != null)
-            {
-                return RedirectToAction("YritysSisalto", "OmaSisaltos");
-            }
+
 
             var omaSisalto = db.OmaSisalto.Include(o => o.Opiskelija);
             return View(omaSisalto.ToList());
@@ -39,6 +47,7 @@ namespace CareeriaDevsApp.Controllers
         public ActionResult OpisSisalto()
         {
             var opislogid = Session["student_id"];
+            //vain se opiskelija kenen opiskelija_id on sama kun muokattava id, pystyy tätä id:tä muokkaamaan
             var opisTeksti = (from m in db.OmaSisalto
                               where m.opiskelija_Id.ToString() == opislogid.ToString()
                               select m);
@@ -82,6 +91,10 @@ namespace CareeriaDevsApp.Controllers
         // GET: OmaSisaltos/Create
         public ActionResult Create()
         {
+            if (Convert.ToInt32(Session["admin_id"]) != 1)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             ViewBag.opiskelija_Id = new SelectList(db.Opiskelija, "opiskelija_Id", "etunimi");
             return View();
         }
@@ -107,14 +120,17 @@ namespace CareeriaDevsApp.Controllers
         // GET: OmaSisaltos/Edit/5
         public ActionResult Edit(int? id)
         {
+            //adminin pitäisi aina päästä muokkaamaan...
             //käyttäjä ei pääse muokkaamaan omasisältöä, jos loginissa saatu Session["student_id"] ei vastaa edittiin menossa olevaa opiskelija_id:tä
-            if (Session["student_id"].ToString() != id.ToString())
+            if (Convert.ToInt32(Session["admin_id"]) != 1)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                if (Convert.ToInt32(Session["student_id"]) != id)
+                {
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                }
             }
 
-
-            if (id == null)
+                if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -152,6 +168,10 @@ namespace CareeriaDevsApp.Controllers
         // GET: OmaSisaltos/Delete/5
         public ActionResult Delete(int? id)
         {
+            if (Convert.ToInt32(Session["admin_id"]) != 1)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

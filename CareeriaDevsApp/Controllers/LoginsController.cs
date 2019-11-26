@@ -419,7 +419,7 @@ namespace CareeriaDevsApp.Controllers
                         Session["corporate_id"] = v.yritys_Id;
                         Session["corporate_kayttajaNimi"] = v.kayttajaNimi;
                     }
-                    if (v.yritys_Id != null) //jos käyttäjällä on login -taulun pääkäyttäjä_id:ssä tietoa, niin käyttäjä tunnistetaan pääkäyttäjäksi.
+                    if (v.paaKayttaja_Id != null) //jos käyttäjällä on login -taulun pääkäyttäjä_id:ssä tietoa, niin käyttäjä tunnistetaan pääkäyttäjäksi.
                     {
                         System.Diagnostics.Debug.WriteLine("tämä käyttäjä on pääkäyttäjä");
                         Session["admin_id"] = v.paaKayttaja_Id;
@@ -484,12 +484,21 @@ namespace CareeriaDevsApp.Controllers
 
         //Logout****************************************************************************************
         //**********************************************************************************************
-        [Authorize]
-        [HttpPost]
+        //[Authorize]
+        //[HttpPost]
         public ActionResult Logout()
         {
+            Session.Clear();
+            Session.Abandon();
+            Session.RemoveAll();
+
             FormsAuthentication.SignOut();
-            return RedirectToAction("Login", "User");
+
+            this.Response.Cache.SetExpires(DateTime.UtcNow.AddMinutes(-1));
+            this.Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            this.Response.Cache.SetNoStore();
+
+            return RedirectToAction("Login", "Logins");
         }
 
 

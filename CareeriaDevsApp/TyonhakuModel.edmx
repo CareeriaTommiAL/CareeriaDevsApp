@@ -24,7 +24,7 @@
           </Key>
           <Property Name="omaSisalto_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="omatAsetukset" Type="varbinary" MaxLength="1" />
-          <Property Name="omaKuva" Type="varbinary" MaxLength="1" />
+          <Property Name="omaKuva" Type="nvarchar(max)" />
           <Property Name="omaTeksti" Type="nvarchar(max)" />
           <Property Name="opiskelija_Id" Type="int" />
         </EntityType>
@@ -406,8 +406,8 @@ warning 6002: The table/view 'CareeriaDevApp.sys.database_firewall_rules' does n
           </Key>
           <Property Name="omaSisalto_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="omatAsetukset" Type="Binary" MaxLength="1" FixedLength="false" />
-          <Property Name="omaKuva" Type="Binary" MaxLength="1" FixedLength="false" />
-          <Property Name="omaTeksti" Type="String" />
+          <Property Name="omaKuva" Type="String" />
+          <Property Name="omaTeksti" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="opiskelija_Id" Type="Int32" />
           <NavigationProperty Name="Opiskelija" Relationship="Self.R_29" FromRole="OmaSisalto" ToRole="Opiskelija" />
         </EntityType>

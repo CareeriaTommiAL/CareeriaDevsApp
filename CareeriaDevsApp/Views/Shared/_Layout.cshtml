@@ -39,6 +39,8 @@
                         Rekisteröidy
                     </button>
                     <input type="button" class="btn btn-yellow ml-2" value="Kirjaudu sisään" onclick='window.location.href = "@Url.Action("Login", "Logins", routeValues: null)"' />
+                    <!--Kutsutaan Logins controllerin logout action-->
+                    <a href="@Url.Action("Logout", "Logins", routeValues: null)">Kirjaudu ulos</a>
                 </form>
             </div>
         </div>
