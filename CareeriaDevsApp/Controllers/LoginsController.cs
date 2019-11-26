@@ -410,11 +410,22 @@ namespace CareeriaDevsApp.Controllers
                     if (v.opiskelija_Id != null) //jos käyttäjällä on login -taulun opiskelija_id:ssä tietoa, niin käyttäjä tunnistetaan opiskelijaksi.
                     {
                         System.Diagnostics.Debug.WriteLine("tämä käyttäjä on opiskelija");
+                        Session["student_id"] = v.opiskelija_Id;
+                        Session["student_kayttajaNimi"] = v.kayttajaNimi;
                     }
                     if (v.yritys_Id != null) //jos käyttäjällä on login -taulun yritys_id:ssä tietoa, niin käyttäjä tunnistetaan yritykseksi.
                     {
                         System.Diagnostics.Debug.WriteLine("tämä käyttäjä on yritys");
+                        Session["corporate_id"] = v.yritys_Id;
+                        Session["corporate_kayttajaNimi"] = v.kayttajaNimi;
                     }
+                    if (v.paaKayttaja_Id != null) //jos käyttäjällä on login -taulun pääkäyttäjä_id:ssä tietoa, niin käyttäjä tunnistetaan pääkäyttäjäksi.
+                    {
+                        System.Diagnostics.Debug.WriteLine("tämä käyttäjä on pääkäyttäjä");
+                        Session["admin_id"] = v.paaKayttaja_Id;
+                        Session["admin_kayttajaNimi"] = v.kayttajaNimi;
+                    }
+
                     //if (!v.onkoEmailAktivoitu) //jos email-osoitetta ei ole aktivoitu niin:
                     //{
                     //    ViewBag.Message = "Olkaa hyvä ja vahvistakaa sähköpostiosoitteenne"; //ei välttämätön, mutta aika yleinen, jos jää aikaa niin toteutetaan
@@ -442,7 +453,19 @@ namespace CareeriaDevsApp.Controllers
                         }
                         else
                         {
-                            return RedirectToAction("Index", "Home");
+                            if (v.opiskelija_Id != null) //kirjautunut opiskelija ohjataan omaan näkymäänsä
+                            {
+                                return RedirectToAction("OpisSisalto", "Omasisaltos");
+                            }
+                            if (v.yritys_Id != null) //kirjautunut yritys ohjataan omaan näkymäänsä
+                            {
+                                return RedirectToAction("YritysSisalto", "Omasisaltos");
+                            }
+                            if (v.paaKayttaja_Id != null) //kirjautunut pääkäyttäjä(admin) ohjataan omaan näkymäänsä
+                            {
+                                return RedirectToAction("Index", "Omasisaltos");
+                            }
+
                         }
                     }
                     else
@@ -461,12 +484,21 @@ namespace CareeriaDevsApp.Controllers
 
         //Logout****************************************************************************************
         //**********************************************************************************************
-        [Authorize]
-        [HttpPost]
+        //[Authorize]
+        //[HttpPost]
         public ActionResult Logout()
         {
+            Session.Clear();
+            Session.Abandon();
+            Session.RemoveAll();
+
             FormsAuthentication.SignOut();
-            return RedirectToAction("Login", "User");
+
+            this.Response.Cache.SetExpires(DateTime.UtcNow.AddMinutes(-1));
+            this.Response.Cache.SetCacheability(HttpCacheability.NoCache);
+            this.Response.Cache.SetNoStore();
+
+            return RedirectToAction("Login", "Logins");
         }
 
 

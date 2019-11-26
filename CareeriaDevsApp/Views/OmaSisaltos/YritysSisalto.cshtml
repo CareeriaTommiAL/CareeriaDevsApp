@@ -1,0 +1,54 @@
+﻿@model IEnumerable<CareeriaDevsApp.OmaSisalto>
+
+
+@{
+    ViewBag.Title = "YritysSisalto";
+}
+
+<h2>Osaajaprofiilien selaus</h2>
+
+<table class="table">
+    <tr>
+        @*<th>
+            <p>Omat Asetukset</p>
+        </th>*@
+        <th>
+            <p>Kuva</p>
+        </th>
+        <th>
+            <p>Nimi</p>
+        </th>
+        <th>
+            <p>Opiskelijan omaesittely</p>
+        </th>
+
+        <th></th>
+    </tr>
+
+
+    @foreach (var item in Model)
+    {
+<tr>
+    @*<td>
+            @Html.DisplayFor(modelItem => item.omatAsetukset)
+        </td>*@
+    <td>
+        @*@Html.DisplayFor(modelItem => item.omaKuva)*@
+        @*Näytetään opiskelijan omaKuva -tietokannasta <img> sisään:*@
+        <p><img src="@Html.Raw(HttpUtility.HtmlDecode(item.omaKuva))" width="200"></p>
+    </td>
+    <td>
+        @*Näytetään opiskelijan koko nimi:*@
+        @Html.DisplayFor(modelItem => item.Opiskelija.etunimi) @Html.DisplayFor(modelItem => item.Opiskelija.sukunimi)
+    </td>
+    <td>
+        @*Näytetään opiskelijan itsemuokkaama "profiili":*@
+        @Html.Raw(HttpUtility.HtmlDecode(item.omaTeksti))
+    </td>
+
+</tr>
+
+    }
+
+</table>
+
