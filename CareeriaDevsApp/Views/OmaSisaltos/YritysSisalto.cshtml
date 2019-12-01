@@ -45,6 +45,9 @@
         @*Näytetään opiskelijan itsemuokkaama "profiili":*@
         @Html.Raw(HttpUtility.HtmlDecode(item.omaTeksti))
     </td>
+    <td>
+        @Html.ActionLink("Lähetä viesti", "Create", "Viestis", new { opisId = item.opiskelija_Id }, null)
+    </td>
 
 </tr>
 

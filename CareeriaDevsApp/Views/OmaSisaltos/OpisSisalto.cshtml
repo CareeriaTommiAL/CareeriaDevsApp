@@ -23,6 +23,14 @@
         @*Näytetään opiskelijan itsemuokkaama "profiili":*@
         @Html.Raw(HttpUtility.HtmlDecode(item.omaTeksti));
         <hr />
+        <!--VIESTIT START-->
+<div class="viestit">
+
+</div>
+        @Html.ActionLink("Katso saapuneet viestit", "HaeOpiskelijanViestit", "Viestis", new { id = Session["student_id"] },null)
+        <hr />
+        <!--VIESTIN END-->
+
     }
 
 }

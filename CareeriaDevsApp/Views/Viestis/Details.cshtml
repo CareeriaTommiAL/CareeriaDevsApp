@@ -1,0 +1,58 @@
+﻿@model CareeriaDevsApp.Viesti
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Viesti</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.inbox)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.inbox)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.viestiLoki)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.viestiLoki)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Opiskelija.etunimi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Opiskelija.etunimi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PaaKayttaja.nimi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaaKayttaja.nimi)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Yritys.yrityksenNimi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Yritys.yrityksenNimi)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.viesti_Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

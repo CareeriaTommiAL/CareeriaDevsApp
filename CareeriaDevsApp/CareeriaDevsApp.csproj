@@ -279,6 +279,7 @@
     <Compile Include="Controllers\OmaSisaltosController.cs" />
     <Compile Include="Controllers\OpiskelijasController.cs" />
     <Compile Include="Controllers\PaaKayttajasController.cs" />
+    <Compile Include="Controllers\ViestisController.cs" />
     <Compile Include="Controllers\YritysController.cs" />
     <Compile Include="Crypto.cs" />
     <Compile Include="database_firewall_rules.cs">
@@ -959,6 +960,13 @@
     <Content Include="Views\OmaSisaltos\Index.cshtml" />
     <Content Include="Views\OmaSisaltos\YritysSisalto.cshtml" />
     <Content Include="Web.config" />
+    <Content Include="Views\Viestis\Create.cshtml" />
+    <Content Include="Views\Viestis\Delete.cshtml" />
+    <Content Include="Views\Viestis\Details.cshtml" />
+    <Content Include="Views\Viestis\Edit.cshtml" />
+    <Content Include="Views\Viestis\Index.cshtml" />
+    <Content Include="Views\Viestis\HaeOpiskelijanViestit.cshtml" />
+    <Content Include="Views\Viestis\Reply.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -233,8 +233,6 @@ namespace CareeriaDevsApp.Controllers
                     uusiOmasis.opiskelija_Id = opiskelija.opiskelija_Id;
 
 
-
-
                     dc.Opiskelija.Add(uusiOpis);
                     dc.PuhelinNumero.Add(uusiPuhO);
                     dc.Sahkoposti.Add(uusiSpostiO);
@@ -390,6 +388,19 @@ namespace CareeriaDevsApp.Controllers
         [HttpGet]
         public ActionResult Login()
         {
+            //mikäli käyttäjä on jo kirjautunut hänet ohjataan suoraan etusivulle, jos hän jostain syystä koittaa päästä kirjautumissivulle...
+            if (Session["student_id"] != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if (Session["corporate_id"] != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            if (Session["admin_id"] != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
@@ -398,6 +409,7 @@ namespace CareeriaDevsApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(UserLogin login, string ReturnUrl = "")
         {
+
             string message = "";
             using (Stud1Entities dc = new Stud1Entities())
             {

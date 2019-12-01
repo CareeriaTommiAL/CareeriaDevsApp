@@ -84,11 +84,12 @@
             <PropertyRef Name="viesti_Id" />
           </Key>
           <Property Name="viesti_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="inbox" Type="varbinary" MaxLength="1" />
-          <Property Name="viestiLoki" Type="varbinary" MaxLength="1" />
+          <Property Name="inbox" Type="nvarchar(max)" />
+          <Property Name="viestiLoki" Type="nvarchar(max)" />
           <Property Name="opiskelija_Id" Type="int" />
           <Property Name="yritys_Id" Type="int" />
           <Property Name="paaKayttaja_Id" Type="int" />
+          <Property Name="onkoVastaus" Type="bit" />
         </EntityType>
         <EntityType Name="Yritys">
           <Key>
@@ -406,7 +407,7 @@ warning 6002: The table/view 'CareeriaDevApp.sys.database_firewall_rules' does n
           </Key>
           <Property Name="omaSisalto_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="omatAsetukset" Type="Binary" MaxLength="1" FixedLength="false" />
-          <Property Name="omaKuva" Type="String" />
+          <Property Name="omaKuva" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="omaTeksti" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="opiskelija_Id" Type="Int32" />
           <NavigationProperty Name="Opiskelija" Relationship="Self.R_29" FromRole="OmaSisalto" ToRole="Opiskelija" />
@@ -485,14 +486,15 @@ warning 6002: The table/view 'CareeriaDevApp.sys.database_firewall_rules' does n
             <PropertyRef Name="viesti_Id" />
           </Key>
           <Property Name="viesti_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="inbox" Type="Binary" MaxLength="1" FixedLength="false" />
-          <Property Name="viestiLoki" Type="Binary" MaxLength="1" FixedLength="false" />
+          <Property Name="inbox" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="viestiLoki" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="opiskelija_Id" Type="Int32" />
           <Property Name="yritys_Id" Type="Int32" />
           <Property Name="paaKayttaja_Id" Type="Int32" />
           <NavigationProperty Name="Opiskelija" Relationship="Self.R_35" FromRole="Viesti" ToRole="Opiskelija" />
           <NavigationProperty Name="PaaKayttaja" Relationship="Self.R_40" FromRole="Viesti" ToRole="PaaKayttaja" />
           <NavigationProperty Name="Yritys" Relationship="Self.R_36" FromRole="Viesti" ToRole="Yritys" />
+          <Property Name="onkoVastaus" Type="Boolean" />
         </EntityType>
         <EntityType Name="Yritys">
           <Key>
@@ -777,8 +779,8 @@ warning 6002: The table/view 'CareeriaDevApp.sys.database_firewall_rules' does n
             <End Role="Yritys" EntitySet="Yritys" />
             <End Role="Viesti" EntitySet="Viesti" />
           </AssociationSet>
-        </EntityContainer>
-      </Schema>
+          </EntityContainer>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -869,8 +871,9 @@ warning 6002: The table/view 'CareeriaDevApp.sys.database_firewall_rules' does n
           <EntitySetMapping Name="Viesti">
             <EntityTypeMapping TypeName="Stud1Model.Viesti">
               <MappingFragment StoreEntitySet="Viesti">
-                <ScalarProperty Name="viesti_Id" ColumnName="viesti_Id" />
+                <ScalarProperty Name="onkoVastaus" ColumnName="onkoVastaus" />
                 <ScalarProperty Name="inbox" ColumnName="inbox" />
+                <ScalarProperty Name="viesti_Id" ColumnName="viesti_Id" />
                 <ScalarProperty Name="viestiLoki" ColumnName="viestiLoki" />
                 <ScalarProperty Name="opiskelija_Id" ColumnName="opiskelija_Id" />
                 <ScalarProperty Name="yritys_Id" ColumnName="yritys_Id" />
@@ -901,7 +904,7 @@ warning 6002: The table/view 'CareeriaDevApp.sys.database_firewall_rules' does n
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

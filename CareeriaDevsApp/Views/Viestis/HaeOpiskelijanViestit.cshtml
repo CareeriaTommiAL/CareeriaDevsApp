@@ -1,0 +1,73 @@
+﻿@model IEnumerable<CareeriaDevsApp.Viesti>
+
+@{
+    ViewBag.Title = "HaeOpiskelijanViestit";
+}
+
+<h2>Omatviestit</h2>
+
+@if (Session["student_id"] != null)
+{
+    foreach (var item in Model)
+    {
+            @*Näytetään opiskelijan viestit:*@
+            <div><h4>Viestin aihe: @Html.DisplayFor(modelItem => item.inbox)</h4></div>
+            <hr />
+            <div><h6>Lähettäjä: @Html.DisplayFor(modelItem => item.Yritys.yrityksenNimi)</h6></div>
+            <div><h6>Viesti:</h6></div>
+            <div>@Html.Raw(HttpUtility.HtmlDecode(item.viestiLoki))</div>
+            <hr />
+            @Html.ActionLink("Vastaa viestiin", "Reply", "Viestis", new { yritysId = item.yritys_Id, vastausAihe = item.inbox }, null)       
+
+    }
+
+}
+
+<hr />
+@Html.ActionLink("Takaisin", "OpisSisalto", "OmaSisaltos", new { id = Session["student_id"] }, null)
+
+
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                Aihe
+            </th>
+            <th>
+                Viesti
+            </th>
+            <th>
+                Vastaanottaja
+            </th>
+            <th>
+                Lähettäjä
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.inbox)
+                </td>
+                <td>
+                    @Html.Raw(HttpUtility.HtmlDecode(item.viestiLoki))
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Opiskelija.etunimi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Yritys.yrityksenNimi)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.viesti_Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.viesti_Id }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.viesti_Id })
+                </td>
+            </tr>
+        }
+
+    </table>*@
