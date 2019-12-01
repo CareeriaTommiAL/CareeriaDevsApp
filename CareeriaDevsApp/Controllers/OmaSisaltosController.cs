@@ -69,15 +69,17 @@ namespace CareeriaDevsApp.Controllers
 
         //haetaan tietty yritys_id ja listataan ko. id:n näkymä YritysSisalto.cshtml
         //**************************************************************************
-        public ActionResult YritysSisalto()
+        public ActionResult YritysSisalto(string search)  //Tommi, hakumetodi
         {
             var yrityslogid = Session["corporate_id"];
             if (yrityslogid == null)
             {
                 return RedirectToAction("Login", "Logins");
             }
-            var omaSisalto = db.OmaSisalto.Include(o => o.Opiskelija);
-            return View(omaSisalto.ToList());
+            //var omaSisalto = db.OmaSisalto.Include(o => o.Opiskelija);
+            //return View(omaSisalto.ToList());
+            else
+            return View(db.OmaSisalto.Where(x => x.omaTeksti.Contains(search) || search == null).ToList());  //Tommi, listaa profiilit joiden omaTeksti sisältää hakusanan tai sen osan. Jos haku = null, näytetään kaikki profiilit.
         }
 
 

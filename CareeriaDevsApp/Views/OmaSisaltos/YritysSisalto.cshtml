@@ -5,13 +5,24 @@
     ViewBag.Title = "YritysSisalto";
 }
 
-<h2>Osaajaprofiilien selaus</h2>
+<h2>Osaajaprofiilien selaus</h2><br />
 
-<table class="table">
+<b>Haku Avainsanalla</b><br />
+
+<p>
+    @using (Html.BeginForm("YritysSisalto", "OmaSisaltos", FormMethod.Get))  //Tommi, tägää OmaSisaltos controllerin YritysSisalto metodin avainsanahakua varten
+    {
+        @Html.TextBox("search") <input type="submit" value="Hae" />  
+    }
+</p>
+
+<br />
+
+<table border="1" class="table1">
     <tr>
         @*<th>
-            <p>Omat Asetukset</p>
-        </th>*@
+                <p>Omat Asetukset</p>
+            </th>*@
         <th>
             <p>Kuva</p>
         </th>
@@ -25,30 +36,38 @@
         <th></th>
     </tr>
 
-
-    @foreach (var item in Model)
+    @if (Model.Count() == 0)  //Tommi, Jos avainsanalla ei tule osumia
     {
-<tr>
-    @*<td>
-            @Html.DisplayFor(modelItem => item.omatAsetukset)
-        </td>*@
-    <td>
-        @*@Html.DisplayFor(modelItem => item.omaKuva)*@
-        @*Näytetään opiskelijan omaKuva -tietokannasta <img> sisään:*@
-        <p><img src="@Html.Raw(HttpUtility.HtmlDecode(item.omaKuva))" width="200"></p>
-    </td>
-    <td>
-        @*Näytetään opiskelijan koko nimi:*@
-        @Html.DisplayFor(modelItem => item.Opiskelija.etunimi) @Html.DisplayFor(modelItem => item.Opiskelija.sukunimi)
-    </td>
-    <td>
-        @*Näytetään opiskelijan itsemuokkaama "profiili":*@
-        @Html.Raw(HttpUtility.HtmlDecode(item.omaTeksti))
-    </td>
-
-</tr>
-
+        <tr>
+            <td colspan="4">Tällä avainsanalla ei tullut osumia</td>
+        </tr>
     }
+    else  //Tommi, Jos osumia tulee, suoritetaan foreach.
+    {
 
+        foreach (var item in Model)
+        {
+            <tr>
+                @*<td>
+                        @Html.DisplayFor(modelItem => item.omatAsetukset)
+                    </td>*@
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.omaKuva)*@
+                    @*Näytetään opiskelijan omaKuva -tietokannasta <img> sisään:*@
+                    <p><img src="@Html.Raw(HttpUtility.HtmlDecode(item.omaKuva))" width="200"></p>
+                </td>
+                <td>
+                    @*Näytetään opiskelijan koko nimi:*@
+                    @Html.DisplayFor(modelItem => item.Opiskelija.etunimi) @Html.DisplayFor(modelItem => item.Opiskelija.sukunimi)
+                </td>
+                <td>
+                    @*Näytetään opiskelijan itsemuokkaama "profiili":*@
+                    @Html.Raw(HttpUtility.HtmlDecode(item.omaTeksti))
+                </td>
+
+            </tr>
+
+        }
+    }
 </table>
 
