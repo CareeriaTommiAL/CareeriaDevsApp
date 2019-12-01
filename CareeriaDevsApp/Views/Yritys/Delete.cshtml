@@ -7,6 +7,8 @@
 
 <h3>Haluatko varmasti poistaa yrityksen kaikki tiedot?</h3>
 
+<p>Poistamisen jälkeen sinun on luotava uusi tunnus, jos haluat palata sivustolle</p>
+
 <div>
     <h4>Yritys</h4>
     <hr />
@@ -49,8 +51,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Poista" class="btn btn-default" /> |
+            @Html.ActionLink("Peruuta", "Index")
         </div>
     }
 </div>
