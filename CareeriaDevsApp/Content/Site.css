@@ -2,6 +2,16 @@
     min-height: 100px;
 }
 
+/* login */
+.form-check {
+    padding: 0;
+}
+
+.login-form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
 #students {
     background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('../Content/Images/tyonhakijoille.jpg') center center;
     opacity: 1;
