@@ -16,62 +16,101 @@ namespace CareeriaDevsApp.Controllers
 
         // GET: Viestis
         public ActionResult Index()
-        {
+        {            
+            //jos admin ei ole kirjautunut, niin opiskelijaprofiilien adminsivua ei näytetä
+            if (Convert.ToInt32(Session["admin_id"]) != 1) //muista muuttaa Session["admin_id"]) != 1 kaikkialle jos muutetaan paakayttaja_id Login-tauluun,
+                                                           //tämä on databasessa kiinteänä id:nä (eli vain 1 admin tällä hetkellä)!!!!!!!!!!!!!!!!!!!
+            {
+                //jos käyttäjällä on Session["student_id"], niin opiskelija ohjataan suoraan omaan profiiliin
+                var opislogid = Session["student_id"];
+                if (opislogid != null)
+                {
+                    return RedirectToAction("OpisSisalto", "OmaSisaltos");
+                }
+                //jos käyttäjällä on Session["corporate_id"], niin yritys ohjataan suoraan samanlaiseen näkymään kuin adminilla, mutta ilman toimintoja
+                var yrityslogid = Session["corporate_id"];
+                if (yrityslogid != null)
+                {
+                    return RedirectToAction("YritysSisalto", "OmaSisaltos");
+                }
+                return RedirectToAction("Login", "Logins");//jos mikään ylläolevista ei toteudu niin käyttäjä ohjataan login -viewiin.
+            }
             var viesti = db.Viesti.Include(v => v.Opiskelija).Include(v => v.PaaKayttaja).Include(v => v.Yritys);
             return View(viesti.ToList());
         }
 
-        // GET: Viestis/Details/5
-        public ActionResult Details(int? id)
+
+        // GET: Viestis/Create
+        public ActionResult Create()
         {
-            if (id == null)
+            //jos admin ei ole kirjautunut, niin opiskelijaprofiilien adminsivua ei näytetä
+            if (Convert.ToInt32(Session["admin_id"]) != 1) //muista muuttaa Session["admin_id"]) != 1 kaikkialle jos muutetaan paakayttaja_id Login-tauluun,
+                                                           //tämä on databasessa kiinteänä id:nä (eli vain 1 admin tällä hetkellä)!!!!!!!!!!!!!!!!!!!
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                //jos käyttäjällä on Session["student_id"], niin opiskelija ohjataan suoraan omaan profiiliin
+                var opislogid = Session["student_id"];
+                if (opislogid != null)
+                {
+                    return RedirectToAction("OpisSisalto", "OmaSisaltos");
+                }
+                //jos käyttäjällä on Session["corporate_id"], niin yritys ohjataan suoraan samanlaiseen näkymään kuin adminilla, mutta ilman toimintoja
+                var yrityslogid = Session["corporate_id"];
+                if (yrityslogid != null)
+                {
+                    return RedirectToAction("YritysSisalto", "OmaSisaltos");
+                }
+                return RedirectToAction("Login", "Logins");//jos mikään ylläolevista ei toteudu niin käyttäjä ohjataan login -viewiin.
             }
-            Viesti viesti = db.Viesti.Find(id);
-            if (viesti == null)
+
+            ViewBag.opiskelija_Id = new SelectList(db.Opiskelija, "opiskelija_Id", "etunimi");
+            ViewBag.paaKayttaja_Id = new SelectList(db.PaaKayttaja, "paaKayttaja_Id", "nimi");
+            ViewBag.yritys_Id = new SelectList(db.Yritys, "yritys_Id", "yrityksenNimi");
+            return View();
+        }
+
+        // POST: Viestis/Create
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
+        public ActionResult Create([Bind(Include = "viesti_Id,inbox,viestiLoki,opiskelija_Id,yritys_Id,paaKayttaja_Id")] Viesti viesti)
+        {
+            if (ModelState.IsValid)
             {
-                return HttpNotFound();
+                db.Viesti.Add(viesti);
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
+
+            ViewBag.opiskelija_Id = new SelectList(db.Opiskelija, "opiskelija_Id", "etunimi", viesti.opiskelija_Id);
+            ViewBag.paaKayttaja_Id = new SelectList(db.PaaKayttaja, "paaKayttaja_Id", "nimi", viesti.paaKayttaja_Id);
+            ViewBag.yritys_Id = new SelectList(db.Yritys, "yritys_Id", "yrityksenNimi", viesti.yritys_Id);
             return View(viesti);
         }
 
-        //// GET: Viestis/Create
-        //public ActionResult Create()
-        //{
-        //    ViewBag.opiskelija_Id = new SelectList(db.Opiskelija, "opiskelija_Id", "etunimi");
-        //    ViewBag.paaKayttaja_Id = new SelectList(db.PaaKayttaja, "paaKayttaja_Id", "nimi");
-        //    ViewBag.yritys_Id = new SelectList(db.Yritys, "yritys_Id", "yrityksenNimi");
-        //    return View();
-        //}
-
-        //// POST: Viestis/Create
-        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //[ValidateInput(false)]
-        //public ActionResult Create([Bind(Include = "viesti_Id,inbox,viestiLoki,opiskelija_Id,yritys_Id,paaKayttaja_Id")] Viesti viesti)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.Viesti.Add(viesti);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    ViewBag.opiskelija_Id = new SelectList(db.Opiskelija, "opiskelija_Id", "etunimi", viesti.opiskelija_Id);
-        //    ViewBag.paaKayttaja_Id = new SelectList(db.PaaKayttaja, "paaKayttaja_Id", "nimi", viesti.paaKayttaja_Id);
-        //    ViewBag.yritys_Id = new SelectList(db.Yritys, "yritys_Id", "yrityksenNimi", viesti.yritys_Id);
-        //    return View(viesti);
-        //}
 
         //****************************************************************
         //luodaan id:n avulla uusi viesti opiskelijalle
         //****************************************************************
 
-        public ActionResult Create(int? opisId)
+        public ActionResult CreateOffer(int? opisId)
         {
+            //tarkastetaan kuka actionia kutsuu
+            if (Convert.ToInt32(Session["admin_id"]) != 1)
+            {
+                var opislogid = Session["student_id"];
+                if (opislogid != null)
+                {
+                    return RedirectToAction("OpisSisalto", "OmaSisaltos"); //opiskelija ohjataan omalle sivulleen
+                }
+                var yrityslogid = Session["corporate_id"];
+                if (yrityslogid == null)
+                {
+                    return RedirectToAction("Login", "Logins"); //jos yritys ei ole kirjautuneena, niin ohjataan yritys kirjautumissivulle
+                                                                //(ei pitäisi olla mahdollista, että näin käy koska tähän viitataan yrityksen YritysSisalto -viewistä)
+                }
+            }
             Viesti model = new Viesti();
             model.opiskelija_Id = opisId;
 
@@ -84,7 +123,7 @@ namespace CareeriaDevsApp.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [ValidateInput(false)]
-        public ActionResult Create([Bind(Include = "viesti_Id,inbox,viestiLoki,opiskelija_Id,yritys_Id,paaKayttaja_Id")] Viesti viesti, int? opisId)
+        public ActionResult CreateOffer([Bind(Include = "viesti_Id,inbox,viestiLoki,opiskelija_Id,yritys_Id,paaKayttaja_Id")] Viesti viesti, int? opisId)
         {
 
             if (ModelState.IsValid)
@@ -116,6 +155,21 @@ namespace CareeriaDevsApp.Controllers
         //****************************************************************
         public ActionResult Reply(int? yritysId, string vastausAihe)
         {
+            //tarkastetaan kuka actionia kutsuu
+            if (Convert.ToInt32(Session["admin_id"]) != 1)
+            {
+                var opislogid = Session["student_id"];
+                if (opislogid == null)
+                {
+                    return RedirectToAction("Login", "Logins"); //jos opiskelija ei ole kirjautuneena, niin ohjataan opiskelija kirjautumissivulle
+                                                                //(ei pitäisi olla mahdollista, että näin käy koska tähän viitataan opiskelijan HaeOpiskelijanViestit -viewistä)
+                }
+                var yrityslogid = Session["corporate_id"];
+                if (yrityslogid != null)
+                {
+                    return RedirectToAction("YritysSisalto", "OmaSisaltos"); //yritys ohjataan omalle sivulleen
+                }
+            }
             Viesti replyModel = new Viesti();
             replyModel.yritys_Id = yritysId;
             replyModel.inbox = vastausAihe;
@@ -159,6 +213,25 @@ namespace CareeriaDevsApp.Controllers
         // GET: Viestis/Edit/5
         public ActionResult Edit(int? id)
         {
+            //jos admin ei ole kirjautunut, niin opiskelijaprofiilien adminsivua ei näytetä
+            if (Convert.ToInt32(Session["admin_id"]) != 1) //muista muuttaa Session["admin_id"]) != 1 kaikkialle jos muutetaan paakayttaja_id Login-tauluun,
+                                                           //tämä on databasessa kiinteänä id:nä (eli vain 1 admin tällä hetkellä)!!!!!!!!!!!!!!!!!!!
+            {
+                //jos käyttäjällä on Session["student_id"], niin opiskelija ohjataan suoraan omaan profiiliin
+                var opislogid = Session["student_id"];
+                if (opislogid != null)
+                {
+                    return RedirectToAction("OpisSisalto", "OmaSisaltos");
+                }
+                //jos käyttäjällä on Session["corporate_id"], niin yritys ohjataan suoraan samanlaiseen näkymään kuin adminilla, mutta ilman toimintoja
+                var yrityslogid = Session["corporate_id"];
+                if (yrityslogid != null)
+                {
+                    return RedirectToAction("YritysSisalto", "OmaSisaltos");
+                }
+                return RedirectToAction("Login", "Logins");//jos mikään ylläolevista ei toteudu niin käyttäjä ohjataan login -viewiin.
+            }
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
