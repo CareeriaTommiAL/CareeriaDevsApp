@@ -10,6 +10,19 @@
     Sinulle on @ViewBag.lukemattomatViestit uutta viestiä.
     <br />
     @Html.ActionLink("Lue saapuneet viestit", "HaeYrityksenViestit", "Viestis", new { id = Session["corporate_id"] }, null)
+
+@*Hakuinput*@
+    <b>Haku Avainsanalla</b>
+    <br />
+
+    <p>
+        @using (Html.BeginForm("YritysSisalto", "OmaSisaltos", FormMethod.Get))  //Tommi, tägää OmaSisaltos controllerin YritysSisalto metodin avainsanahakua varten
+        {
+            @Html.TextBox("search") <input type="submit" value="Hae" />
+        }
+    </p>
+
+
     <table class="table">
         <tr>
             @*<th>
@@ -27,6 +40,16 @@
 
             <th></th>
         </tr>
+        @if (Model.Count() == 0)  //Tommi, Jos avainsanalla ei tule osumia
+        {
+            <tr>
+                <td colspan="4">Tällä avainsanalla ei tullut osumia</td>
+            </tr>
+        }
+        else  //Tommi, Jos osumia tulee, suoritetaan foreach.
+        {
+            @*Haku rajaa tavaraa, mutta silti alla oleva foreach ajetaan alussa, alla oleva foreach paginoitava tai top10*@
+        }
 
 
         @foreach (var item in Model)
