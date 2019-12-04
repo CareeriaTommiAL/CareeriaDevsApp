@@ -1,23 +1,23 @@
 ﻿@model IEnumerable<CareeriaDevsApp.Viesti>
 
 @{
-    ViewBag.Title = "HaeOpiskelijanViestit";
+    ViewBag.Title = "HaeYrityksenViestit";
 }
 
 <h2>Saapuneet viestit</h2>
 
-@if (Session["student_id"] != null)
+@if (Session["corporate_id"] != null)
 {
     foreach (var item in Model.Reverse())
     {
         @*Näytetään opiskelijan viestit:*@
         <div><h4>Viestin aihe: @Html.DisplayFor(modelItem => item.inbox)</h4></div>
-        <div><h6>Lähettäjä: @Html.DisplayFor(modelItem => item.Yritys.yrityksenNimi) | <i>@Html.DisplayFor(modelItem => item.viestinPaivays)</i></h6></div>
+        <div><h6>Lähettäjä: @Html.DisplayFor(modelItem => item.Opiskelija.etunimi) @Html.DisplayFor(modelItem => item.Opiskelija.sukunimi) | <i>@Html.DisplayFor(modelItem => item.viestinPaivays)</i></h6></div>
         <hr />
         <div><h6>Viesti:</h6></div>
         <div>@Html.Raw(HttpUtility.HtmlDecode(item.viestiLoki))</div>
         <hr />
-        @Html.ActionLink("Vastaa viestiin", "Reply", "Viestis", new { yritysId = item.yritys_Id, vastausAihe = item.inbox }, null)
+        @Html.ActionLink("Vastaa viestiin", "ReplyToStudent", "Viestis", new { opiskelijaId = item.opiskelija_Id, vastausAihe = item.inbox }, null)
         <br />
         if (item.onkoLuettu == false)
         {
@@ -28,7 +28,7 @@
                 document.getElementById("viestiLuetuksi").style.display = "none";
             }
         </script>
-        @Html.ActionLink("Poista", "Delete", new { id = item.viesti_Id })
+        @Html.ActionLink("Delete", "Delete", new { id = item.viesti_Id })
         <hr />
         <br />
         <br />
@@ -40,4 +40,4 @@
 }
 
 <hr />
-@Html.ActionLink("Takaisin", "OpisSisalto", "OmaSisaltos", new { id = Session["student_id"] }, null)
+@Html.ActionLink("Takaisin", "YritysSisalto", "OmaSisaltos")

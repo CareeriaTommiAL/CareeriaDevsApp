@@ -60,6 +60,28 @@ namespace CareeriaDevsApp.Controllers
             {
                 return RedirectToAction("Login", "Logins");
             }
+
+            var i = 0;
+
+            foreach (var item in db.Viesti) //haetaan lukemattomat viestit viewbagiin
+            {
+                if (item.onkoLuettu == false)
+                {
+                    if (item.opiskelija_Id == Convert.ToInt32(Session["student_id"]))
+                    {
+                        if (item.onkoVastaus == false)
+                        {
+                            i++;
+                        }
+
+                    }
+
+                }
+            };
+
+
+            ViewBag.lukemattomatViestit = i;
+
             var omaSisalto = db.OmaSisalto.Include(o => o.Opiskelija);
             return View(opisTeksti.ToList());
         }
@@ -76,32 +98,37 @@ namespace CareeriaDevsApp.Controllers
             {
                 return RedirectToAction("Login", "Logins");
             }
+
+            var i = 0;
+
+            foreach (var item in db.Viesti) //haetaan lukemattomat viestit viewbagiin
+            {
+                if (item.onkoLuettu == false)
+                {
+                    if (item.yritys_Id == Convert.ToInt32(Session["corporate_id"]))
+                    {
+                        if (item.onkoVastaus == true)
+                        {
+                            i++;
+                        }
+
+                    }
+
+                }
+            };
+
+
+            ViewBag.lukemattomatViestit = i;
+
+
+
             var omaSisalto = db.OmaSisalto.Include(o => o.Opiskelija);
             return View(omaSisalto.ToList());
         }
 
 
 
-
-        //// Details haku...en tiedä onko välttämätön tämä enää kun on yrityksille ja opiskelijoille oma view samoilla tiedoilla...
-        //public ActionResult Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    OmaSisalto omaSisalto = db.OmaSisalto.Find(id);
-        //    if (omaSisalto == null)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return View(omaSisalto);
-        //}
-
-
-
-
-        // Uuden omasisällön luonti. (Joutuu luomaan olemassa olevaan id:hen, mahdollisesti kaatuu jos tietoja olemassa) EI TESTATTU HOX! EI TESTATTU!
+        // Uuden omasisällön luonti. (Joutuu luomaan olemassa olevaan id:hen, mahdollisesti kaatuu jos tietoja jo olemassa) EI TESTATTU HOX! EI TESTATTU!
         //********************************************************************************************************************************************
         public ActionResult Create()
         {

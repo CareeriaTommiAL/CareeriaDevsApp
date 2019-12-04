@@ -21,6 +21,8 @@ namespace CareeriaDevsApp
         public Nullable<int> yritys_Id { get; set; }
         public Nullable<int> paaKayttaja_Id { get; set; }
         public Nullable<bool> onkoVastaus { get; set; }
+        public Nullable<bool> onkoLuettu { get; set; }
+        public Nullable<System.DateTime> viestinPaivays { get; set; }
     
         public virtual Opiskelija Opiskelija { get; set; }
         public virtual PaaKayttaja PaaKayttaja { get; set; }

@@ -8,8 +8,10 @@ using System.Web;
 using System.Web.Mvc;
 using CareeriaDevsApp;
 
+
 namespace CareeriaDevsApp.Controllers
 {
+
     public class ViestisController : Controller
     {
         private Stud1Entities db = new Stud1Entities();
@@ -117,7 +119,7 @@ namespace CareeriaDevsApp.Controllers
             return View(model);
         }
 
-        // POST: Viestis/Create
+        // POST: Viestis/CreateOffer
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -136,6 +138,8 @@ namespace CareeriaDevsApp.Controllers
                     uusiViesti.opiskelija_Id = opisId;
                     uusiViesti.yritys_Id = Convert.ToInt32(Session["corporate_id"]);
                     uusiViesti.onkoVastaus = false;
+                    uusiViesti.onkoLuettu = false;
+                    uusiViesti.viestinPaivays = DateTime.Now;
 
                     db.Viesti.Add(uusiViesti);
                     db.SaveChanges();
@@ -150,8 +154,71 @@ namespace CareeriaDevsApp.Controllers
             return View(viesti);
         }
 
+
         //****************************************************************
-        //luodaan id:n avulla vastaus yritykselle
+        //luodaan id:n avulla vastaus opiskelijalle v2
+        //****************************************************************
+        public ActionResult ReplyToStudent(int? opiskelijaId, string vastausAihe)
+        {
+            //tarkastetaan kuka actionia kutsuu
+            if (Convert.ToInt32(Session["admin_id"]) != 1)
+            {
+                var opislogid = Session["student_id"];
+                if (opislogid != null)
+                {
+                    return RedirectToAction("OpisSisalto", "OmaSisaltos");
+                }
+                var yrityslogid = Session["corporate_id"];
+                if (yrityslogid == null)
+                {
+                    return RedirectToAction("Login","Logins");
+                }
+            }
+            Viesti replyToStudModel = new Viesti();
+            replyToStudModel.opiskelija_Id = opiskelijaId;
+            replyToStudModel.inbox = vastausAihe;
+
+            return View(replyToStudModel);
+        }
+
+        // POST: Viestis/ReplyToStudent
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ValidateInput(false)]
+        public ActionResult ReplyTostudent([Bind(Include = "viesti_Id,inbox,viestiLoki,opiskelija_Id,yritys_Id,paaKayttaja_Id")] Viesti viesti, int? opiskelijaId, string vastausAihe)
+        {
+
+            if (ModelState.IsValid)
+            {
+                using (Stud1Entities dc = new Stud1Entities())
+                {
+                    Viesti uusiVastausViesti = new Viesti();
+                    uusiVastausViesti.inbox = vastausAihe;
+                    uusiVastausViesti.viestiLoki = viesti.viestiLoki;
+                    uusiVastausViesti.yritys_Id = Convert.ToInt32(Session["corporate_id"]);
+                    uusiVastausViesti.opiskelija_Id = opiskelijaId;
+                    uusiVastausViesti.onkoVastaus = false;
+                    uusiVastausViesti.onkoLuettu = false;
+                    uusiVastausViesti.viestinPaivays = DateTime.Now;
+
+                    db.Viesti.Add(uusiVastausViesti);
+                    db.SaveChanges();
+                }
+
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.opiskelija_Id = new SelectList(db.Opiskelija, "opiskelija_Id", "etunimi", viesti.opiskelija_Id);
+            ViewBag.paaKayttaja_Id = new SelectList(db.PaaKayttaja, "paaKayttaja_Id", "nimi", viesti.paaKayttaja_Id);
+            ViewBag.yritys_Id = new SelectList(db.Yritys, "yritys_Id", "yrityksenNimi", viesti.yritys_Id);
+            return View(viesti);
+        }
+
+
+
+
+        //****************************************************************
+        //luodaan id:n avulla vastaus yritykselle v1
         //****************************************************************
         public ActionResult Reply(int? yritysId, string vastausAihe)
         {
@@ -193,7 +260,9 @@ namespace CareeriaDevsApp.Controllers
                     uusiVastausViesti.viestiLoki = viesti.viestiLoki;
                     uusiVastausViesti.opiskelija_Id = Convert.ToInt32(Session["student_id"]);
                     uusiVastausViesti.yritys_Id = yritysId;
+                    uusiVastausViesti.onkoLuettu = false;
                     uusiVastausViesti.onkoVastaus = true;
+                    uusiVastausViesti.viestinPaivays = DateTime.Now;
 
                     db.Viesti.Add(uusiVastausViesti);
                     db.SaveChanges();
@@ -208,6 +277,47 @@ namespace CareeriaDevsApp.Controllers
             return View(viesti);
         }
 
+        //****************************************************************
+        //viestiluetuksi
+        //****************************************************************
+        //**HOX! tällä hetkellä mahdollisesti pystyy suoraan selaimen osoiteriville kirjoitettuaan kirjoittaa viestin luetuksi. ei paha.
+        public ActionResult ViestiLuetuksi(int id) //id tulee suoraan osoitekenttään linkistä saatavalla item.viesti_Id:llä
+        {
+            using (Stud1Entities update = new Stud1Entities())
+            {
+                Viesti viestiLuetuksi = (from c in update.Viesti
+                                         where c.viesti_Id == id
+                                         select c).FirstOrDefault();
+                viestiLuetuksi.onkoLuettu = true;
+                update.SaveChanges();
+            }
+
+            //Viesti f = db.Viesti.FirstOrDefault(x => x.viesti_Id == id);
+            //f.onkoLuettu = true;
+            //db.SaveChanges();
+            
+            //uudelleenlinkkaus takaisin käyttäjän sivulle onnistuneen tietokantatallennuksen jälkeen:
+            if (Convert.ToInt32(Session["admin_id"]) != 1)
+            {
+                if (Session["student_id"] != null)
+                {
+                    return RedirectToAction("HaeOpiskelijanViestit", "Viestis", null);
+                }
+                if (Session["corporate_id"] != null)
+                {
+                    return RedirectToAction("HaeYrityksenViestit", "Viestis", null);
+                }
+                return RedirectToAction("Index", "Viestis", null);
+            }
+            else
+            {
+                return RedirectToAction("Login", "Logins", null);
+            }
+            
+        }
+
+        //************************************************************************
+        //************************************************************************
 
 
         // GET: Viestis/Edit/5
@@ -269,6 +379,14 @@ namespace CareeriaDevsApp.Controllers
         // GET: Viestis/Delete/5
         public ActionResult Delete(int? id)
         {
+            //jos admin ei ole kirjautunut, niin opiskelijaprofiilien adminsivua ei näytetä
+            if (Convert.ToInt32(Session["admin_id"]) != 1) //jos joku muu kuin admin niin tarkastetaan ketä
+            {
+                if (Session["student_id"] == null && Session["corporate_id"] == null) //jos käyttäjä ei ole kirjautunut niin hänet ohjataan login sivulle kutsuessaan tätä
+                {
+                    return RedirectToAction("Login", "Logins");
+                }
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -302,6 +420,9 @@ namespace CareeriaDevsApp.Controllers
         }
 
 
+        //************************************************************************
+        //Viestin haku listaan
+        //************************************************************************
 
         //Haetaan tietty opiskelija_id ja listataan ko. id:n viestit
         //****************************************************************************
@@ -318,6 +439,23 @@ namespace CareeriaDevsApp.Controllers
                 return RedirectToAction("Login", "Logins");
             }
             return View(opisViestit.ToList().Where(m => m.onkoVastaus == false));
+        }
+
+        //Haetaan tietty corporate_id ja listataan ko. id:n viestit
+        //****************************************************************************
+        public ActionResult HaeYrityksenViestit()
+        {
+            var yritysid = Session["corporate_id"];
+            //opiskelijalle näkyy vain omat viestit
+            var yritysViestit = (from m in db.Viesti
+                               where m.yritys_Id.ToString() == yritysid.ToString()
+                               select m);
+
+            if (yritysid == null)
+            {
+                return RedirectToAction("Login", "Logins");
+            }
+            return View(yritysViestit.ToList().Where(m => m.onkoVastaus == true));
         }
 
 

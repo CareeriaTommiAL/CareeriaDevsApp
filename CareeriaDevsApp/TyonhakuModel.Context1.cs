@@ -36,5 +36,8 @@ namespace CareeriaDevsApp
         public virtual DbSet<Viesti> Viesti { get; set; }
         public virtual DbSet<Yritys> Yritys { get; set; }
         public virtual DbSet<database_firewall_rules> database_firewall_rules { get; set; }
+        public virtual DbSet<Message> Message { get; set; }
+        public virtual DbSet<User> User { get; set; }
+        public virtual DbSet<UserConnection> UserConnection { get; set; }
     }
 }
