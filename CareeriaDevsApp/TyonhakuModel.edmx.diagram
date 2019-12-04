@@ -31,13 +31,7 @@
         <AssociationConnector Association="Stud1Model.R_28" ManuallyRouted="false" />
         <AssociationConnector Association="Stud1Model.R_43" ManuallyRouted="false" />
         <AssociationConnector Association="Stud1Model.R_36" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="Stud1Model.Message" Width="1.5" PointX="12.625" PointY="1.125" />
-        <EntityTypeShape EntityType="Stud1Model.User" Width="1.5" PointX="10.375" PointY="2.375" />
-        <EntityTypeShape EntityType="Stud1Model.UserConnection" Width="1.5" PointX="12.625" PointY="4.125" />
-        <AssociationConnector Association="Stud1Model.FK_Messages_User" />
-        <AssociationConnector Association="Stud1Model.FK_Messages_User1" />
-        <AssociationConnector Association="Stud1Model.FK_UserConnection_User" />
-      </Diagram>
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

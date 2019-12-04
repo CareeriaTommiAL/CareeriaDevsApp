@@ -11,22 +11,12 @@
           </Key>
           <Property Name="login_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="kayttajaNimi" Type="nvarchar" MaxLength="25" />
-          <Property Name="salasana" Type="nvarchar(max)" />
+          <Property Name="salasana" Type="nvarchar" MaxLength="25" />
           <Property Name="opiskelija_Id" Type="int" />
           <Property Name="yritys_Id" Type="int" />
           <Property Name="paaKayttaja_Id" Type="int" />
           <Property Name="aktivointiKoodi" Type="uniqueidentifier" />
           <Property Name="onkoEmailAktivoitu" Type="bit" />
-        </EntityType>
-        <EntityType Name="Message">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="FromUser" Type="int" />
-          <Property Name="ToUser" Type="int" />
-          <Property Name="Message" Type="nvarchar(max)" />
-          <Property Name="Date" Type="datetime" />
         </EntityType>
         <EntityType Name="OmaSisalto">
           <Key>
@@ -89,23 +79,6 @@
           <Property Name="yritys_Id" Type="int" />
           <Property Name="opiskelija_Id" Type="int" />
         </EntityType>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="UserId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Username" Type="nvarchar" MaxLength="50" />
-          <Property Name="FullName" Type="nvarchar" MaxLength="50" />
-          <Property Name="Password" Type="nvarchar" MaxLength="50" />
-        </EntityType>
-        <EntityType Name="UserConnection">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UserId" Type="int" />
-          <Property Name="ConnectionId" Type="uniqueidentifier" />
-        </EntityType>
         <EntityType Name="Viesti">
           <Key>
             <PropertyRef Name="viesti_Id" />
@@ -131,7 +104,7 @@
           <Property Name="postitoimipaikka_Id" Type="int" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'CareeriaDevApp.sys.database_firewall_rules' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'Stud1.sys.database_firewall_rules' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="database_firewall_rules">
           <Key>
             <PropertyRef Name="id" />
@@ -148,42 +121,6 @@ warning 6002: The table/view 'CareeriaDevApp.sys.database_firewall_rules' does n
           <Property Name="create_date" Type="datetime" Nullable="false" />
           <Property Name="modify_date" Type="datetime" Nullable="false" />
         </EntityType>
-        <Association Name="FK_Messages_User">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
-          <End Role="Message" Type="Self.Message" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="Message">
-              <PropertyRef Name="FromUser" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Messages_User1">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
-          <End Role="Message" Type="Self.Message" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="Message">
-              <PropertyRef Name="ToUser" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserConnection_User">
-          <End Role="User" Type="Self.User" Multiplicity="0..1" />
-          <End Role="UserConnection" Type="Self.UserConnection" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="UserConnection">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="R_11">
           <End Role="PuhelinTyyppi" Type="Self.PuhelinTyyppi" Multiplicity="0..1" />
           <End Role="PuhelinNumero" Type="Self.PuhelinNumero" Multiplicity="*" />
@@ -366,7 +303,6 @@ warning 6002: The table/view 'CareeriaDevApp.sys.database_firewall_rules' does n
         </Association>
         <EntityContainer Name="Stud1ModelStoreContainer">
           <EntitySet Name="Login" EntityType="Self.Login" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Message" EntityType="Self.Message" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OmaSisalto" EntityType="Self.OmaSisalto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Opiskelija" EntityType="Self.Opiskelija" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PaaKayttaja" EntityType="Self.PaaKayttaja" Schema="dbo" store:Type="Tables" />
@@ -374,8 +310,6 @@ warning 6002: The table/view 'CareeriaDevApp.sys.database_firewall_rules' does n
           <EntitySet Name="PuhelinNumero" EntityType="Self.PuhelinNumero" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PuhelinTyyppi" EntityType="Self.PuhelinTyyppi" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sahkoposti" EntityType="Self.Sahkoposti" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="UserConnection" EntityType="Self.UserConnection" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Viesti" EntityType="Self.Viesti" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Yritys" EntityType="Self.Yritys" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" store:Type="Views" store:Schema="sys">
@@ -388,18 +322,6 @@ warning 6002: The table/view 'CareeriaDevApp.sys.database_firewall_rules' does n
     [database_firewall_rules].[modify_date] AS [modify_date]
     FROM [sys].[database_firewall_rules] AS [database_firewall_rules]</DefiningQuery>
           </EntitySet>
-          <AssociationSet Name="FK_Messages_User" Association="Self.FK_Messages_User">
-            <End Role="User" EntitySet="User" />
-            <End Role="Message" EntitySet="Message" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Messages_User1" Association="Self.FK_Messages_User1">
-            <End Role="User" EntitySet="User" />
-            <End Role="Message" EntitySet="Message" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserConnection_User" Association="Self.FK_UserConnection_User">
-            <End Role="User" EntitySet="User" />
-            <End Role="UserConnection" EntitySet="UserConnection" />
-          </AssociationSet>
           <AssociationSet Name="R_11" Association="Self.R_11">
             <End Role="PuhelinTyyppi" EntitySet="PuhelinTyyppi" />
             <End Role="PuhelinNumero" EntitySet="PuhelinNumero" />
@@ -471,7 +393,7 @@ warning 6002: The table/view 'CareeriaDevApp.sys.database_firewall_rules' does n
           </Key>
           <Property Name="login_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="kayttajaNimi" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
-          <Property Name="salasana" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="salasana" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
           <Property Name="opiskelija_Id" Type="Int32" />
           <Property Name="yritys_Id" Type="Int32" />
           <Property Name="paaKayttaja_Id" Type="Int32" />
@@ -861,91 +783,7 @@ warning 6002: The table/view 'CareeriaDevApp.sys.database_firewall_rules' does n
             <End Role="Yritys" EntitySet="Yritys" />
             <End Role="Viesti" EntitySet="Viesti" />
           </AssociationSet>
-          <EntitySet Name="Message" EntityType="Stud1Model.Message" />
-          <EntitySet Name="User" EntityType="Stud1Model.User" />
-          <EntitySet Name="UserConnection" EntityType="Stud1Model.UserConnection" />
-          <AssociationSet Name="FK_Messages_User" Association="Stud1Model.FK_Messages_User">
-            <End Role="User" EntitySet="User" />
-            <End Role="Message" EntitySet="Message" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Messages_User1" Association="Stud1Model.FK_Messages_User1">
-            <End Role="User" EntitySet="User" />
-            <End Role="Message" EntitySet="Message" />
-          </AssociationSet>
-          <AssociationSet Name="FK_UserConnection_User" Association="Stud1Model.FK_UserConnection_User">
-            <End Role="User" EntitySet="User" />
-            <End Role="UserConnection" EntitySet="UserConnection" />
-          </AssociationSet>
           </EntityContainer>
-        <EntityType Name="Message">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FromUser" Type="Int32" />
-          <Property Name="ToUser" Type="Int32" />
-          <Property Name="Message1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Date" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="User" Relationship="Stud1Model.FK_Messages_User" FromRole="Message" ToRole="User" />
-          <NavigationProperty Name="User1" Relationship="Stud1Model.FK_Messages_User1" FromRole="Message" ToRole="User" />
-        </EntityType>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="UserId" />
-          </Key>
-          <Property Name="UserId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="FullName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Message" Relationship="Stud1Model.FK_Messages_User" FromRole="User" ToRole="Message" />
-          <NavigationProperty Name="Message1" Relationship="Stud1Model.FK_Messages_User1" FromRole="User" ToRole="Message" />
-          <NavigationProperty Name="UserConnection" Relationship="Stud1Model.FK_UserConnection_User" FromRole="User" ToRole="UserConnection" />
-        </EntityType>
-        <EntityType Name="UserConnection">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UserId" Type="Int32" />
-          <Property Name="ConnectionId" Type="Guid" />
-          <NavigationProperty Name="User" Relationship="Stud1Model.FK_UserConnection_User" FromRole="UserConnection" ToRole="User" />
-        </EntityType>
-        <Association Name="FK_Messages_User">
-          <End Type="Stud1Model.User" Role="User" Multiplicity="0..1" />
-          <End Type="Stud1Model.Message" Role="Message" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="Message">
-              <PropertyRef Name="FromUser" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Messages_User1">
-          <End Type="Stud1Model.User" Role="User" Multiplicity="0..1" />
-          <End Type="Stud1Model.Message" Role="Message" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="Message">
-              <PropertyRef Name="ToUser" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_UserConnection_User">
-          <End Type="Stud1Model.User" Role="User" Multiplicity="0..1" />
-          <End Type="Stud1Model.UserConnection" Role="UserConnection" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserId" />
-            </Principal>
-            <Dependent Role="UserConnection">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1069,36 +907,6 @@ warning 6002: The table/view 'CareeriaDevApp.sys.database_firewall_rules' does n
                 <ScalarProperty Name="end_ip_address" ColumnName="end_ip_address" />
                 <ScalarProperty Name="create_date" ColumnName="create_date" />
                 <ScalarProperty Name="modify_date" ColumnName="modify_date" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Message">
-            <EntityTypeMapping TypeName="Stud1Model.Message">
-              <MappingFragment StoreEntitySet="Message">
-                <ScalarProperty Name="Date" ColumnName="Date" />
-                <ScalarProperty Name="Message1" ColumnName="Message" />
-                <ScalarProperty Name="ToUser" ColumnName="ToUser" />
-                <ScalarProperty Name="FromUser" ColumnName="FromUser" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="User">
-            <EntityTypeMapping TypeName="Stud1Model.User">
-              <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="FullName" ColumnName="FullName" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="UserConnection">
-            <EntityTypeMapping TypeName="Stud1Model.UserConnection">
-              <MappingFragment StoreEntitySet="UserConnection">
-                <ScalarProperty Name="ConnectionId" ColumnName="ConnectionId" />
-                <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

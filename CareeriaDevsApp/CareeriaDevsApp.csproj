@@ -291,9 +291,6 @@
     <Compile Include="Login.cs">
       <DependentUpon>TyonhakuModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Message.cs">
-      <DependentUpon>TyonhakuModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\OpiskelijaModel.cs" />
     <Compile Include="Models\PostitoimipaikkaModel.cs" />
@@ -341,12 +338,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>TyonhakuModel.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="User.cs">
-      <DependentUpon>TyonhakuModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="UserConnection.cs">
-      <DependentUpon>TyonhakuModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Viesti.cs">
       <DependentUpon>TyonhakuModel.tt</DependentUpon>
