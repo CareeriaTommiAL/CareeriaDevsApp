@@ -282,6 +282,7 @@
     <Compile Include="Controllers\OmaSisaltosController.cs" />
     <Compile Include="Controllers\OpiskelijasController.cs" />
     <Compile Include="Controllers\PaaKayttajasController.cs" />
+    <Compile Include="Controllers\ViestisController.cs" />
     <Compile Include="Controllers\YritysController.cs" />
     <Compile Include="Crypto.cs" />
     <Compile Include="database_firewall_rules.cs">
@@ -1027,6 +1028,15 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Views\Viestis\Create.cshtml" />
+    <Content Include="Views\Viestis\CreateOffer.cshtml" />
+    <Content Include="Views\Viestis\Delete.cshtml" />
+    <Content Include="Views\Viestis\Edit.cshtml" />
+    <Content Include="Views\Viestis\HaeOpiskelijanViestit.cshtml" />
+    <Content Include="Views\Viestis\HaeYrityksenViestit.cshtml" />
+    <Content Include="Views\Viestis\Index.cshtml" />
+    <Content Include="Views\Viestis\Reply.cshtml" />
+    <Content Include="Views\Viestis\ReplyToStudent.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
