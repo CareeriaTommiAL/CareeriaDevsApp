@@ -282,6 +282,7 @@
     <Compile Include="Controllers\OmaSisaltosController.cs" />
     <Compile Include="Controllers\OpiskelijasController.cs" />
     <Compile Include="Controllers\PaaKayttajasController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ViestisController.cs" />
     <Compile Include="Controllers\YritysController.cs" />
     <Compile Include="Crypto.cs" />
