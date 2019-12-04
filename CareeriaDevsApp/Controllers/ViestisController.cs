@@ -205,7 +205,7 @@ namespace CareeriaDevsApp.Controllers
                     db.SaveChanges();
                 }
 
-                return RedirectToAction("Index");
+                return RedirectToAction("HaeYrityksenViestit", "Viestis");
             }
 
             ViewBag.opiskelija_Id = new SelectList(db.Opiskelija, "opiskelija_Id", "etunimi", viesti.opiskelija_Id);
@@ -268,7 +268,7 @@ namespace CareeriaDevsApp.Controllers
                     db.SaveChanges();
                 }
 
-                return RedirectToAction("Index");
+                return RedirectToAction("HaeOpiskelijanViestit", "Viestis");
             }
 
             ViewBag.opiskelija_Id = new SelectList(db.Opiskelija, "opiskelija_Id", "etunimi", viesti.opiskelija_Id);
