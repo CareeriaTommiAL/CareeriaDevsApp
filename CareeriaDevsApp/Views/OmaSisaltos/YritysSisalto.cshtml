@@ -5,79 +5,90 @@
     ViewBag.Title = "YritysSisalto";
 }
 
-<h2>Osaajaprofiilien selaus</h2>
+    <div class="alert alert-warning text-center" role="alert">
+        Tervetuloa Yritys X // 
+        Sinulle on <span class="badge badge-primary">@ViewBag.lukemattomatViestit</span> uutta viestiä. @Html.ActionLink("Lue saapuneet viestit", "HaeYrityksenViestit", "Viestis", new { id = Session["corporate_id"] }, null)
+    </div>
 
-    Sinulle on @ViewBag.lukemattomatViestit uutta viestiä.
-    <br />
-    @Html.ActionLink("Lue saapuneet viestit", "HaeYrityksenViestit", "Viestis", new { id = Session["corporate_id"] }, null)<br />
+    <div class="container">
 
-@*Hakuinput*@
-    <b>Haku Avainsanalla</b>
-    <br />
+        <div class="row mb-5 mt-5">
 
-    <p>
-        @using (Html.BeginForm("YritysSisalto", "OmaSisaltos", FormMethod.Get))  //Tommi, tägää OmaSisaltos controllerin YritysSisalto metodin avainsanahakua varten
-        {
-            @Html.TextBox("search") <input type="submit" value="Hae" />
-        }
-    </p>
+            <div class="col d-flex align-items-center justify-content-center">
+
+                @*Hakuinput*@
+
+                    @using (Html.BeginForm("YritysSisalto", "OmaSisaltos", FormMethod.Get))  //Tommi, tägää OmaSisaltos controllerin YritysSisalto metodin avainsanahakua varten
+                    {
+                        @Html.TextBox("search", null, new { @class = "form-control search-bar" } ) <input class="btn btn-yellow" type="submit" value="Hae" />
+                    }
+
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        @*<th>
+                <p>Omat Asetukset</p>
+            </th>*@
+                        <th scope="col">
+                            Kuva
+                        </th>
+                        <th scope="col">
+                            Nimi
+                        </th>
+                        <th scope="col">
+                            Opiskelijan omaesittely
+                        </th>
+
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                @if (Model.Count() == 0)  //Tommi, Jos avainsanalla ei tule osumia
+                {
+                    <tr>
+                        <td colspan="4"><div class="alert alert-danger" role="alert">Tällä avainsanalla ei tullut osumia</div></td>
+                    </tr>
+                }
+                else  //Tommi, Jos osumia tulee, suoritetaan foreach.
+                {
+                    @*Haku rajaa tavaraa, mutta silti alla oleva foreach ajetaan alussa, alla oleva foreach paginoitava tai top10*@
+                }
 
 
-    <table class="table">
-        <tr>
-            @*<th>
-                    <p>Omat Asetukset</p>
-                </th>*@
-            <th>
-                <p>Kuva</p>
-            </th>
-            <th>
-                <p>Nimi</p>
-            </th>
-            <th>
-                <p>Opiskelijan omaesittely</p>
-            </th>
-
-            <th></th>
-        </tr>
-        @if (Model.Count() == 0)  //Tommi, Jos avainsanalla ei tule osumia
-        {
-            <tr>
-                <td colspan="4">Tällä avainsanalla ei tullut osumia</td>
-            </tr>
-        }
-        else  //Tommi, Jos osumia tulee, suoritetaan foreach.
-        {
-            @*Haku rajaa tavaraa, mutta silti alla oleva foreach ajetaan alussa, alla oleva foreach paginoitava tai top10*@
-        }
-
-
-        @foreach (var item in Model)
-        {
-            <tr>
-                @*<td>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        @*<td>
                         @Html.DisplayFor(modelItem => item.omatAsetukset)
                     </td>*@
-                <td>
-                    @*@Html.DisplayFor(modelItem => item.omaKuva)*@
-                    @*Näytetään opiskelijan omaKuva -tietokannasta <img> sisään:*@
-                    <p><img src="@Html.Raw(HttpUtility.HtmlDecode(item.omaKuva))" width="200"></p>
-                </td>
-                <td>
-                    @*Näytetään opiskelijan koko nimi:*@
-                    @Html.DisplayFor(modelItem => item.Opiskelija.etunimi) @Html.DisplayFor(modelItem => item.Opiskelija.sukunimi)
-                </td>
-                <td>
-                    @*Näytetään opiskelijan itsemuokkaama "profiili":*@
-                    @Html.Raw(HttpUtility.HtmlDecode(item.omaTeksti))
-                </td>
-                <td>
-                    @Html.ActionLink("Lähetä viesti", "CreateOffer", "Viestis", new { opisId = item.opiskelija_Id }, null)
-                </td>
+                        <td>
+                            @*@Html.DisplayFor(modelItem => item.omaKuva)*@
+                            @*Näytetään opiskelijan omaKuva -tietokannasta <img> sisään:*@
+                            <p><img src="@Html.Raw(HttpUtility.HtmlDecode(item.omaKuva))" width="200"></p>
+                        </td>
+                        <td>
+                            @*Näytetään opiskelijan koko nimi:*@
+                            @Html.DisplayFor(modelItem => item.Opiskelija.etunimi) @Html.DisplayFor(modelItem => item.Opiskelija.sukunimi)
+                        </td>
+                        <td>
+                            @*Näytetään opiskelijan itsemuokkaama "profiili":*@
+                            @Html.Raw(HttpUtility.HtmlDecode(item.omaTeksti))
+                        </td>
+                        <td>
+                            @Html.ActionLink("Lähetä viesti", "CreateOffer", "Viestis", new { opisId = item.opiskelija_Id }, null)
+                        </td>
 
-            </tr>
+                    </tr>
 
-        }
+                }
 
-    </table>
+            </table>
 
+        </div>
+
+    </div>

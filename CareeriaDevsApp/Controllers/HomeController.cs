@@ -20,20 +20,6 @@ namespace CareeriaDevsApp.Controllers
             return View();
         }
 
-        public ActionResult About()
-        {
-            ViewBag.Message = "";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
         //Login-----------------------------------------------------------------------------------------------------------------------
         public ActionResult Login()
         {
