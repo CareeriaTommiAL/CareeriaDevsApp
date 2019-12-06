@@ -42,6 +42,9 @@
                             Nimi
                         </th>
                         <th scope="col">
+                            Paikkakunta
+                        </th>
+                        <th scope="col">
                             Opiskelijan omaesittely
                         </th>
 
@@ -74,6 +77,9 @@
                         <td>
                             @*Näytetään opiskelijan koko nimi:*@
                             @Html.DisplayFor(modelItem => item.Opiskelija.etunimi) @Html.DisplayFor(modelItem => item.Opiskelija.sukunimi)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Opiskelija.Postitoimipaikka.postitoimipaikka1)
                         </td>
                         <td>
                             @*Näytetään opiskelijan itsemuokkaama "profiili":*@
