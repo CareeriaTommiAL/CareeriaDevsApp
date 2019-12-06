@@ -3,18 +3,20 @@
 
 @{
     ViewBag.Title = "YritysSisalto";
+    WebGrid webGrid = new WebGrid(source: Model, canSort: false, canPage: false);
 }
 
 <h2>Osaajaprofiilien selaus</h2>
 
     Sinulle on @ViewBag.lukemattomatViestit uutta viestiä.
     <br />
-    @Html.ActionLink("Lue saapuneet viestit", "HaeYrityksenViestit", "Viestis", new { id = Session["corporate_id"] }, null)<br />
-
-@*Hakuinput*@
-    <b>Haku Avainsanalla</b>
+    @Html.ActionLink("Lue saapuneet viestit", "HaeYrityksenViestit", "Viestis", new { id = Session["corporate_id"] }, null)
     <br />
 
+
+    <b>Haku Avainsanalla</b>
+    <br />
+    @*Hakuinput*@
     <p>
         @using (Html.BeginForm("YritysSisalto", "OmaSisaltos", FormMethod.Get))  //Tommi, tägää OmaSisaltos controllerin YritysSisalto metodin avainsanahakua varten
         {
@@ -22,7 +24,7 @@
         }
     </p>
 
-
+   
     <table class="table">
         <tr>
             @*<th>
