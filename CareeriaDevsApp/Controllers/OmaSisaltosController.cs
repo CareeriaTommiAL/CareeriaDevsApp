@@ -11,33 +11,19 @@ using CareeriaDevsApp.Models;
 
 namespace CareeriaDevsApp.Controllers
 {
-    public class OmaSisaltosController : Controller
+    public class OmaSisaltosController : BaseController
     {
         private Stud1Entities db = new Stud1Entities();
 
-        //Adminin näkymä Index.cshtml, ja vain adminin
-        //********************************************
         public ActionResult Index()
         {
-            //jos admin ei ole kirjautunut, niin opiskelijaprofiilien adminsivua ei näytetä
-            if (Convert.ToInt32(Session["admin_id"]) != 1) //muista muuttaa Session["admin_id"]) != 1 kaikkialle jos muutetaan paakayttaja_id Login-tauluun,
-                                                           //tämä on databasessa kiinteänä id:nä (eli vain 1 admin tällä hetkellä)!!!!!!!!!!!!!!!!!!!
+            //****HOX!**** tätä voit kutsua BaseControllerista ja muuttaa redirectit mieluiseksi ks. Controllers -> Basecontroller ****HOX!****
+            if (TryGetRedirectUrl(RedirectToAction("OpisSisalto", "OmaSisaltos"), //BaseControllerilta saadaan käyttäjätodennus
+                                  RedirectToAction("YritysSisalto", "OmaSisaltos"),
+                                  out var redirectResult))
             {
-                //jos käyttäjällä on Session["student_id"], niin opiskelija ohjataan suoraan omaan profiiliin
-                var opislogid = Session["student_id"];
-                if (opislogid != null)
-                {
-                    return RedirectToAction("OpisSisalto", "OmaSisaltos");
-                }
-                //jos käyttäjällä on Session["corporate_id"], niin yritys ohjataan suoraan samanlaiseen näkymään kuin adminilla, mutta ilman toimintoja
-                var yrityslogid = Session["corporate_id"];
-                if (yrityslogid != null)
-                {
-                    return RedirectToAction("YritysSisalto", "OmaSisaltos");
-                }
-                return RedirectToAction("Login", "Logins");//jos mikään ylläolevista ei toteudu niin käyttäjä ohjataan login -viewiin.
+                return redirectResult;
             }
-
 
             var omaSisalto = db.OmaSisalto.Include(o => o.Opiskelija);
             return View(omaSisalto.ToList());
@@ -120,48 +106,11 @@ namespace CareeriaDevsApp.Controllers
 
             ViewBag.lukemattomatViestit = i;
 
-
-
             //var omaSisalto = db.OmaSisalto.Include(o => o.Opiskelija);
             //return View(omaSisalto.ToList());
             return View(db.OmaSisalto.Where(x => x.omaTeksti.Contains(search) || search == null).ToList());  //Tommi, listaa profiilit joiden omaTeksti sisältää hakusanan tai sen osan. Jos haku = null, näytetään kaikki profiilit.
 
         }
-
-
-
-        // Uuden omasisällön luonti. (Joutuu luomaan olemassa olevaan id:hen, mahdollisesti kaatuu jos tietoja jo olemassa) EI TESTATTU HOX! EI TESTATTU!
-        //********************************************************************************************************************************************
-        public ActionResult Create()
-        {
-            if (Convert.ToInt32(Session["admin_id"]) != 1)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            ViewBag.opiskelija_Id = new SelectList(db.Opiskelija, "opiskelija_Id", "etunimi");
-            return View();
-        }
-
-        // POST: OmaSisaltos/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "omaSisalto_Id,omatAsetukset,omaKuva,omaTeksti,opiskelija_Id")] OmaSisalto omaSisalto)
-        {
-            if (ModelState.IsValid)
-            {
-                db.OmaSisalto.Add(omaSisalto);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.opiskelija_Id = new SelectList(db.Opiskelija, "opiskelija_Id", "etunimi", omaSisalto.opiskelija_Id);
-            return View(omaSisalto);
-        }
-
-
-
 
         // Omansisällön muokkaus...missa (int? id) = opiskelija_Id
         //*********************************************************
@@ -243,6 +192,29 @@ namespace CareeriaDevsApp.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
+
+        //**************************************************************************************
+        //Infinite scrolling
+        //**************************************************************************************
+        [HttpPost]
+        public JsonResult AjaxMethod(int pageIndex)
+        {
+            System.Threading.Thread.Sleep(1000);
+            OpiskelijaInfinite model = new OpiskelijaInfinite();
+            model.PageIndex = pageIndex;
+            model.PageSize = 10;
+            model.RecordCount = db.OmaSisalto.Count();
+            int startIndex = (pageIndex - 1) * model.PageSize;
+            model.Opiskelijat = (from i in db.OmaSisalto
+                                 select i)
+                            .OrderBy(i => i.opiskelija_Id)
+                            .Skip(startIndex)
+                            .Take(model.PageSize).ToList();
+
+            return Json(model);
+        }
+
 
         protected override void Dispose(bool disposing)
         {

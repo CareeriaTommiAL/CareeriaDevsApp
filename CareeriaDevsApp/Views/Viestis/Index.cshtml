@@ -6,9 +6,6 @@
 
 <h2>Viestit (admin näkymä)</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -35,15 +32,13 @@
             @Html.Raw(HttpUtility.HtmlDecode(item.viestiLoki))
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Opiskelija.etunimi)
+            @Html.DisplayFor(modelItem => item.Opiskelija.etunimi) @Html.DisplayFor(modelItem => item.Opiskelija.sukunimi)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Yritys.yrityksenNimi)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.viesti_Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.viesti_Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.viesti_Id })
+            @Html.ActionLink("Poista", "Delete", new { id=item.viesti_Id })
         </td>
     </tr>
 }

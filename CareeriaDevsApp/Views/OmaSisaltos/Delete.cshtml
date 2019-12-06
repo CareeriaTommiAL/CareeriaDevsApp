@@ -4,23 +4,13 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
+<h3>Haluatko varmasti poistaa tämän?</h3>
 <div>
     <h4>OmaSisalto</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.omatAsetukset)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.omatAsetukset)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.omaKuva)
+            <p>Profiilikuva</p>
         </dt>
 
         <dd>
@@ -28,7 +18,7 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.omaTeksti)
+            <p>Opiskelijan omaesittely</p>
         </dt>
 
         <dd>
@@ -36,11 +26,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Opiskelija.etunimi)
+            <p>Opiskelijan nimi</p>
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Opiskelija.etunimi)
+            @Html.DisplayFor(model => model.Opiskelija.etunimi) @Html.DisplayFor(model => model.Opiskelija.sukunimi)
         </dd>
 
     </dl>
@@ -49,8 +39,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Poista" class="btn btn-default" /> |
+            @Html.ActionLink("Takaisin", "Index")
         </div>
     }
 </div>

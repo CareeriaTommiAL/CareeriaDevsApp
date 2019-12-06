@@ -25,21 +25,6 @@ namespace CareeriaDevsApp.Controllers
             return View(login.ToList());
         }
 
-        // GET: Logins/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Login login = db.Login.Find(id);
-            if (login == null)
-            {
-                return HttpNotFound();
-            }
-            return View(login);
-        }
-
         // GET: Logins/Create
         public ActionResult Create()
         {
@@ -306,7 +291,7 @@ namespace CareeriaDevsApp.Controllers
                 yriKirjautuminen.onkoEmailAktivoitu = true;//muutettu trueksi koska helpompi kehittäessä...
 
 
-                #region Save to Database
+                #region Tallennus kantaan
                 using (Stud1Entities dc = new Stud1Entities())
                 {
                     //Tietojen tallennus modelista tietokantaan...

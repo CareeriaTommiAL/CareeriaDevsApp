@@ -277,6 +277,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginsController.cs" />
     <Compile Include="Controllers\OmaSisaltosController.cs" />
@@ -296,6 +297,7 @@
       <DependentUpon>TyonhakuModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\OpiskelijaInfinite.cs" />
     <Compile Include="Models\OpiskelijaModel.cs" />
     <Compile Include="Models\PostitoimipaikkaModel.cs" />
     <Compile Include="Models\PuhelinNumeroModel.cs" />
@@ -360,6 +362,7 @@
     <Content Include="Content\Images\avatar.jpg" />
     <Content Include="Content\Images\careeria-logo.png" />
     <Content Include="Content\Images\footerbg.png" />
+    <Content Include="Content\Images\Loader.gif" />
     <Content Include="Content\Images\ohjelmistoyrittajat-logo.png" />
     <Content Include="Content\Images\pallo-1.png" />
     <Content Include="Content\Images\pallo-2.png" />
@@ -982,8 +985,6 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Logins\Create.cshtml" />
     <Content Include="Views\Logins\Delete.cshtml" />
-    <Content Include="Views\Logins\Details.cshtml" />
-    <Content Include="Views\Logins\Edit.cshtml" />
     <Content Include="Views\Logins\Index.cshtml" />
     <Content Include="Views\Opiskelijas\Create.cshtml" />
     <Content Include="Views\Opiskelijas\Delete.cshtml" />
@@ -1011,9 +1012,7 @@
     <Content Include="TyonhakuModel.edmx.diagram">
       <DependentUpon>TyonhakuModel.edmx</DependentUpon>
     </Content>
-    <Content Include="Views\OmaSisaltos\Create.cshtml" />
     <Content Include="Views\OmaSisaltos\Delete.cshtml" />
-    <Content Include="Views\OmaSisaltos\Details.cshtml" />
     <Content Include="Views\OmaSisaltos\Edit.cshtml" />
     <Content Include="Views\OmaSisaltos\OpisSisalto.cshtml" />
     <Content Include="Views\OmaSisaltos\Index.cshtml" />
@@ -1029,10 +1028,8 @@
     <Content Include="Scripts\popper.js.map" />
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
-    <Content Include="Views\Viestis\Create.cshtml" />
     <Content Include="Views\Viestis\CreateOffer.cshtml" />
     <Content Include="Views\Viestis\Delete.cshtml" />
-    <Content Include="Views\Viestis\Edit.cshtml" />
     <Content Include="Views\Viestis\HaeOpiskelijanViestit.cshtml" />
     <Content Include="Views\Viestis\HaeYrityksenViestit.cshtml" />
     <Content Include="Views\Viestis\Index.cshtml" />
@@ -1047,6 +1044,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

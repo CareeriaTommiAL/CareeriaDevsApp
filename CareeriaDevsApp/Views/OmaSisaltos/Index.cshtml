@@ -7,22 +7,16 @@
 
 <h2>Opiskelijaprofiilit(Admin)</h2>
 
-<p>
-    @Html.ActionLink("Luo uusi", "Create")
-</p>
 <table class="table">
     <tr>
-        @*<th>
-            @Html.DisplayNameFor(model => model.omatAsetukset)
-        </th>*@
         <th>
-            @Html.DisplayNameFor(model => model.omaKuva)
+            <p>Profiilikuva</p>
         </th>
         <th>
             <p>Nimi</p>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.omaTeksti)
+            <p>Opiskelijan omaesittely</p>
         </th>
         <th></th>
     </tr>
@@ -31,25 +25,21 @@
     @foreach (var item in Model)
     {
 <tr>
-    @*<td>
-            @Html.DisplayFor(modelItem => item.omatAsetukset)
-        </td>*@
     <td>
-        @*@Html.DisplayFor(modelItem => item.omaKuva)*@
-        <img src="@Html.Raw(HttpUtility.HtmlDecode(item.omaKuva))" width="200"/>
+        @*Näytetään opiskelijan kuva URLista:*@
+        <img src="@Html.Raw(HttpUtility.HtmlDecode(item.omaKuva))" width="200" />
     </td>
     <td>@*Näytetään opiskelijan koko nimi:*@
         @Html.DisplayFor(modelItem => item.Opiskelija.etunimi) @Html.DisplayFor(modelItem => item.Opiskelija.sukunimi)
     </td>
     <td>
-        @*@Html.DisplayFor(modelItem => item.omaTeksti)*@
         @*Näytetään opiskelijan itsemuokkaama "profiili":*@
         @Html.Raw(HttpUtility.HtmlDecode(item.omaTeksti))
     </td>
 
     <td>
-        @Html.ActionLink("Edit", "Edit", new { id = item.opiskelija_Id }) |
-        @Html.ActionLink("Delete", "Delete", new { id = item.opiskelija_Id})
+        @Html.ActionLink("Muokkaa", "Edit", new { id = item.opiskelija_Id }) |
+        @Html.ActionLink("Poista", "Delete", new { id = item.opiskelija_Id})
     </td>
 </tr>
         
