@@ -1,5 +1,10 @@
-﻿.navbar {
+﻿/* nav */
+.navbar {
     min-height: 100px;
+}
+
+.dropdown-item {
+    cursor: pointer;
 }
 
 /* login */
@@ -8,8 +13,13 @@
 }
 
 .login-form {
-    max-width: 400px;
-    margin: 0 auto;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    padding: 30px;
+}
+
+.login-h {
+    border-bottom: 1px dashed rgba(0,0,0,0.2);
 }
 
 #students {
