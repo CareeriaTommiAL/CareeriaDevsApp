@@ -1,0 +1,46 @@
+﻿@model IEnumerable<CareeriaDevsApp.Viesti>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Viestit (admin näkymä)</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Aihe
+        </th>
+        <th>
+            Viesti
+        </th>
+        <th>
+            Opiskelija
+        </th>
+        <th>
+            Yritys
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.inbox)
+        </td>
+        <td>
+            @Html.Raw(HttpUtility.HtmlDecode(item.viestiLoki))
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Opiskelija.etunimi) @Html.DisplayFor(modelItem => item.Opiskelija.sukunimi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Yritys.yrityksenNimi)
+        </td>
+        <td>
+            @Html.ActionLink("Poista", "Delete", new { id=item.viesti_Id })
+        </td>
+    </tr>
+}
+
+</table>

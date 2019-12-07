@@ -6,7 +6,9 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using CareeriaDevsApp;
+using CareeriaDevsApp.Filters;
 
 namespace CareeriaDevsApp.Controllers
 {
@@ -37,6 +39,7 @@ namespace CareeriaDevsApp.Controllers
         }
 
         // GET: Yritys/Create
+
         public ActionResult Create()
         {
             ViewBag.postitoimipaikka_Id = new SelectList(db.Postitoimipaikka, "postitoimipaikka_Id", "postinumero");
@@ -62,6 +65,7 @@ namespace CareeriaDevsApp.Controllers
         }
 
         // GET: Yritys/Edit/5
+        [PreventFromUrl]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -95,6 +99,7 @@ namespace CareeriaDevsApp.Controllers
         }
 
         // GET: Yritys/Delete/5
+        [PreventFromUrl]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -115,6 +120,36 @@ namespace CareeriaDevsApp.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Yritys yritys = db.Yritys.Find(id);
+            var poistettavaYritys = from l in db.Login where l.yritys_Id == id select l; //Hakee login taulusta poistettavan yrityksen loginin
+            var yrityksenPuhelin = from p in db.PuhelinNumero where p.yritys_Id == id select p;
+            var yrityksenSahkoposti = from s in db.Sahkoposti where s.yritys_Id == id select s;
+            var yrityksenViestit = from m in db.Viesti where m.yritys_Id == id select m;
+
+            foreach (var l in poistettavaYritys)
+            {
+                db.Login.Remove(l);  //Poistaa yrityksen rivin login talulusta yritys_id -perusteella
+            }
+
+            foreach (var p in yrityksenPuhelin)
+            {
+                db.PuhelinNumero.Remove(p);  
+            }
+            foreach (var s in yrityksenSahkoposti)
+            {
+                db.Sahkoposti.Remove(s);
+            }
+            foreach (var m in yrityksenViestit)
+            {
+                db.Viesti.Remove(m);
+            }
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+                return HttpNotFound();
+            }
             db.Yritys.Remove(yritys);
             db.SaveChanges();
             return RedirectToAction("Index");

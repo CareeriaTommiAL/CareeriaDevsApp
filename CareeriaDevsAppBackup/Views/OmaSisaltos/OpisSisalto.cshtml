@@ -1,0 +1,34 @@
+﻿@model IEnumerable<CareeriaDevsApp.OmaSisalto>
+
+
+@{
+    ViewBag.Title = "OpisSisalto";
+}
+
+    <label>Sinulle on @ViewBag.lukemattomatViestit uutta viestiä.</label>
+<br />
+@Html.ActionLink("Lue saapuneet viestit", "HaeOpiskelijanViestit", "Viestis", new { id = Session["student_id"] }, null)
+<hr />
+
+
+
+@if (Session["student_id"] != null)
+{
+    foreach (var item in Model)
+    {
+        @*Näytetään opiskelijan omaKuva -tietokannasta <img> sisään:*@
+        <p>
+            profiilikuva
+            <br />
+            <img src="@Html.Raw(HttpUtility.HtmlDecode(item.omaKuva))" width="200">
+        </p>
+        <hr />
+        @*Näytetään opiskelijan itsemuokkaama "profiili":*@
+        @Html.Raw(HttpUtility.HtmlDecode(item.omaTeksti));
+        <hr />
+    }
+
+}
+
+@*käytetään loginissa saatua Session["student_id"] ominaisuutta viittaamaan oikeaan tauluun*@
+@Html.ActionLink("Muokkaa omaa osaajaprofiilia", "Edit", new { id = Session["student_id"] })

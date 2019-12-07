@@ -1,0 +1,17 @@
+﻿@model CareeriaDevsApp.Viesti
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h3>Oletko varma että haluat poistaa tämän viestin?</h3>
+<div>
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Poista" class="btn btn-default" /> |
+            @Html.ActionLink("Takaisin", "Index")
+        </div>
+    }
+</div>

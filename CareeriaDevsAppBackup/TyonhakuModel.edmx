@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Stud1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Stud1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Login">
           <Key>
             <PropertyRef Name="login_Id" />
@@ -15,6 +15,8 @@
           <Property Name="opiskelija_Id" Type="int" />
           <Property Name="yritys_Id" Type="int" />
           <Property Name="paaKayttaja_Id" Type="int" />
+          <Property Name="aktivointiKoodi" Type="uniqueidentifier" />
+          <Property Name="onkoEmailAktivoitu" Type="bit" />
         </EntityType>
         <EntityType Name="OmaSisalto">
           <Key>
@@ -22,8 +24,8 @@
           </Key>
           <Property Name="omaSisalto_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="omatAsetukset" Type="varbinary" MaxLength="1" />
-          <Property Name="omaKuva" Type="varbinary" MaxLength="1" />
-          <Property Name="omaTeksti" Type="varbinary" MaxLength="1" />
+          <Property Name="omaKuva" Type="nvarchar(max)" />
+          <Property Name="omaTeksti" Type="nvarchar(max)" />
           <Property Name="opiskelija_Id" Type="int" />
         </EntityType>
         <EntityType Name="Opiskelija">
@@ -82,11 +84,14 @@
             <PropertyRef Name="viesti_Id" />
           </Key>
           <Property Name="viesti_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="inbox" Type="varbinary" MaxLength="1" />
-          <Property Name="viestiLoki" Type="varbinary" MaxLength="1" />
+          <Property Name="inbox" Type="nvarchar(max)" />
+          <Property Name="viestiLoki" Type="nvarchar(max)" />
           <Property Name="opiskelija_Id" Type="int" />
           <Property Name="yritys_Id" Type="int" />
           <Property Name="paaKayttaja_Id" Type="int" />
+          <Property Name="onkoVastaus" Type="bit" />
+          <Property Name="onkoLuettu" Type="bit" />
+          <Property Name="viestinPaivays" Type="datetime" />
         </EntityType>
         <EntityType Name="Yritys">
           <Key>
@@ -378,8 +383,7 @@ warning 6002: The table/view 'Stud1.sys.database_firewall_rules' does not have a
             <End Role="Sahkoposti" EntitySet="Sahkoposti" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Stud1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -396,6 +400,8 @@ warning 6002: The table/view 'Stud1.sys.database_firewall_rules' does not have a
           <NavigationProperty Name="Opiskelija" Relationship="Self.R_30" FromRole="Login" ToRole="Opiskelija" />
           <NavigationProperty Name="Yritys" Relationship="Self.R_39" FromRole="Login" ToRole="Yritys" />
           <NavigationProperty Name="PaaKayttaja" Relationship="Self.R_42" FromRole="Login" ToRole="PaaKayttaja" />
+          <Property Name="aktivointiKoodi" Type="Guid" />
+          <Property Name="onkoEmailAktivoitu" Type="Boolean" />
         </EntityType>
         <EntityType Name="OmaSisalto">
           <Key>
@@ -403,8 +409,8 @@ warning 6002: The table/view 'Stud1.sys.database_firewall_rules' does not have a
           </Key>
           <Property Name="omaSisalto_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="omatAsetukset" Type="Binary" MaxLength="1" FixedLength="false" />
-          <Property Name="omaKuva" Type="Binary" MaxLength="1" FixedLength="false" />
-          <Property Name="omaTeksti" Type="Binary" MaxLength="1" FixedLength="false" />
+          <Property Name="omaKuva" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="omaTeksti" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="opiskelija_Id" Type="Int32" />
           <NavigationProperty Name="Opiskelija" Relationship="Self.R_29" FromRole="OmaSisalto" ToRole="Opiskelija" />
         </EntityType>
@@ -482,14 +488,17 @@ warning 6002: The table/view 'Stud1.sys.database_firewall_rules' does not have a
             <PropertyRef Name="viesti_Id" />
           </Key>
           <Property Name="viesti_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="inbox" Type="Binary" MaxLength="1" FixedLength="false" />
-          <Property Name="viestiLoki" Type="Binary" MaxLength="1" FixedLength="false" />
+          <Property Name="inbox" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="viestiLoki" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
           <Property Name="opiskelija_Id" Type="Int32" />
           <Property Name="yritys_Id" Type="Int32" />
           <Property Name="paaKayttaja_Id" Type="Int32" />
           <NavigationProperty Name="Opiskelija" Relationship="Self.R_35" FromRole="Viesti" ToRole="Opiskelija" />
           <NavigationProperty Name="PaaKayttaja" Relationship="Self.R_40" FromRole="Viesti" ToRole="PaaKayttaja" />
           <NavigationProperty Name="Yritys" Relationship="Self.R_36" FromRole="Viesti" ToRole="Yritys" />
+          <Property Name="onkoVastaus" Type="Boolean" />
+          <Property Name="onkoLuettu" Type="Boolean" />
+          <Property Name="viestinPaivays" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="Yritys">
           <Key>
@@ -774,8 +783,8 @@ warning 6002: The table/view 'Stud1.sys.database_firewall_rules' does not have a
             <End Role="Yritys" EntitySet="Yritys" />
             <End Role="Viesti" EntitySet="Viesti" />
           </AssociationSet>
-        </EntityContainer>
-      </Schema>
+          </EntityContainer>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -784,6 +793,8 @@ warning 6002: The table/view 'Stud1.sys.database_firewall_rules' does not have a
           <EntitySetMapping Name="Login">
             <EntityTypeMapping TypeName="Stud1Model.Login">
               <MappingFragment StoreEntitySet="Login">
+                <ScalarProperty Name="onkoEmailAktivoitu" ColumnName="onkoEmailAktivoitu" />
+                <ScalarProperty Name="aktivointiKoodi" ColumnName="aktivointiKoodi" />
                 <ScalarProperty Name="login_Id" ColumnName="login_Id" />
                 <ScalarProperty Name="kayttajaNimi" ColumnName="kayttajaNimi" />
                 <ScalarProperty Name="salasana" ColumnName="salasana" />
@@ -864,8 +875,11 @@ warning 6002: The table/view 'Stud1.sys.database_firewall_rules' does not have a
           <EntitySetMapping Name="Viesti">
             <EntityTypeMapping TypeName="Stud1Model.Viesti">
               <MappingFragment StoreEntitySet="Viesti">
-                <ScalarProperty Name="viesti_Id" ColumnName="viesti_Id" />
+                <ScalarProperty Name="viestinPaivays" ColumnName="viestinPaivays" />
+                <ScalarProperty Name="onkoLuettu" ColumnName="onkoLuettu" />
+                <ScalarProperty Name="onkoVastaus" ColumnName="onkoVastaus" />
                 <ScalarProperty Name="inbox" ColumnName="inbox" />
+                <ScalarProperty Name="viesti_Id" ColumnName="viesti_Id" />
                 <ScalarProperty Name="viestiLoki" ColumnName="viestiLoki" />
                 <ScalarProperty Name="opiskelija_Id" ColumnName="opiskelija_Id" />
                 <ScalarProperty Name="yritys_Id" ColumnName="yritys_Id" />
@@ -896,7 +910,7 @@ warning 6002: The table/view 'Stud1.sys.database_firewall_rules' does not have a
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-        </EntityContainerMapping>
+          </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
   </edmx:Runtime>

@@ -8,37 +8,75 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Opiskelijat", "Index", "Opiskelijas")</li>
-                    <li>@Html.ActionLink("Yritykset", "Index", "Yritys")</li>
-                </ul>
 
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="background-color: #fff;">
+        <div class="container">
+
+            @Html.ActionLink("Etusivu", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+
+            @*<a class="navbar-brand" href="#">
+                    <img src="https://getbootstrap.com/docs/4.3/assets/brand/bootstrap-solid.svg"
+                         width="30"
+                         height="30"
+                         alt="" />
+                </a>*@
+
+            <button class="navbar-toggler"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                </ul>
+                <form class="form-inline">
+                    <div class="dropdown">
+                        <button class="btn btn-outline-yellow dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Rekisteröidy
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" onclick='window.location.href = "@Url.Action("OppilasRekisterointi", "Logins", routeValues: null)"'>Työnhakija</a>
+                            <a class="dropdown-item" onclick='window.location.href = "@Url.Action("YritysRekisterointi", "Logins", routeValues: null)"'>Työnantaja</a>
+                        </div>
+                    </div>
+                    <input type="button" class="btn btn-yellow ml-2" value="Kirjaudu sisään" onclick='window.location.href = "@Url.Action("Login", "Logins", routeValues: null)"' />
+                    <!--Kutsutaan Logins controllerin logout action-->
+                    <a href="@Url.Action("Logout", "Logins", routeValues: null)">Kirjaudu ulos</a>
+                </form>
             </div>
         </div>
-    </div>
-    <div class="container body-content">
-        <!--LOGIN START-->
-        <a class="" href="Home/Login">Kirjaudu sisään</a><br />
-        Olet @Session["LoggedStatus"]<br />
-        <a class="" href="/Home/Logout">Kirjaudu ulos</a><br />
-        <!--LOGIN END-->
+    </nav>
+
+
+    @*<div class="navbar navbar-expand-lg navbar-light" style="background-color: #fff;">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                        <li>@Html.ActionLink("About", "About", "Home")</li>
+                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    </ul>
+                </div>
+            </div>
+        </div>*@
+
+    <div>
         @RenderBody()
         <hr />
-        <footer>
+        <footer class="container">
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
     </div>

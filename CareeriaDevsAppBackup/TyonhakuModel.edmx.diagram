@@ -31,7 +31,7 @@
         <AssociationConnector Association="Stud1Model.R_28" ManuallyRouted="false" />
         <AssociationConnector Association="Stud1Model.R_43" ManuallyRouted="false" />
         <AssociationConnector Association="Stud1Model.R_36" ManuallyRouted="false" />
-      </Diagram>
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

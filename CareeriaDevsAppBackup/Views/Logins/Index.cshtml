@@ -6,9 +6,6 @@
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -47,9 +44,8 @@
             @Html.DisplayFor(modelItem => item.PaaKayttaja.nimi)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.login_Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.login_Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.login_Id })
+            @Html.ActionLink("Muokkaa", "Edit", new { id=item.login_Id }) |
+            @Html.ActionLink("Poista", "Delete", new { id=item.login_Id })
         </td>
     </tr>
 }

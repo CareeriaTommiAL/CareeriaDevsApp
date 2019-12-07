@@ -20,6 +20,8 @@ namespace CareeriaDevsApp
         public Nullable<int> opiskelija_Id { get; set; }
         public Nullable<int> yritys_Id { get; set; }
         public Nullable<int> paaKayttaja_Id { get; set; }
+        public Nullable<System.Guid> aktivointiKoodi { get; set; }
+        public Nullable<bool> onkoEmailAktivoitu { get; set; }
     
         public virtual Opiskelija Opiskelija { get; set; }
         public virtual Yritys Yritys { get; set; }
