@@ -31,6 +31,7 @@ namespace CareeriaDevsApp.Controllers
             ViewBag.opiskelija_Id = new SelectList(db.Opiskelija, "opiskelija_Id", "etunimi");
             ViewBag.yritys_Id = new SelectList(db.Yritys, "yritys_Id", "yrityksenNimi");
             ViewBag.paaKayttaja_Id = new SelectList(db.PaaKayttaja, "paaKayttaja_Id", "nimi");
+            ViewBag.postitoimipaikka_Id = new SelectList(db.Postitoimipaikka, "postitoimipaikka", "postinumero");
             return View();
         }
 
@@ -142,6 +143,7 @@ namespace CareeriaDevsApp.Controllers
         [HttpGet]
         public ActionResult OppilasRekisterointi()
         {
+            ViewBag.postitoimipaikka_Id = new SelectList(db.Postitoimipaikka, "postitoimipaikka_Id", "postinumero");
             return View();
         }
         //Registration POST action 
@@ -154,8 +156,10 @@ namespace CareeriaDevsApp.Controllers
         public ActionResult OppilasRekisterointi(
             [Bind(Prefix = "Item1")] LoginModel oppkirjautuminen,
             [Bind(Prefix = "Item2")] OpiskelijaModel opiskelija,
+            [Bind(Prefix = "Item3")] PostitoimipaikkaModel pstmp,
             [Bind(Prefix = "Item4")] PuhelinNumeroModel puhelinnro
             )
+
         {
             bool Status = false;
             string message = "";
@@ -199,6 +203,10 @@ namespace CareeriaDevsApp.Controllers
                     uusiOpis.sukunimi = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(uusiOpis.sukunimi.ToLower()); //muutetaan ensimmäinen kirjain isoksi, koska käyttäjä
                     uusiOpis.opiskelija_Id = opiskelija.opiskelija_Id;
 
+                    string opiskelijanpostinumero = pstmp.postinumero;
+                    //Postitoimipaikka id:n haku postinumeron perusteella
+                    uusiOpis.postitoimipaikka_Id = (from x in db.Postitoimipaikka where x.postinumero == opiskelijanpostinumero select x.postitoimipaikka_Id).First();
+
                     Login uusiKirj = new Login();
                     uusiKirj.opiskelija_Id = opiskelija.opiskelija_Id;
                     uusiKirj.kayttajaNimi = oppkirjautuminen.kayttajaNimi;
@@ -231,6 +239,7 @@ namespace CareeriaDevsApp.Controllers
                     //    " on lähetetty sähköpostiinne:" + user.kayttajaNimi;
                     //Status = true;
                 }
+
                 #endregion
             }
             else
@@ -248,6 +257,7 @@ namespace CareeriaDevsApp.Controllers
         [HttpGet]
         public ActionResult YritysRekisterointi()
         {
+            
             return View();
         }
         //Registration POST action 
@@ -258,6 +268,7 @@ namespace CareeriaDevsApp.Controllers
         public ActionResult YritysRekisterointi(
             [Bind(Prefix = "Item1")] LoginModel yriKirjautuminen,
             [Bind(Prefix = "Item2")] YritysModel yritys,
+            [Bind(Prefix = "Item3")] PostitoimipaikkaModel pstmp,
             [Bind(Prefix = "Item4")] PuhelinNumeroModel puhelinnro
             )
         {
@@ -300,6 +311,12 @@ namespace CareeriaDevsApp.Controllers
                     uusiYrit.yrityksenNimi = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(uusiYrit.yrityksenNimi.ToLower()); //muutetaan ensimmäinen kirjain isoksi, koska käyttäjä
                     uusiYrit.Y_tunnus = yritys.Y_tunnus;
                     uusiYrit.lahiosoite = yritys.lahiosoite;
+
+                    string yrityksenpostinumero = pstmp.postinumero;
+
+                    uusiYrit.postitoimipaikka_Id = (from x in db.Postitoimipaikka where x.postinumero == yrityksenpostinumero select x.postitoimipaikka_Id).First(); //Postitoimipaikka id:n haku postinumeron perusteella
+
+
 
                     Login uusiKirjY = new Login();
                     uusiKirjY.yritys_Id = yritys.yritys_Id;

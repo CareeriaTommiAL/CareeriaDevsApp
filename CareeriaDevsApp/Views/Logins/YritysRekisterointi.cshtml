@@ -1,93 +1,91 @@
 ﻿<!--Tuplea hyväksikäyttäen voi linkata kaikkiin tarvittaviin Entitymodelissa oleviin classeihin tai omiin classeihin***************-->
-<!--*****************************************************YRITYSREKISTERÖINTI*************************************************************-->
+<!--*****************************************************YRITYSREKISTERÖINTI*******************************************************-->
 @model Tuple<CareeriaDevsApp.Models.LoginModel, CareeriaDevsApp.Models.YritysModel, CareeriaDevsApp.Models.PostitoimipaikkaModel, CareeriaDevsApp.Models.PuhelinNumeroModel>
 
+    <div class="container">
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
+        <div class="row">
 
-    <div class="form-horizontal">
-        <h4>Yritysrekisteröityminen</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            <p class="control-label col-md-2">Sähköpostiosoite</p>
-            <div class="col-md-10">
-                @Html.EditorFor(tuple => tuple.Item1.kayttajaNimi, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(tuple => tuple.Item1.kayttajaNimi, "", new { @class = "text-danger" })
-                @*@Html.ValidationMessage("EmailExist", new { @class = "text-danger" })
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })*@
+            <div class="col">
+
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+
+                    <form>
+
+                            <h1 class="m-5 text-center">Yritysrekisteröityminen</h1>
+
+                            <hr />
+
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                            <div class="form-group">
+                                @Html.LabelFor(tuple => tuple.Item1.kayttajaNimi, "Sähköpostiosoite", new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(tuple => tuple.Item1.kayttajaNimi, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(tuple => tuple.Item1.kayttajaNimi, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(tuple => tuple.Item1.salasana, "Salasana", new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(tuple => tuple.Item1.salasana, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(tuple => tuple.Item1.salasana, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(tuple => tuple.Item2.yrityksenNimi, "Yrityksen nimi", new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(tuple => tuple.Item2.yrityksenNimi, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(tuple => tuple.Item2.yrityksenNimi, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(tuple => tuple.Item2.Y_tunnus, "Y-Tunnus", new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(tuple => tuple.Item2.Y_tunnus, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(tuple => tuple.Item2.Y_tunnus, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(tuple => tuple.Item2.lahiosoite, "Lähiosoite", new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(tuple => tuple.Item2.lahiosoite, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(tuple => tuple.Item2.lahiosoite, "", new { @class = "text-danger" })
+                            </div>
+
+                            @*<div class="form-group">
+                                @Html.LabelFor(tuple => tuple.Item3.postinumero, "Postinumero", new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(tuple => tuple.Item3.postinumero, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } }) <!--disabloituna koska ei oo mitään järkee viä-->
+                                @Html.ValidationMessageFor(tuple => tuple.Item3.postinumero, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(tuple => tuple.Item3.postitoimipaikka, "Postitoimipaikka", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                                @Html.EditorFor(tuple => tuple.Item3.postitoimipaikka, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })<!--disabloituna koska ei oo mitään järkee viä-->
+                                @Html.ValidationMessageFor(tuple => tuple.Item3.postitoimipaikka, "", new { @class = "text-danger" })
+                            </div>*@
+
+                            <div class="form-group">
+                                @Html.LabelFor(tuple => tuple.Item4.numero, "Puhelinnumero", new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.EditorFor(tuple => tuple.Item4.numero, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(tuple => tuple.Item4.numero, "", new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(tuple => tuple.Item3.postinumero, "Postinumero", htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-md-10">
+                                    @Html.EditorFor(tuple => tuple.Item3.postinumero, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(tuple => tuple.Item2.postitoimipaikka_Id, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-yellow">Rekisteröidy</button>
+
+                    </form>
+                    }
+
             </div>
-        </div>
-        <div class="form-group">
-            <p class="control-label col-md-2">Salasana</p>
-            <div class="col-md-10">
-                @Html.EditorFor(tuple => tuple.Item1.salasana, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(tuple => tuple.Item1.salasana, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            <p class="control-label col-md-2">Yrityksen nimi</p>
-            <div class="col-md-10">
-                @Html.EditorFor(tuple => tuple.Item2.yrityksenNimi, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(tuple => tuple.Item2.yrityksenNimi, "", new { @class = "text-danger" })
-            </div>
+
         </div>
 
-        <div class="form-group">
-            <p class="control-label col-md-2">Y-Tunnus</p>
-            <div class="col-md-10">
-                @Html.EditorFor(tuple => tuple.Item2.Y_tunnus, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(tuple => tuple.Item2.Y_tunnus, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <p class="control-label col-md-2">Lähiosoite</p>
-            <div class="col-md-10">
-                @Html.EditorFor(tuple => tuple.Item2.lahiosoite, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(tuple => tuple.Item2.lahiosoite, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <p class="control-label col-md-2">Postinumero</p>
-            <div class="col-md-10">
-                @Html.EditorFor(tuple => tuple.Item3.postinumero, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } }) <!--disabloituna koska ei oo mitään järkee viä-->
-                @Html.ValidationMessageFor(tuple => tuple.Item3.postinumero, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            <p class="control-label col-md-2">Postitoimipaikka</p>
-            <div class="col-md-10">
-                @Html.EditorFor(tuple => tuple.Item3.postitoimipaikka, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })<!--disabloituna koska ei oo mitään järkee viä-->
-                @Html.ValidationMessageFor(tuple => tuple.Item3.postitoimipaikka, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            <p class="control-label col-md-2">Puhelinnumero</p>
-            <div class="col-md-10">
-                @Html.EditorFor(tuple => tuple.Item4.numero, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(tuple => tuple.Item4.numero, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        @*<div class="form-group">
-            @Html.LabelFor(tuple => tuple.Item2.postitoimipaikka_Id, "postitoimipaikka_Id", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("postitoimipaikka_Id", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(tuple => tuple.Item2.postitoimipaikka_Id, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Rekisteröidy" class="btn btn-default" />
-            </div>
-        </div>
     </div>
-    }
 
 
 <!--Valitoidaan kentät, jotka on tällä hetkellä kovakoodattu suoraan Entiteettimallin .cs -tiedostoihin (ei hyvä tapa mutta toimii tällä hetkellä)-->
