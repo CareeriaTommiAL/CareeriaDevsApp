@@ -570,6 +570,83 @@ namespace CareeriaDevsApp.Controllers
         //***********************************************************************************************************
 
 
+
+        //Oppilaan tietojen päivitys***************************************************************
+        //*************************************************************************************
+        [HttpGet]
+        public ActionResult OppilasTiedotUpdate(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Login login = db.Login.Find(id);
+            if (login == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.postitoimipaikka_Id = new SelectList(db.Postitoimipaikka, "postitoimipaikka_Id", "postinumero");
+            return View();
+        }
+        //Registration POST action 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+
+        public ActionResult OppilasTiedotUpdate(
+            [Bind(Prefix = "Item1")] LoginModel oppkirjautuminen,
+            [Bind(Prefix = "Item2")] OpiskelijaModel opiskelija,
+            [Bind(Prefix = "Item3")] PostitoimipaikkaModel pstmp,
+            [Bind(Prefix = "Item4")] PuhelinNumeroModel puhelinnro
+            )
+
+        {
+            bool Status = false;
+            string message = "";
+            //
+            // Model Validation 
+            if (ModelState.IsValid)
+            {
+                #region Uusien tietojen tallennus tietokantaan
+                using (Stud1Entities dc = new Stud1Entities())
+                {
+                    //Tietojen tallennus modelista tietokantaan...
+                    Opiskelija uusiOpis = new Opiskelija();
+                    uusiOpis.etunimi = opiskelija.etunimi;
+                    uusiOpis.etunimi = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(uusiOpis.etunimi.ToLower()); //muutetaan ensimmäinen kirjain isoksi, koska käyttäjä
+                    uusiOpis.sukunimi = opiskelija.sukunimi;
+                    uusiOpis.sukunimi = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(uusiOpis.sukunimi.ToLower()); //muutetaan ensimmäinen kirjain isoksi, koska käyttäjä
+
+                    string opiskelijanpostinumero = pstmp.postinumero;
+                    //Postitoimipaikka id:n haku postinumeron perusteella
+                    uusiOpis.postitoimipaikka_Id = (from x in db.Postitoimipaikka where x.postinumero == opiskelijanpostinumero select x.postitoimipaikka_Id).First();
+
+                    Login uusiKirj = new Login();
+                    uusiKirj.salasana = oppkirjautuminen.salasana;
+
+                    PuhelinNumero uusiPuhO = new PuhelinNumero();
+                    uusiPuhO.numero = puhelinnro.numero;
+
+                    dc.Entry(uusiOpis).State = EntityState.Modified;
+                    dc.Entry(uusiPuhO).State = EntityState.Modified;
+                    dc.Entry(uusiKirj).State = EntityState.Modified;
+                    dc.SaveChanges();
+                }
+                #endregion
+            }
+            else
+            {
+                message = "Virhe käsiteltäessä pyyntöä!";
+            }
+
+            ViewBag.Message = message;
+            ViewBag.Status = Status;
+            return RedirectToAction("Login");
+        }
+
+
+
+
+
     }
 }
 

@@ -22,7 +22,7 @@
 
                         <div class="form-group">
                             @Html.LabelFor(tuple => tuple.Item1.kayttajaNimi, "Käyttäjänimi", new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.LabelFor(tuple => tuple.Item1.kayttajaNimi, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.DisplayFor(tuple => tuple.Item1.kayttajaNimi, new { htmlAttributes = new { @class = "form-control" } })
                             @Html.ValidationMessageFor(tuple => tuple.Item1.kayttajaNimi, "", new { @class = "text-danger" })
                         </div>
 
@@ -44,18 +44,6 @@
                             @Html.ValidationMessageFor(tuple => tuple.Item2.sukunimi, "", new { @class = "text-danger" })
                         </div>
 
-                        @*<div class="form-group">
-                            @Html.LabelFor(tuple => tuple.Item2.postitoimipaikka_Id, "Postinumero", new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.EditorFor(tuple => tuple.Item2.postitoimipaikka_Id, new { htmlAttributes = new { @class = "form-control"} }) <!--disabloituna koska ei oo mitään järkee viä-->
-                            @Html.ValidationMessageFor(tuple => tuple.Item2.postitoimipaikka_Id, "", new { @class = "text-danger" })
-                        </div>
-
-                        <div class="form-group">
-                            @Html.LabelFor(tuple => tuple.Item3.postitoimipaikka, "Postitoimipaikka", new { htmlAttributes = new { @class = "form-control" } })
-                            @Html.EditorFor(tuple => tuple.Item3.postitoimipaikka, new { htmlAttributes = new { @class = "form-control"} })<!--disabloituna koska ei oo mitään järkee viä-->
-                            @Html.ValidationMessageFor(tuple => tuple.Item3.postitoimipaikka, "", new { @class = "text-danger" })
-                        </div>*@
-
                         <div class="form-group">
                             @Html.LabelFor(tuple => tuple.Item4.numero, "Puhelinnumero", new { htmlAttributes = new { @class = "form-control" } })
                             @Html.EditorFor(tuple => tuple.Item4.numero, new { htmlAttributes = new { @class = "form-control" } })
@@ -70,7 +58,7 @@
                             </div>
             </div>
 
-                        <button type="submit" class="btn btn-yellow">Rekisteröidy</button>
+                        <button type="submit" class="btn btn-yellow">Tallenna tiedot</button>
 
                     </form>
                         

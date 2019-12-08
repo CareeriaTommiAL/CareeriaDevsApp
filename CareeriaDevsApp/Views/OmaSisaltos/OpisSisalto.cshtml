@@ -5,7 +5,7 @@
     ViewBag.Title = "OpisSisalto";
 }
 
-    <label>Sinulle on @ViewBag.lukemattomatViestit uutta viestiä.</label>
+<label>Sinulle on @ViewBag.lukemattomatViestit uutta viestiä.</label>
 <br />
 @Html.ActionLink("Lue saapuneet viestit", "HaeOpiskelijanViestit", "Viestis", new { id = Session["student_id"] }, null)
 <hr />
@@ -32,3 +32,4 @@
 
 @*käytetään loginissa saatua Session["student_id"] ominaisuutta viittaamaan oikeaan tauluun*@
 @Html.ActionLink("Muokkaa omaa osaajaprofiilia", "Edit", new { id = Session["student_id"] })
+@Html.ActionLink("Muokkaa omia tietoja", "OppilasTiedotUpdate", "Logins", new { id = Session["student_id"] }, null)
