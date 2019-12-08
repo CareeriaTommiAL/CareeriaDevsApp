@@ -5,30 +5,36 @@
     ViewBag.Title = "OpisSisalto";
 }
 
-    <label>Sinulle on @ViewBag.lukemattomatViestit uutta viestiä.</label>
-<br />
-@Html.ActionLink("Lue saapuneet viestit", "HaeOpiskelijanViestit", "Viestis", new { id = Session["student_id"] }, null)
-<hr />
+<div class="alert alert-warning text-center" role="alert">
+    Tervetuloa Opiskelija X //
+    Sinulle on <span class="badge badge-primary">@ViewBag.lukemattomatViestit</span> uutta viestiä. @Html.ActionLink("Lue saapuneet viestit", "HaeOpiskelijanViestit", "Viestis", new { id = Session["student_id"] }, null)
+</div>
 
+<div class="container">
+    <div class="row">
+        <div class="col d-flex flex-column align-items-center">
 
+            @if (Session["student_id"] != null)
+            {
+                foreach (var item in Model)
+                {
+                @*Näytetään opiskelijan omaKuva -tietokannasta <img> sisään:*@
+                <div class="card" style="width: 18rem;">
+                    <img src="@Html.Raw(HttpUtility.HtmlDecode(item.omaKuva))" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">Opiskelija X</h5>
+                        @*Näytetään opiskelijan itsemuokkaama "profiili":*@
+                        <p class="card-text">@Html.Raw(HttpUtility.HtmlDecode(item.omaTeksti))</p>
+                    </div>
+                </div>
+                <br />
+                }
 
-@if (Session["student_id"] != null)
-{
-    foreach (var item in Model)
-    {
-        @*Näytetään opiskelijan omaKuva -tietokannasta <img> sisään:*@
-        <p>
-            profiilikuva
-            <br />
-            <img src="@Html.Raw(HttpUtility.HtmlDecode(item.omaKuva))" width="200">
-        </p>
-        <hr />
-        @*Näytetään opiskelijan itsemuokkaama "profiili":*@
-        @Html.Raw(HttpUtility.HtmlDecode(item.omaTeksti));
-        <hr />
-    }
+            }
 
-}
+            @*käytetään loginissa saatua Session["student_id"] ominaisuutta viittaamaan oikeaan tauluun*@
+            <div>@Html.ActionLink("Muokkaa omaa profiilia", "Edit", new { id = Session["student_id"] }, new { @class = "btn btn-light" })</div>
 
-@*käytetään loginissa saatua Session["student_id"] ominaisuutta viittaamaan oikeaan tauluun*@
-@Html.ActionLink("Muokkaa omaa osaajaprofiilia", "Edit", new { id = Session["student_id"] })
+        </div>
+    </div>
+</div>

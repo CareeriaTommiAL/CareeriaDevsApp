@@ -4,40 +4,47 @@
     ViewBag.Title = "HaeOpiskelijanViestit";
 }
 
-<h2>Saapuneet viestit</h2>
+<div class="container">
+    <div class="row">
+        <div class="col">
 
-@if (Session["student_id"] != null)
-{
-    foreach (var item in Model.Reverse())
-    {
-        @*Näytetään opiskelijan viestit:*@
-        <div><h4>Viestin aihe: @Html.DisplayFor(modelItem => item.inbox)</h4></div>
-        <div><h6>Lähettäjä: @Html.DisplayFor(modelItem => item.Yritys.yrityksenNimi) | <i>@Html.DisplayFor(modelItem => item.viestinPaivays)</i></h6></div>
-        <hr />
-        <div><h6>Viesti:</h6></div>
-        <div>@Html.Raw(HttpUtility.HtmlDecode(item.viestiLoki))</div>
-        <hr />
-        @Html.ActionLink("Vastaa viestiin", "Reply", "Viestis", new { yritysId = item.yritys_Id, vastausAihe = item.inbox }, null)
-        <br />
-        if (item.onkoLuettu == false)
-        {
-            <div id="id=" viestiLuetuksi""><a href="~/Viestis/ViestiLuetuksi?id=@item.viesti_Id" onclick="viestiLuettu()">Merkitse viesti luetuksi</a></div>
-        }
-        <script>
-            function viestiLuettu() { //
-                document.getElementById("viestiLuetuksi").style.display = "none";
+            <h1 class="m-5 text-center">Saapuneet viestit</h1>
+
+            @if (Session["student_id"] != null)
+            {
+                foreach (var item in Model.Reverse())
+                {
+                    @*Näytetään opiskelijan viestit:*@
+                    <div class="list-group">
+                        <div class="list-group-item">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1"><u>Viestin aihe: @Html.DisplayFor(modelItem => item.inbox)</u></h5>
+                                <small class="text-muted">@Html.DisplayFor(modelItem => item.viestinPaivays)</small>
+                            </div>
+                            <p class="mb-1">@Html.Raw(HttpUtility.HtmlDecode(item.viestiLoki))</p>
+                            <small class="text-muted">Lähettäjä: @Html.DisplayFor(modelItem => item.Yritys.yrityksenNimi)</small>
+                        </div>
+                    </div>
+
+                    @Html.ActionLink("Vastaa viestiin", "Reply", "Viestis", new { yritysId = item.yritys_Id, vastausAihe = item.inbox }, null)
+                    if (item.onkoLuettu == false)
+                    {
+                        <div id="id=" viestiLuetuksi""><a href="~/Viestis/ViestiLuetuksi?id=@item.viesti_Id" onclick="viestiLuettu()">Merkitse viesti luetuksi</a></div>
+                    }
+                    <script>
+                        function viestiLuettu() { //
+                            document.getElementById("viestiLuetuksi").style.display = "none";
+                        }
+                    </script>
+                    @Html.ActionLink("Poista viesti", "Delete", new { id = item.viesti_Id })
+                    <br /><br />
+                }
+
             }
-        </script>
-        @Html.ActionLink("Poista", "Delete", new { id = item.viesti_Id })
-        <hr />
-        <br />
-        <br />
-        <br />
-        <br />
 
-    }
+            <hr />
+            @Html.ActionLink("Takaisin", "OpisSisalto", "OmaSisaltos", new { id = Session["student_id"] }, new { @class = "btn btn-light mb-3" })
 
-}
-
-<hr />
-@Html.ActionLink("Takaisin", "OpisSisalto", "OmaSisaltos", new { id = Session["student_id"] }, null)
+        </div>
+    </div>
+</div>
