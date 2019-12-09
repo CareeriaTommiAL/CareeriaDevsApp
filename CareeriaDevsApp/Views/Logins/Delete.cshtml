@@ -3,62 +3,47 @@
 @{
     ViewBag.Title = "Delete";
 }
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
 
-<h2>Käyttäjän poisto</h2>
+                <h2 class="m-5 text-center">Admin / Poista käyttäjä</h2>
 
-<h3>Haluatko varmasti poistaa kyseisen käyttäjän?</h3>
-<div>
-    <h4>Login</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.kayttajaNimi)
-        </dt>
+                <div class="alert alert-danger mb-5 text-center" role="alert">Oletko varma että haluat poistaa <strong>@Html.DisplayFor(model => model.kayttajaNimi)</strong> käyttäjän?</div>
 
-        <dd>
-            @Html.DisplayFor(model => model.kayttajaNimi)
-        </dd>
+                <ul class="list-group list-group-flush">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.salasana)
-        </dt>
+                    <li class="list-group-item">
+                        @Html.DisplayFor(model => model.kayttajaNimi)
+                    </li>
 
-        <dd>
-            @Html.DisplayFor(model => model.salasana)
-        </dd>
+                    <li class="list-group-item">
+                        @Html.DisplayFor(model => model.salasana)
+                    </li>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Opiskelija.etunimi)
-        </dt>
+                    <li class="list-group-item">
+                        @Html.DisplayFor(model => model.Opiskelija.etunimi)
+                    </li>
 
-        <dd>
-            @Html.DisplayFor(model => model.Opiskelija.etunimi)
-        </dd>
+                    <li class="list-group-item">
+                        @Html.DisplayFor(model => model.Yritys.yrityksenNimi)
+                    </li>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Yritys.yrityksenNimi)
-        </dt>
+                    <li class="list-group-item">
+                        @Html.DisplayFor(model => model.PaaKayttaja.nimi)
+                    </li>
 
-        <dd>
-            @Html.DisplayFor(model => model.Yritys.yrityksenNimi)
-        </dd>
+                </ul>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.PaaKayttaja.nimi)
-        </dt>
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
 
-        <dd>
-            @Html.DisplayFor(model => model.PaaKayttaja.nimi)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+                <div class="form-actions no-color mt-5">
+                    <input type="submit" value="Poista käyttäjä" class="btn btn-danger" />
+                    @Html.ActionLink("Takaisin listanäkymään", "Index", null, new { @class = "btn btn-light" })
+                </div>
+                    }
+            </div>
         </div>
-    }
-</div>
+    </div>

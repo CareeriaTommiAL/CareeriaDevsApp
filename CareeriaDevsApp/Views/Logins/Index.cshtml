@@ -4,50 +4,64 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<div class="container">
+    <div class="row">
+        <div class="col">
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.kayttajaNimi)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.salasana)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Opiskelija.etunimi)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Yritys.yrityksenNimi)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PaaKayttaja.nimi)
-        </th>
-        <th></th>
-    </tr>
+            <h2 class="m-5 text-center">Admin / Kaikki käyttäjät</h2>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.kayttajaNimi)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.salasana)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Opiskelija.etunimi)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Yritys.yrityksenNimi)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.PaaKayttaja.nimi)
-        </td>
-        <td>
-            @Html.ActionLink("Muokkaa", "Edit", new { id=item.login_Id }) |
-            @Html.ActionLink("Poista", "Delete", new { id=item.login_Id })
-        </td>
-    </tr>
-}
+            @Html.ActionLink("Luo uusi käyttäjä", "Create", null, new { @class = "btn btn-success mb-3" })
 
-</table>
+                <table class="table table-borderless table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">
+                                @Html.DisplayNameFor(model => model.kayttajaNimi)
+                            </th>
+                            <th scope="col">
+                                @Html.DisplayNameFor(model => model.salasana)
+                            </th>
+                            <th scope="col">
+                                @Html.DisplayNameFor(model => model.Opiskelija.etunimi)
+                            </th>
+                            <th scope="col">
+                                @Html.DisplayNameFor(model => model.Yritys.yrityksenNimi)
+                            </th>
+                            <th scope="col">
+                                @Html.DisplayNameFor(model => model.PaaKayttaja.nimi)
+                            </th>
+                            <th scope="col"></th>
+                        </tr>
+                    </thead>
+
+                    @foreach (var item in Model)
+                    {
+                        <tbody>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.kayttajaNimi)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.salasana)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Opiskelija.etunimi)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Yritys.yrityksenNimi)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PaaKayttaja.nimi)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Muokkaa", "Edit", new { id = item.login_Id }, new { @class = "btn btn-secondary" })
+                                    @Html.ActionLink("Poista", "Delete", new { id = item.login_Id }, new { @class = "btn btn-danger" })
+                                </td>
+                            </tr>
+                        </tbody>
+                    }
+
+                </table>
+</div>
+    </div>
+</div>

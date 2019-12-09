@@ -1,17 +1,33 @@
 ﻿@model CareeriaDevsApp.Viesti
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Poista viesti";
 }
 
-<h3>Oletko varma että haluat poistaa tämän viestin?</h3>
-<div>
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
+<div class="container">
+    <div class="row">
+        <div class="col">
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Poista" class="btn btn-default" /> |
-            @Html.ActionLink("Takaisin", "Index")
+            <div class="alert alert-danger text-center" role="alert">
+                Oletko varma että haluat poistaa tämän viestin?
+            </div>
+
+            <div class="row">
+                <div class="col text-center">
+
+                        @using (Html.BeginForm())
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-actions">
+                                <input type="submit" value="Poista viesti" class="btn btn-danger" />
+                                @Html.ActionLink("Takaisin", "Index", null, new { @class = "btn btn-light" })
+                            </div>
+                        }
+
+                </div>
+            </div>
+
         </div>
-    }
+    </div>
 </div>

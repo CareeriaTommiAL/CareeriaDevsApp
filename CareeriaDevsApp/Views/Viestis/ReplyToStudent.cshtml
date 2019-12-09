@@ -1,41 +1,35 @@
 ﻿@model CareeriaDevsApp.Viesti
 
 @{
-    ViewBag.Title = "ReplyToStudent";
+    ViewBag.Title = "Vastaa viestiin";
 }
 <script src="~/Scripts/ckeditor/ckeditor.js"></script>
 <script src="~/Scripts/ckeditor/samples/js/sample.js"></script>
 
-<h2>Luo vastausviesti</h2>
+<div class="container">
+    <div class="row">
+        <div class="col">
+
+            <h1 class="m-5 text-center">Luo vastausviesti</h1>
 
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>Viesti</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            Otsikko:
-            <div class="col-md-10">
-                @Html.DisplayFor(model => model.inbox, "", new { @class = "text-danger" })
-                @*@Html.EditorFor(model => model.inbox, new { htmlAttributes = new { @class = "form-control" } })*@
-                @Html.ValidationMessageFor(model => model.inbox, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <div class="form-group">
+                        <label for="inbox"><strong>Otsikko: @Html.DisplayFor(model => model.inbox, "")</strong></label>
+                        @*@Html.EditorFor(model => model.inbox, new { htmlAttributes = new { @class = "form-control" } })*@
+                        @Html.ValidationMessageFor(model => model.inbox, "", new { @class = "text-danger" })
+                    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.viestiLoki, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.viestiLoki, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.viestiLoki, "", new { @class = "text-danger" })
-                <script type="text/javascript" language="javascript">
-                    CKEDITOR.replace(@Html.IdFor(model => model.viestiLoki));@*CKEDITORI korvaa mvc:n editorin*@
-                </script>
-            </div>
-        </div>
+                    <div class="form-group">
+                        @Html.TextAreaFor(model => model.viestiLoki, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.viestiLoki, "", new { @class = "text-danger" })
+                        <script type="text/javascript" language="javascript">CKEDITOR.replace(@Html.IdFor(model => model.viestiLoki));@*CKEDITORI korvaa mvc:n editorin*@
+                        </script>
+                    </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
@@ -45,8 +39,12 @@
     </div>
 }
 
-<div>
-    @Html.ActionLink("Takaisin", "Index")
+            <div>
+                @Html.ActionLink("Takaisin", "Index", null, new { @class = "btn btn-light" })
+            </div>
+
+        </div>
+    </div>
 </div>
 
 @section Scripts {
