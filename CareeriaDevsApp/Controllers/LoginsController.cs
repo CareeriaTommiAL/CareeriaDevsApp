@@ -571,6 +571,8 @@ namespace CareeriaDevsApp.Controllers
 
 
 
+
+        //******************************************************************************************
         //Oppilaan tietojen päivitys***************************************************************
         //*************************************************************************************
         [HttpGet]
@@ -585,7 +587,29 @@ namespace CareeriaDevsApp.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.postitoimipaikka_Id = new SelectList(db.Postitoimipaikka, "postitoimipaikka_Id", "postinumero");
+
+            var puhnrotiedot = db.PuhelinNumero.FirstOrDefault(p => p.opiskelija_Id == id);
+            if (puhnrotiedot != null)
+            {
+                var numero = puhnrotiedot.numero;
+                ViewBag.puhnro = numero;
+            }
+            //var postitiedot = db.Postitoimipaikka.Where(a => a.postitoimipaikka_Id == login.Opiskelija.postitoimipaikka_Id).FirstOrDefault();
+            //var postitiedot = (from a in db.Postitoimipaikka
+            //                   where a.postitoimipaikka_Id == login.Opiskelija.postitoimipaikka_Id
+            //                   select a).FirstOrDefault();
+            //if (postitiedot != null)
+            //{
+            //    ViewBag.postinro = postitiedot.postinumero;
+            //}
+
+                ViewBag.kayttajanimi = login.kayttajaNimi;
+                ViewBag.etunimi = login.Opiskelija.etunimi;
+                ViewBag.sukunimi = login.Opiskelija.sukunimi;
+                ViewBag.postinro = "Kirjoita postinumerosi tähän";
+
+
+
             return View();
         }
         //Registration POST action 
@@ -596,7 +620,8 @@ namespace CareeriaDevsApp.Controllers
             [Bind(Prefix = "Item1")] LoginModel oppkirjautuminen,
             [Bind(Prefix = "Item2")] OpiskelijaModel opiskelija,
             [Bind(Prefix = "Item3")] PostitoimipaikkaModel pstmp,
-            [Bind(Prefix = "Item4")] PuhelinNumeroModel puhelinnro
+            [Bind(Prefix = "Item4")] PuhelinNumeroModel puhelinnro,
+            Login paivitaSa, Opiskelija paivitaOpis, PuhelinNumero paivitaPuh
             )
 
         {
@@ -609,26 +634,31 @@ namespace CareeriaDevsApp.Controllers
                 #region Uusien tietojen tallennus tietokantaan
                 using (Stud1Entities dc = new Stud1Entities())
                 {
-                    //Tietojen tallennus modelista tietokantaan...
-                    Opiskelija uusiOpis = new Opiskelija();
-                    uusiOpis.etunimi = opiskelija.etunimi;
-                    uusiOpis.etunimi = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(uusiOpis.etunimi.ToLower()); //muutetaan ensimmäinen kirjain isoksi, koska käyttäjä
-                    uusiOpis.sukunimi = opiskelija.sukunimi;
-                    uusiOpis.sukunimi = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(uusiOpis.sukunimi.ToLower()); //muutetaan ensimmäinen kirjain isoksi, koska käyttäjä
+                    //Paivitys tietokantaan
+
+                    //Opiskelija tauluun:
+                    paivitaOpis.opiskelija_Id = Convert.ToInt32(Session["student_id"]);
+                    paivitaOpis.etunimi = opiskelija.etunimi;
+                    paivitaOpis.etunimi = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(paivitaOpis.etunimi.ToLower());
+                    paivitaOpis.sukunimi = opiskelija.sukunimi;
+                    paivitaOpis.sukunimi = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(paivitaOpis.sukunimi.ToLower());
 
                     string opiskelijanpostinumero = pstmp.postinumero;
                     //Postitoimipaikka id:n haku postinumeron perusteella
-                    uusiOpis.postitoimipaikka_Id = (from x in db.Postitoimipaikka where x.postinumero == opiskelijanpostinumero select x.postitoimipaikka_Id).First();
+                    paivitaOpis.postitoimipaikka_Id = (from x in db.Postitoimipaikka where x.postinumero == opiskelijanpostinumero select x.postitoimipaikka_Id).First();
 
-                    Login uusiKirj = new Login();
-                    uusiKirj.salasana = oppkirjautuminen.salasana;
+                    //Logins tauluun:
+                    paivitaSa.opiskelija_Id = Convert.ToInt32(Session["student_id"]);
+                    paivitaSa.salasana = oppkirjautuminen.salasana;
 
-                    PuhelinNumero uusiPuhO = new PuhelinNumero();
-                    uusiPuhO.numero = puhelinnro.numero;
+                    //PuhelinNumero tauluun:
+                    paivitaPuh.opiskelija_Id = Convert.ToInt32(Session["student_id"]);
+                    paivitaPuh.numero = puhelinnro.numero;
 
-                    dc.Entry(uusiOpis).State = EntityState.Modified;
-                    dc.Entry(uusiPuhO).State = EntityState.Modified;
-                    dc.Entry(uusiKirj).State = EntityState.Modified;
+                    dc.Entry(paivitaOpis).State = EntityState.Modified;
+                    dc.Entry(paivitaSa).State = EntityState.Modified;
+                    dc.Entry(paivitaPuh).State = EntityState.Modified;
+
                     dc.SaveChanges();
                 }
                 #endregion
