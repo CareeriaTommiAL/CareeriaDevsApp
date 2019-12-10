@@ -35,43 +35,45 @@
                 <ul class="navbar-nav ml-auto">
                 </ul>
                 <form class="form-inline">
-                    <div class="dropdown">
-                        <button class="btn btn-outline-yellow dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Rekisteröidy
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" onclick='window.location.href = "@Url.Action("OppilasRekisterointi", "Logins", routeValues: null)"'>Työnhakija</a>
-                            <a class="dropdown-item" onclick='window.location.href = "@Url.Action("YritysRekisterointi", "Logins", routeValues: null)"'>Työnantaja</a>
+                    @if (Convert.ToInt32(Session["islogged"]) != 1)
+                    {
+                        <div class="dropdown">
+                            <button class="btn btn-outline-yellow dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Rekisteröidy
+                            </button>
+
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class="dropdown-item" onclick='window.location.href = "@Url.Action("OppilasRekisterointi", "Logins", routeValues: null)"'>Työnhakija</a>
+                                <a class="dropdown-item" onclick='window.location.href = "@Url.Action("YritysRekisterointi", "Logins", routeValues: null)"'>Työnantaja</a>
+                            </div>
+
                         </div>
-                    </div>
-                    <input type="button" class="btn btn-yellow ml-2" value="Kirjaudu sisään" onclick='window.location.href = "@Url.Action("Login", "Logins", routeValues: null)"' />
-                    <!--Kutsutaan Logins controllerin logout action-->
-                    <a href="@Url.Action("Logout", "Logins", routeValues: null)">Kirjaudu ulos</a>
+                    }
+                    else
+                    {
+                        if (Session["student_id"] != null)
+                        {
+                            <input type="button" id="opProfiili" class="btn btn-yellow ml-2" value="Oma profiili" onclick='window.location.href = "@Url.Action("OpisSisalto", "OmaSisaltos", routeValues: null)"' />
+                        }
+                        if (Session["corporate_id"] != null)
+                        {
+                            <input type="button" id="yritProfiili" class="btn btn-yellow ml-2" value="Opiskelijaprofiilien selaus" onclick='window.location.href = "@Url.Action("YritysSisalto", "OmaSisaltos", routeValues: null)"' />
+                        }
+                    }
+
+                    @if (Convert.ToInt32(Session["islogged"]) != 1)
+                    {
+                        <input type="button" id="login" class="btn btn-yellow ml-2" value="Kirjaudu sisään" onclick='window.location.href = "@Url.Action("Login", "Logins", routeValues: null)"' />
+                    }
+                    else
+                    {
+                        <!--Kutsutaan Logins controllerin logout action-->
+                        <input type="button" id="logout" class="btn btn-danger ml-2" value="Kirjaudu ulos" onclick='window.location.href = "@Url.Action("Logout", "Logins", routeValues: null)"' />
+                    }
                 </form>
             </div>
         </div>
     </nav>
-
-
-    @*<div class="navbar navbar-expand-lg navbar-light" style="background-color: #fff;">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                        <li>@Html.ActionLink("About", "About", "Home")</li>
-                        <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    </ul>
-                </div>
-            </div>
-        </div>*@
 
     <div>
         @RenderBody()

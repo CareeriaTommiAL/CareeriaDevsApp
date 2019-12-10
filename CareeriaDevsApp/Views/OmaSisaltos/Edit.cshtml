@@ -46,15 +46,11 @@
 
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Tallenna" class="btn btn-default" />
+                        @Html.ActionLink("Takaisin", "Index", null, new { @class = "btn btn-light" }) <input type="submit" value="Tallenna" class="btn btn-yellow" />
                     </div>
                 </div>
             </div>
         }
-
-        <div>
-            @Html.ActionLink("Takaisin", "Index")
-        </div>
 
         @section Scripts {
             @Scripts.Render("~/bundles/jqueryval")

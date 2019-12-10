@@ -1034,6 +1034,7 @@
     <Content Include="Views\Viestis\Reply.cshtml" />
     <Content Include="Views\Viestis\ReplyToStudent.cshtml" />
     <Content Include="Views\Logins\OppilasTiedotUpdate.cshtml" />
+    <Content Include="Views\Logins\YritysTiedotUpdate.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

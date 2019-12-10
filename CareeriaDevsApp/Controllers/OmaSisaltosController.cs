@@ -36,12 +36,25 @@ namespace CareeriaDevsApp.Controllers
         //****************************************************************************
         public ActionResult OpisSisalto()
         {
-            var opislogid = Session["student_id"];
+
+            if (TryGetRedirectUrlWhereStudent(RedirectToAction("Login", "Logins", null), //BaseControllerilta saadaan käyttäjätodennus
+            RedirectToAction("YritysSisalto", "OmaSisaltos", null),
+            out var redirectResult))
+            {
+                return redirectResult;
+            }
+
+
+            var opiskelijaid = Convert.ToInt32(Session["student_id"]);
+            var opiskelijan = db.Opiskelija.FirstOrDefault(y => y.opiskelija_Id == opiskelijaid);
+            ViewBag.opiskelijanimi = opiskelijan.etunimi + " " + opiskelijan.sukunimi;
+
+
             //vain se opiskelija kenen opiskelija_id on sama kun muokattava id, pystyy tätä id:tä muokkaamaan
+            var opislogid = Session["student_id"];
             var opisTeksti = (from m in db.OmaSisalto
                               where m.opiskelija_Id.ToString() == opislogid.ToString()
                               select m);
-
             if (opislogid == null)
             {
                 return RedirectToAction("Login", "Logins");
@@ -79,6 +92,19 @@ namespace CareeriaDevsApp.Controllers
         //**************************************************************************
         public ActionResult YritysSisalto(string search)  //Tommi, hakumetodi
         {
+
+            if (TryGetRedirectUrlWhereYritys(RedirectToAction("Login", "Logins"), //BaseControllerilta saadaan käyttäjätodennus
+          RedirectToAction("OpisSisalto", "OmaSisaltos"),
+          out var redirectResult))
+            {
+                return redirectResult;
+            }
+
+            var corporate = Convert.ToInt32(Session["corporate_id"]);
+            var corporatename = db.Yritys.FirstOrDefault(y => y.yritys_Id == corporate);
+            ViewBag.yritysnimi = corporatename.yrityksenNimi;
+
+
             var yrityslogid = Session["corporate_id"];
             if (yrityslogid == null)
             {
@@ -191,28 +217,6 @@ namespace CareeriaDevsApp.Controllers
             db.OmaSisalto.Remove(omaSisalto);
             db.SaveChanges();
             return RedirectToAction("Index");
-        }
-
-
-        //**************************************************************************************
-        //Infinite scrolling
-        //**************************************************************************************
-        [HttpPost]
-        public JsonResult AjaxMethod(int pageIndex)
-        {
-            System.Threading.Thread.Sleep(1000);
-            OpiskelijaInfinite model = new OpiskelijaInfinite();
-            model.PageIndex = pageIndex;
-            model.PageSize = 10;
-            model.RecordCount = db.OmaSisalto.Count();
-            int startIndex = (pageIndex - 1) * model.PageSize;
-            model.Opiskelijat = (from i in db.OmaSisalto
-                                 select i)
-                            .OrderBy(i => i.opiskelija_Id)
-                            .Skip(startIndex)
-                            .Take(model.PageSize).ToList();
-
-            return Json(model);
         }
 
 

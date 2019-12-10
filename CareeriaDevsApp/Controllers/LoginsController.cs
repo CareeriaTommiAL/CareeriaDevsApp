@@ -14,7 +14,7 @@ using System.Globalization;
 
 namespace CareeriaDevsApp.Controllers
 {
-    public class LoginsController : Controller
+    public class LoginsController : BaseController
     {
         private Stud1Entities db = new Stud1Entities();
 
@@ -224,6 +224,7 @@ namespace CareeriaDevsApp.Controllers
 
                     OmaSisalto uusiOmasis = new OmaSisalto();
                     uusiOmasis.opiskelija_Id = opiskelija.opiskelija_Id;
+                    //muistetaas tähän lisätä se default-kuva myös
 
 
                     dc.Opiskelija.Add(uusiOpis);
@@ -257,7 +258,7 @@ namespace CareeriaDevsApp.Controllers
         [HttpGet]
         public ActionResult YritysRekisterointi()
         {
-            
+
             return View();
         }
         //Registration POST action 
@@ -426,18 +427,21 @@ namespace CareeriaDevsApp.Controllers
                         System.Diagnostics.Debug.WriteLine("tämä käyttäjä on opiskelija");
                         Session["student_id"] = v.opiskelija_Id;
                         Session["student_kayttajaNimi"] = v.kayttajaNimi;
+                        Session["islogged"] = 1; //käyttäjälle lisätään apumuuttuja, jota voi käyttää todentamaan onko jokin käyttäjistä kirjautunut.
                     }
                     if (v.yritys_Id != null) //jos käyttäjällä on login -taulun yritys_id:ssä tietoa, niin käyttäjä tunnistetaan yritykseksi.
                     {
                         System.Diagnostics.Debug.WriteLine("tämä käyttäjä on yritys");
                         Session["corporate_id"] = v.yritys_Id;
                         Session["corporate_kayttajaNimi"] = v.kayttajaNimi;
+                        Session["islogged"] = 1;
                     }
                     if (v.paaKayttaja_Id != null) //jos käyttäjällä on login -taulun pääkäyttäjä_id:ssä tietoa, niin käyttäjä tunnistetaan pääkäyttäjäksi.
                     {
                         System.Diagnostics.Debug.WriteLine("tämä käyttäjä on pääkäyttäjä");
                         Session["admin_id"] = v.paaKayttaja_Id;
                         Session["admin_kayttajaNimi"] = v.kayttajaNimi;
+                        Session["islogged"] = 1;
                     }
 
                     //if (!v.onkoEmailAktivoitu) //jos email-osoitetta ei ole aktivoitu niin:
@@ -572,17 +576,25 @@ namespace CareeriaDevsApp.Controllers
 
 
 
-        //******************************************************************************************
+        //*****************************************************************************************
         //Oppilaan tietojen päivitys***************************************************************
-        //*************************************************************************************
+        //*****************************************************************************************
+
         [HttpGet]
         public ActionResult OppilasTiedotUpdate(int? id)
         {
+            if (TryGetRedirectUrlWhereStudent(RedirectToAction("OpisSisalto", "OmaSisaltos"), //BaseControllerilta saadaan käyttäjätodennus
+                      RedirectToAction("YritysSisalto", "OmaSisaltos"),
+                      out var redirectResult))
+            {
+                return redirectResult;
+            }
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Login login = db.Login.Find(id);
+            Login login = db.Login.Where(l => l.opiskelija_Id == id).FirstOrDefault();
             if (login == null)
             {
                 return HttpNotFound();
@@ -594,19 +606,11 @@ namespace CareeriaDevsApp.Controllers
                 var numero = puhnrotiedot.numero;
                 ViewBag.puhnro = numero;
             }
-            //var postitiedot = db.Postitoimipaikka.Where(a => a.postitoimipaikka_Id == login.Opiskelija.postitoimipaikka_Id).FirstOrDefault();
-            //var postitiedot = (from a in db.Postitoimipaikka
-            //                   where a.postitoimipaikka_Id == login.Opiskelija.postitoimipaikka_Id
-            //                   select a).FirstOrDefault();
-            //if (postitiedot != null)
-            //{
-            //    ViewBag.postinro = postitiedot.postinumero;
-            //}
 
-                ViewBag.kayttajanimi = login.kayttajaNimi;
-                ViewBag.etunimi = login.Opiskelija.etunimi;
-                ViewBag.sukunimi = login.Opiskelija.sukunimi;
-                ViewBag.postinro = "Kirjoita postinumerosi tähän";
+            ViewBag.kayttajanimi = login.kayttajaNimi;
+            ViewBag.etunimi = login.Opiskelija.etunimi;
+            ViewBag.sukunimi = login.Opiskelija.sukunimi;
+            ViewBag.postinro = (from a in db.Postitoimipaikka where a.postitoimipaikka_Id == login.Opiskelija.postitoimipaikka_Id select a.postinumero).FirstOrDefault();/*"Kirjoita postinumerosi tähän";*/
 
 
 
@@ -615,29 +619,26 @@ namespace CareeriaDevsApp.Controllers
         //Registration POST action 
         [HttpPost]
         [ValidateAntiForgeryToken]
-
         public ActionResult OppilasTiedotUpdate(
             [Bind(Prefix = "Item1")] LoginModel oppkirjautuminen,
             [Bind(Prefix = "Item2")] OpiskelijaModel opiskelija,
             [Bind(Prefix = "Item3")] PostitoimipaikkaModel pstmp,
             [Bind(Prefix = "Item4")] PuhelinNumeroModel puhelinnro,
-            Login paivitaSa, Opiskelija paivitaOpis, PuhelinNumero paivitaPuh
+            int? id
             )
-
         {
+
             bool Status = false;
-            string message = "";
-            //
-            // Model Validation 
-            if (ModelState.IsValid)
+
+            // Validation 
+            if (id != null)
             {
-                #region Uusien tietojen tallennus tietokantaan
+                #region Opiskelijan päivitettyjen tietojen tallennus tietokantaan
+
+                //etunimen, sukunimen, postitoimipaikan päivitys
                 using (Stud1Entities dc = new Stud1Entities())
                 {
-                    //Paivitys tietokantaan
-
-                    //Opiskelija tauluun:
-                    paivitaOpis.opiskelija_Id = Convert.ToInt32(Session["student_id"]);
+                    var paivitaOpis = dc.Opiskelija.Where(c => c.opiskelija_Id == id).FirstOrDefault(); //päivitetään sitä opiskelijaa joka omaa saman opiskelija_Id:n mikä (id)viewistä ohjataan tänne
                     paivitaOpis.etunimi = opiskelija.etunimi;
                     paivitaOpis.etunimi = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(paivitaOpis.etunimi.ToLower());
                     paivitaOpis.sukunimi = opiskelija.sukunimi;
@@ -647,30 +648,165 @@ namespace CareeriaDevsApp.Controllers
                     //Postitoimipaikka id:n haku postinumeron perusteella
                     paivitaOpis.postitoimipaikka_Id = (from x in db.Postitoimipaikka where x.postinumero == opiskelijanpostinumero select x.postitoimipaikka_Id).First();
 
-                    //Logins tauluun:
-                    paivitaSa.opiskelija_Id = Convert.ToInt32(Session["student_id"]);
+                    dc.Entry(paivitaOpis).State = EntityState.Modified;
+                    dc.SaveChanges();
+                    dc.Entry(paivitaOpis).State = EntityState.Detached; //en tiedä onko tarpeellinen, mutta toimii
+                }
+
+
+                //salasanan päivitys, jokainen entitymäärityksen tulee olla eriniminen muuten tulee erroria...HOX!
+                using (Stud1Entities dcc = new Stud1Entities())
+                {
+                    var paivitaSa = dcc.Login.Where(d => d.opiskelija_Id == id).FirstOrDefault();
                     paivitaSa.salasana = oppkirjautuminen.salasana;
 
-                    //PuhelinNumero tauluun:
-                    paivitaPuh.opiskelija_Id = Convert.ToInt32(Session["student_id"]);
+                    dcc.Entry(paivitaSa).State = EntityState.Modified;
+                    dcc.SaveChanges();
+                    dcc.Entry(paivitaSa).State = EntityState.Detached; //en tiedä onko tarpeellinen, mutta toimii
+                }
+
+
+                //puhelinnumeron päivitys
+                using (Stud1Entities dccc = new Stud1Entities())
+                {
+                    var paivitaPuh = dccc.PuhelinNumero.Where(e => e.opiskelija_Id == id).FirstOrDefault();
                     paivitaPuh.numero = puhelinnro.numero;
 
-                    dc.Entry(paivitaOpis).State = EntityState.Modified;
-                    dc.Entry(paivitaSa).State = EntityState.Modified;
-                    dc.Entry(paivitaPuh).State = EntityState.Modified;
-
-                    dc.SaveChanges();
+                    dccc.Entry(paivitaPuh).State = EntityState.Modified;
+                    dccc.SaveChanges();
+                    dccc.Entry(paivitaPuh).State = EntityState.Detached; //en tiedä onko tarpeellinen, mutta toimii
                 }
+
                 #endregion
+
             }
+
             else
             {
-                message = "Virhe käsiteltäessä pyyntöä!";
+                TempData["tallennusepaonnistui"] = "Virhe käsiteltäessä pyyntöä!";
             }
 
-            ViewBag.Message = message;
+            TempData["tallennusonnistui"] = "Tiedot tallennettiin onnistuneesti!";
             ViewBag.Status = Status;
-            return RedirectToAction("Login");
+            return RedirectToAction("OpisSisalto", "OmaSisaltos", null);
+        }
+
+        //*****************************************************************************************
+        //Yrityksen tietojen päivitys***************************************************************
+        //*****************************************************************************************
+
+        [HttpGet]
+        public ActionResult YritysTiedotUpdate(int? id)
+        {
+            if (TryGetRedirectUrlWhereYritys(RedirectToAction("YritysSisalto", "OmaSisaltos"), //BaseControllerilta saadaan käyttäjätodennus
+                      RedirectToAction("OpisSisalto", "OmaSisaltos"),
+                      out var redirectResult))
+            {
+                return redirectResult;
+            }
+
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Login login2 = db.Login.Where(l => l.yritys_Id == id).FirstOrDefault();
+            if (login2 == null)
+            {
+                return HttpNotFound();
+            }
+
+            var puhnrotiedot = db.PuhelinNumero.FirstOrDefault(p => p.yritys_Id == id);
+            if (puhnrotiedot != null)
+            {
+                var numero = puhnrotiedot.numero;
+                ViewBag.puhnro = numero;
+            }
+
+            var yritystiedot = db.Yritys.FirstOrDefault(y => y.yritys_Id == id);
+            if (yritystiedot != null)
+            {
+                ViewBag.yritysnimi = login2.kayttajaNimi;
+                ViewBag.yrityksennimi = yritystiedot.yrityksenNimi;
+                ViewBag.ytunnus = yritystiedot.Y_tunnus;
+                ViewBag.lahiosoite = yritystiedot.lahiosoite;
+                ViewBag.postinro = (from a in db.Postitoimipaikka where a.postitoimipaikka_Id == yritystiedot.postitoimipaikka_Id select a.postinumero).FirstOrDefault();/*"Kirjoita postinumerosi tähän";*/
+            }
+
+
+            return View();
+        }
+        //Registration POST action 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult YritysTiedotUpdate(
+            [Bind(Prefix = "Item1")] LoginModel yrityskirjautuminen,
+            [Bind(Prefix = "Item2")] YritysModel yritys,
+            [Bind(Prefix = "Item3")] PostitoimipaikkaModel pstmp,
+            [Bind(Prefix = "Item4")] PuhelinNumeroModel puhelinnro,
+            int? id
+            )
+        {
+
+            bool Status = false;
+            //
+            // Model Validation 
+            if (id != null)
+            {
+                #region Yrityksen päivitettyjen tietojen tallennus tietokantaan
+
+                //etunimen, sukunimen, postitoimipaikan päivitys
+                using (Stud1Entities dc = new Stud1Entities())
+                {
+                    var paivitaYritys = dc.Yritys.Where(c => c.yritys_Id == id).FirstOrDefault(); //päivitetään sitä opiskelijaa joka omaa saman opiskelija_Id:n mikä (id)viewistä ohjataan tänne
+                    paivitaYritys.yrityksenNimi = yritys.yrityksenNimi;
+                    paivitaYritys.Y_tunnus = yritys.Y_tunnus;
+                    paivitaYritys.lahiosoite = yritys.lahiosoite;
+
+                    string yrityksenpostinumero = pstmp.postinumero;
+                    //Postitoimipaikka id:n haku postinumeron perusteella
+                    paivitaYritys.postitoimipaikka_Id = (from x in db.Postitoimipaikka where x.postinumero == yrityksenpostinumero select x.postitoimipaikka_Id).First();
+
+                    dc.Entry(paivitaYritys).State = EntityState.Modified;
+                    dc.SaveChanges();
+                    dc.Entry(paivitaYritys).State = EntityState.Detached; //en tiedä onko tarpeellinen, mutta toimii
+                }
+
+
+                //salasanan päivitys, jokainen entitymäärityksen tulee olla eriniminen muuten tulee erroria...HOX!
+                using (Stud1Entities dcc = new Stud1Entities())
+                {
+                    var paivitaSaY = dcc.Login.Where(d => d.yritys_Id == id).FirstOrDefault();
+                    paivitaSaY.salasana = yrityskirjautuminen.salasana;
+
+                    dcc.Entry(paivitaSaY).State = EntityState.Modified;
+                    dcc.SaveChanges();
+                    dcc.Entry(paivitaSaY).State = EntityState.Detached; //en tiedä onko tarpeellinen, mutta toimii
+                }
+
+
+                //puhelinnumeron päivitys
+                using (Stud1Entities dccc = new Stud1Entities())
+                {
+                    var paivitaPuhY = dccc.PuhelinNumero.Where(e => e.yritys_Id == id).FirstOrDefault();
+                    paivitaPuhY.numero = puhelinnro.numero;
+
+                    dccc.Entry(paivitaPuhY).State = EntityState.Modified;
+                    dccc.SaveChanges();
+                    dccc.Entry(paivitaPuhY).State = EntityState.Detached; //en tiedä onko tarpeellinen, mutta toimii
+                }
+
+                #endregion
+
+            }
+
+            else
+            {
+                TempData["tallennusepaonnistui"] = "Virhe käsiteltäessä pyyntöä!";
+            }
+
+            TempData["tallennusonnistui"] = "Tiedot tallennettiin onnistuneesti!";
+            ViewBag.Status = Status;
+            return RedirectToAction("YritysSisalto", "OmaSisaltos", null);
         }
 
 

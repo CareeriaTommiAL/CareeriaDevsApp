@@ -1,41 +1,66 @@
 ﻿@model IEnumerable<CareeriaDevsApp.OmaSisalto>
 
 
-@{
-    ViewBag.Title = "OpisSisalto";
-}
+    @{
+        ViewBag.Title = "OpisSisalto";
+        var success = TempData["tallennusonnistui"];
+        var unsuccess = TempData["tallennusepaonnistui"];
+    }
 
-<div class="alert alert-warning text-center" role="alert">
-    Tervetuloa Opiskelija X //
-    Sinulle on <span class="badge badge-primary">@ViewBag.lukemattomatViestit</span> uutta viestiä. @Html.ActionLink("Lue saapuneet viestit", "HaeOpiskelijanViestit", "Viestis", new { id = Session["student_id"] }, null)
-</div>
+    <div class="alert alert-warning text-center" role="alert">
+        Tervetuloa <strong>@ViewBag.opiskelijanimi</strong>.
+        Sinulle on <span class="badge badge-primary">@ViewBag.lukemattomatViestit</span> uutta viestiä. @Html.ActionLink("Lue saapuneet viestit", "HaeOpiskelijanViestit", "Viestis", new { id = Session["student_id"] }, null) ||
+        @*käytetään loginissa saatua Session["student_id"] ominaisuutta viittaamaan oikeaan tauluun*@
+        @Html.ActionLink("Muokkaa omaa osaajaprofiilia", "Edit", new { id = Session["student_id"], @class = "btn btn-light" }) ||
+        @Html.ActionLink("Muokkaa omia tietoja", "OppilasTiedotUpdate", "Logins", new { id = Session["student_id"], @class = "btn btn-light" }, null)
+    </div>
 
-<div class="container">
-    <div class="row">
-        <div class="col d-flex flex-column align-items-center">
+    <div>
+        @if (success != null)
+        {
+            <h2> @TempData["tallennusonnistui"]</h2>
 
-            @if (Session["student_id"] != null)
-            {
-                foreach (var item in Model)
+        }
+        @if (unsuccess != null)
+        {
+            <h2> @TempData["tallennusepaonnistui"]</h2>
+
+        }
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col d-flex flex-column align-items-center">
+
+                @if (Session["student_id"] != null)
                 {
-                @*Näytetään opiskelijan omaKuva -tietokannasta <img> sisään:*@
-                <div class="card" style="width: 18rem;">
-                    <img src="@Html.Raw(HttpUtility.HtmlDecode(item.omaKuva))" class="card-img-top">
-                    <div class="card-body">
-                        <h5 class="card-title">Opiskelija X</h5>
-                        @*Näytetään opiskelijan itsemuokkaama "profiili":*@
-                        <p class="card-text">@Html.Raw(HttpUtility.HtmlDecode(item.omaTeksti))</p>
-                    </div>
-                </div>
-                <br />
+                    foreach (var item in Model)
+                    {
+                        @*Näytetään opiskelijan omaKuva -tietokannasta <img> sisään:*@
+                        <div class="card" style="width: 18rem;">
+                            <img src="@Html.Raw(HttpUtility.HtmlDecode(item.omaKuva))" class="card-img-top">
+                            <div class="card-body">
+                                <h5 class="card-title">@ViewBag.opiskelijanimi</h5>
+                                @*Näytetään opiskelijan itsemuokkaama "profiili":*@
+                                <script type="text/javascript">
+                                    var naytaTeksti = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(item.omaTeksti)) /*Sanotaan notta eläpä suorita scriptejä*/
+                                </script>
+                                <p class="card-text">
+                                    <script type="text/javascript">
+                                        document.write(naytaTeksti)
+                                    </script>
+                                </p>
+
+
+                            </div>
+                        </div>
+                        <br />
+                    }
+
                 }
 
-            }
 
-@*käytetään loginissa saatua Session["student_id"] ominaisuutta viittaamaan oikeaan tauluun*@
-@Html.ActionLink("Muokkaa omaa osaajaprofiilia", "Edit", new { id = Session["student_id"], @class = "btn btn-light" })
-@Html.ActionLink("Muokkaa omia tietoja", "OppilasTiedotUpdate", "Logins", new { id = Session["student_id"], @class = "btn btn-light" }, null)
 
+            </div>
         </div>
     </div>
-</div>
