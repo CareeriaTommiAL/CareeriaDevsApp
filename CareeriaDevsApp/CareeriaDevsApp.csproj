@@ -287,9 +287,6 @@
     <Compile Include="Controllers\ViestisController.cs" />
     <Compile Include="Controllers\YritysController.cs" />
     <Compile Include="Crypto.cs" />
-    <Compile Include="database_firewall_rules.cs">
-      <DependentUpon>TyonhakuModel.tt</DependentUpon>
-    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

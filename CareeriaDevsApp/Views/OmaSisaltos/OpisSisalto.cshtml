@@ -45,11 +45,14 @@
                                 <script type="text/javascript">
                                     var naytaTeksti = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(item.omaTeksti)) /*Sanotaan notta eläpä suorita scriptejä*/
                                 </script>
+                                @if (item.omaTeksti != null)
+                                {
                                 <p class="card-text">
                                     <script type="text/javascript">
                                         document.write(naytaTeksti)
                                     </script>
                                 </p>
+                                }
 
 
                             </div>

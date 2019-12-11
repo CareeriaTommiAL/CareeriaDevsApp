@@ -10,8 +10,8 @@
             <PropertyRef Name="login_Id" />
           </Key>
           <Property Name="login_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="kayttajaNimi" Type="nvarchar" MaxLength="25" />
-          <Property Name="salasana" Type="nvarchar" MaxLength="25" />
+          <Property Name="kayttajaNimi" Type="nvarchar(max)" />
+          <Property Name="salasana" Type="nvarchar(max)" />
           <Property Name="opiskelija_Id" Type="int" />
           <Property Name="yritys_Id" Type="int" />
           <Property Name="paaKayttaja_Id" Type="int" />
@@ -33,8 +33,8 @@
             <PropertyRef Name="opiskelija_Id" />
           </Key>
           <Property Name="opiskelija_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="etunimi" Type="nvarchar" MaxLength="25" />
-          <Property Name="sukunimi" Type="nvarchar" MaxLength="30" />
+          <Property Name="etunimi" Type="nvarchar(max)" />
+          <Property Name="sukunimi" Type="nvarchar(max)" />
           <Property Name="postitoimipaikka_Id" Type="int" />
         </EntityType>
         <EntityType Name="PaaKayttaja">
@@ -57,7 +57,7 @@
             <PropertyRef Name="puhelinNumero_Id" />
           </Key>
           <Property Name="puhelinNumero_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="numero" Type="nvarchar" MaxLength="25" />
+          <Property Name="numero" Type="nvarchar(max)" />
           <Property Name="puhelinTyyppi_Id" Type="int" />
           <Property Name="opiskelija_Id" Type="int" />
           <Property Name="yritys_Id" Type="int" />
@@ -74,7 +74,7 @@
             <PropertyRef Name="sahkoposti_Id" />
           </Key>
           <Property Name="sahkoposti_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="sahkopostiOsoite" Type="nvarchar" MaxLength="30" />
+          <Property Name="sahkopostiOsoite" Type="nvarchar(max)" />
           <Property Name="paaKayttaja_Id" Type="int" />
           <Property Name="yritys_Id" Type="int" />
           <Property Name="opiskelija_Id" Type="int" />
@@ -98,28 +98,10 @@
             <PropertyRef Name="yritys_Id" />
           </Key>
           <Property Name="yritys_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="yrityksenNimi" Type="nvarchar" MaxLength="25" />
+          <Property Name="yrityksenNimi" Type="nvarchar(max)" />
           <Property Name="Y_tunnus" Type="nvarchar" MaxLength="20" />
-          <Property Name="lahiosoite" Type="nvarchar" MaxLength="50" />
+          <Property Name="lahiosoite" Type="nvarchar(max)" />
           <Property Name="postitoimipaikka_Id" Type="int" />
-        </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'Stud1.sys.database_firewall_rules' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="database_firewall_rules">
-          <Key>
-            <PropertyRef Name="id" />
-            <PropertyRef Name="name" />
-            <PropertyRef Name="start_ip_address" />
-            <PropertyRef Name="end_ip_address" />
-            <PropertyRef Name="create_date" />
-            <PropertyRef Name="modify_date" />
-          </Key>
-          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="start_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="end_ip_address" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="create_date" Type="datetime" Nullable="false" />
-          <Property Name="modify_date" Type="datetime" Nullable="false" />
         </EntityType>
         <Association Name="R_11">
           <End Role="PuhelinTyyppi" Type="Self.PuhelinTyyppi" Multiplicity="0..1" />
@@ -312,16 +294,6 @@ warning 6002: The table/view 'Stud1.sys.database_firewall_rules' does not have a
           <EntitySet Name="Sahkoposti" EntityType="Self.Sahkoposti" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Viesti" EntityType="Self.Viesti" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Yritys" EntityType="Self.Yritys" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" store:Type="Views" store:Schema="sys">
-            <DefiningQuery>SELECT 
-    [database_firewall_rules].[id] AS [id], 
-    [database_firewall_rules].[name] AS [name], 
-    [database_firewall_rules].[start_ip_address] AS [start_ip_address], 
-    [database_firewall_rules].[end_ip_address] AS [end_ip_address], 
-    [database_firewall_rules].[create_date] AS [create_date], 
-    [database_firewall_rules].[modify_date] AS [modify_date]
-    FROM [sys].[database_firewall_rules] AS [database_firewall_rules]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="R_11" Association="Self.R_11">
             <End Role="PuhelinTyyppi" EntitySet="PuhelinTyyppi" />
             <End Role="PuhelinNumero" EntitySet="PuhelinNumero" />
@@ -392,8 +364,8 @@ warning 6002: The table/view 'Stud1.sys.database_firewall_rules' does not have a
             <PropertyRef Name="login_Id" />
           </Key>
           <Property Name="login_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="kayttajaNimi" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
-          <Property Name="salasana" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="kayttajaNimi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="salasana" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="opiskelija_Id" Type="Int32" />
           <Property Name="yritys_Id" Type="Int32" />
           <Property Name="paaKayttaja_Id" Type="Int32" />
@@ -419,8 +391,8 @@ warning 6002: The table/view 'Stud1.sys.database_firewall_rules' does not have a
             <PropertyRef Name="opiskelija_Id" />
           </Key>
           <Property Name="opiskelija_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="etunimi" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
-          <Property Name="sukunimi" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="etunimi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="sukunimi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="postitoimipaikka_Id" Type="Int32" />
           <NavigationProperty Name="Login" Relationship="Self.R_30" FromRole="Opiskelija" ToRole="Login" />
           <NavigationProperty Name="OmaSisalto" Relationship="Self.R_29" FromRole="Opiskelija" ToRole="OmaSisalto" />
@@ -454,7 +426,7 @@ warning 6002: The table/view 'Stud1.sys.database_firewall_rules' does not have a
             <PropertyRef Name="puhelinNumero_Id" />
           </Key>
           <Property Name="puhelinNumero_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="numero" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="numero" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="puhelinTyyppi_Id" Type="Int32" />
           <Property Name="opiskelija_Id" Type="Int32" />
           <Property Name="yritys_Id" Type="Int32" />
@@ -475,7 +447,7 @@ warning 6002: The table/view 'Stud1.sys.database_firewall_rules' does not have a
             <PropertyRef Name="sahkoposti_Id" />
           </Key>
           <Property Name="sahkoposti_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="sahkopostiOsoite" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="sahkopostiOsoite" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="paaKayttaja_Id" Type="Int32" />
           <Property Name="yritys_Id" Type="Int32" />
           <Property Name="opiskelija_Id" Type="Int32" />
@@ -505,31 +477,15 @@ warning 6002: The table/view 'Stud1.sys.database_firewall_rules' does not have a
             <PropertyRef Name="yritys_Id" />
           </Key>
           <Property Name="yritys_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="yrityksenNimi" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="yrityksenNimi" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Y_tunnus" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="lahiosoite" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="lahiosoite" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="postitoimipaikka_Id" Type="Int32" />
           <NavigationProperty Name="Login" Relationship="Self.R_39" FromRole="Yritys" ToRole="Login" />
           <NavigationProperty Name="Postitoimipaikka" Relationship="Self.R_38" FromRole="Yritys" ToRole="Postitoimipaikka" />
           <NavigationProperty Name="PuhelinNumero" Relationship="Self.R_28" FromRole="Yritys" ToRole="PuhelinNumero" />
           <NavigationProperty Name="Sahkoposti" Relationship="Self.R_43" FromRole="Yritys" ToRole="Sahkoposti" />
           <NavigationProperty Name="Viesti" Relationship="Self.R_36" FromRole="Yritys" ToRole="Viesti" />
-        </EntityType>
-        <EntityType Name="database_firewall_rules">
-          <Key>
-            <PropertyRef Name="id" />
-            <PropertyRef Name="name" />
-            <PropertyRef Name="start_ip_address" />
-            <PropertyRef Name="end_ip_address" />
-            <PropertyRef Name="create_date" />
-            <PropertyRef Name="modify_date" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="start_ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="end_ip_address" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="create_date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="modify_date" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <Association Name="R_30">
           <End Role="Opiskelija" Type="Self.Opiskelija" Multiplicity="0..1" />
@@ -722,7 +678,6 @@ warning 6002: The table/view 'Stud1.sys.database_firewall_rules' does not have a
           <EntitySet Name="Sahkoposti" EntityType="Self.Sahkoposti" />
           <EntitySet Name="Viesti" EntityType="Self.Viesti" />
           <EntitySet Name="Yritys" EntityType="Self.Yritys" />
-          <EntitySet Name="database_firewall_rules" EntityType="Self.database_firewall_rules" />
           <AssociationSet Name="R_30" Association="Self.R_30">
             <End Role="Opiskelija" EntitySet="Opiskelija" />
             <End Role="Login" EntitySet="Login" />
@@ -895,18 +850,6 @@ warning 6002: The table/view 'Stud1.sys.database_firewall_rules' does not have a
                 <ScalarProperty Name="Y_tunnus" ColumnName="Y_tunnus" />
                 <ScalarProperty Name="lahiosoite" ColumnName="lahiosoite" />
                 <ScalarProperty Name="postitoimipaikka_Id" ColumnName="postitoimipaikka_Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="database_firewall_rules">
-            <EntityTypeMapping TypeName="Stud1Model.database_firewall_rules">
-              <MappingFragment StoreEntitySet="database_firewall_rules">
-                <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="start_ip_address" ColumnName="start_ip_address" />
-                <ScalarProperty Name="end_ip_address" ColumnName="end_ip_address" />
-                <ScalarProperty Name="create_date" ColumnName="create_date" />
-                <ScalarProperty Name="modify_date" ColumnName="modify_date" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
