@@ -4,53 +4,49 @@
     ViewBag.Title = "Kirjautuminen";
 }
 
-    <div class="container m-5">
+<div class="container">
 
-        <div class="row justify-content-center">
+    <div class="row">
 
-            <div class="col-6 login-form text-center">
+        <div class="col-6 login-form text-center">
 
-                <h1 class="mb-5 pb-4 login-h">Kirjaudu sisään</h1>
+            <h1 class="mb-5 pb-4 login-h">Kirjaudu sisään</i></h1>
 
-                @using (Html.BeginForm())
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                if (@ViewBag.Message != "")
                 {
-                    @Html.AntiForgeryToken()
-
-
-                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
-                    if (@ViewBag.Message != "")
-                    {
-                        <div class="text-danger">@ViewBag.Message</div>
-                    }
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.EmailID, "Sähköpostiosoite", htmlAttributes: new { @class = "control-label" })
-                        @Html.EditorFor(model => model.EmailID, new { htmlAttributes = new { @class = "form-control mb-2" } })
-                        @Html.ValidationMessageFor(model => model.EmailID, "", new { @class = "text-danger" })
-                    </div>
-
-                    <div class="form-group">
-                        @Html.LabelFor(model => model.Password, "Salasana", htmlAttributes: new { @class = "control-label" })
-                        @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control mb-2" } })
-                        @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-                    </div>
-
-                    <div class="form-group form-check">
-                        @Html.EditorFor(model => model.RememberMe)
-                        @Html.LabelFor(model => model.RememberMe, htmlAttributes: new { @class = "control-label" })
-                        @Html.ValidationMessageFor(model => model.RememberMe, "", new { @class = "text-danger" })
-                    </div>
-
-                    <button type="submit" class="btn btn-yellow">Kirjaudu sisään</button>
-
+                    <div class="text-danger">@ViewBag.Message</div>
                 }
 
-            </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.EmailID, "Sähköpostiosoite", htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.EmailID, new { htmlAttributes = new { @class = "form-control mb-2" } })
+                    @Html.ValidationMessageFor(model => model.EmailID, "", new { @class = "text-danger" })
+                </div>
 
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Password, "Salasana", htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control mb-2" } })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group form-check">
+                    @Html.EditorFor(model => model.RememberMe)
+                    @Html.LabelFor(model => model.RememberMe, htmlAttributes: new { @class = "control-label" })
+                    @Html.ValidationMessageFor(model => model.RememberMe, "", new { @class = "text-danger" })
+                </div>
+
+                <button type="submit" class="btn btn-yellow">Kirjaudu sisään</button>
+
+            }
         </div>
-
     </div>
+</div>
 
 @section Scripts{
     <script src="~/Scripts/jquery.validate.min.js"></script>

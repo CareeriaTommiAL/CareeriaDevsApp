@@ -1,4 +1,22 @@
-﻿/* nav */
+﻿/* main */
+a {
+    color: dimgrey;
+}
+
+.linkit {
+    max-height: 110px;
+}
+
+.linkit a {
+    display: block;
+    margin: 10px;
+}
+
+.profiili-kuva {
+    border-radius: 100%;
+}
+
+/* nav */
 .navbar {
     min-height: 100px;
 }
@@ -16,6 +34,7 @@
     border-radius: 20px;
     box-shadow: 0 4px 6px rgba(0,0,0,0.2);
     padding: 30px;
+    margin: 100px auto;
 }
 
 .login-h {

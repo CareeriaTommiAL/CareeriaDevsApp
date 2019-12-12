@@ -9,10 +9,9 @@
 
     <div class="alert alert-warning text-center" role="alert">
         Tervetuloa <strong>@ViewBag.opiskelijanimi</strong>.
-        Sinulle on <span class="badge badge-primary">@ViewBag.lukemattomatViestit</span> uutta viestiä. @Html.ActionLink("Lue saapuneet viestit", "HaeOpiskelijanViestit", "Viestis", new { id = Session["student_id"] }, null) ||
+        Sinulle on <span class="badge badge-primary">@ViewBag.lukemattomatViestit</span> uutta viestiä. @Html.ActionLink("Lue saapuneet viestit", "HaeOpiskelijanViestit", "Viestis", new { id = Session["student_id"] }, null)
         @*käytetään loginissa saatua Session["student_id"] ominaisuutta viittaamaan oikeaan tauluun*@
-        @Html.ActionLink("Muokkaa omaa osaajaprofiilia", "Edit", new { id = Session["student_id"], @class = "btn btn-light" }) ||
-        @Html.ActionLink("Muokkaa omia tietoja", "OppilasTiedotUpdate", "Logins", new { id = Session["student_id"], @class = "btn btn-light" }, null)
+        
     </div>
 
     <div>
@@ -29,41 +28,36 @@
     </div>
 
     <div class="container">
-        <div class="row">
-            <div class="col d-flex flex-column align-items-center">
+        <div class="row mt-5 mb-5">
 
                 @if (Session["student_id"] != null)
                 {
                     foreach (var item in Model)
                     {
                         @*Näytetään opiskelijan omaKuva -tietokannasta <img> sisään:*@
-                        <div class="card" style="width: 18rem;">
-                            <img src="@Html.Raw(HttpUtility.HtmlDecode(item.omaKuva))" class="card-img-top">
-                            <div class="card-body">
-                                <h5 class="card-title">@ViewBag.opiskelijanimi</h5>
-                                @*Näytetään opiskelijan itsemuokkaama "profiili":*@
-                                <script type="text/javascript">
-                                    var naytaTeksti = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(item.omaTeksti)) /*Sanotaan notta eläpä suorita scriptejä*/
-                                </script>
-                                @if (item.omaTeksti != null)
-                                {
-                                <p class="card-text">
-                                    <script type="text/javascript">
-                                        document.write(naytaTeksti)
-                                    </script>
-                                </p>
-                                }
-
-
-                            </div>
+                        <div class="col-3">
+                            <img src="@Html.Raw(HttpUtility.HtmlDecode(item.omaKuva))" class="img-fluid profiili-kuva">
                         </div>
-                        <br />
-                    }
 
+                        <div class="col-6">
+                            <h5>@ViewBag.opiskelijanimi</h5>
+                            @*Näytetään opiskelijan itsemuokkaama "profiili":*@
+                            <script type="text/javascript">
+                                var naytaTeksti = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(item.omaTeksti)) /*Sanotaan notta eläpä suorita scriptejä*/
+                            </script>
+                            <p>
+                                <script type="text/javascript">
+                                    document.write(naytaTeksti)
+                                </script>
+                            </p>
+                        </div>
+
+                        <div class="col-3 bg-light p-3 linkit">
+                            @Html.ActionLink("Muokkaa osaajaprofiilia", "Edit", new { id = Session["student_id"] })
+                            @Html.ActionLink("Muokkaa omia tietoja", "OppilasTiedotUpdate", "Logins", new { id = Session["student_id"] }, null)
+                        </div>
+                    }
                 }
 
-
-
-            </div>
         </div>
     </div>
