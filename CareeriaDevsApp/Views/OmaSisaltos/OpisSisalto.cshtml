@@ -45,12 +45,15 @@
                             <script type="text/javascript">
                                 var naytaTeksti = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(item.omaTeksti)) /*Sanotaan notta eläpä suorita scriptejä*/
                             </script>
-                            <p>
-                                <script type="text/javascript">
-                                    document.write(naytaTeksti)
-                                </script>
-                            </p>
-                        </div>
+                            @if (item.omaTeksti != null)
+                            {
+                                <p>
+                                    <script type="text/javascript">
+                                        document.write(naytaTeksti)
+                                    </script>
+                                </p>
+                            }
+                            </div>
 
                         <div class="col-3 bg-light p-3 linkit">
                             @Html.ActionLink("Muokkaa osaajaprofiilia", "Edit", new { id = Session["student_id"] })
