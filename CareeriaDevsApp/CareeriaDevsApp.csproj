@@ -282,8 +282,6 @@
     <Compile Include="Controllers\LoginsController.cs" />
     <Compile Include="Controllers\OmaSisaltosController.cs" />
     <Compile Include="Controllers\OpiskelijasController.cs" />
-    <Compile Include="Controllers\PaaKayttajasController.cs" />
-    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ViestisController.cs" />
     <Compile Include="Controllers\YritysController.cs" />
     <Compile Include="Crypto.cs" />
@@ -986,11 +984,6 @@
     <Content Include="Views\Opiskelijas\Details.cshtml" />
     <Content Include="Views\Opiskelijas\Edit.cshtml" />
     <Content Include="Views\Opiskelijas\Index.cshtml" />
-    <Content Include="Views\PaaKayttajas\Create.cshtml" />
-    <Content Include="Views\PaaKayttajas\Delete.cshtml" />
-    <Content Include="Views\PaaKayttajas\Details.cshtml" />
-    <Content Include="Views\PaaKayttajas\Edit.cshtml" />
-    <Content Include="Views\PaaKayttajas\Index.cshtml" />
     <Content Include="Views\Yritys\Create.cshtml" />
     <Content Include="Views\Yritys\Delete.cshtml" />
     <Content Include="Views\Yritys\Details.cshtml" />

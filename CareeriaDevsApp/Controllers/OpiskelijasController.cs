@@ -44,35 +44,34 @@ namespace CareeriaDevsApp.Controllers
             }
         }
     }
-    public class OpiskelijasController : Controller
+    public class OpiskelijasController : BaseController
     {
         private Stud1Entities db = new Stud1Entities();
 
         // GET: Opiskelijas
-        public ActionResult Index()
+        public ActionResult Index() //admin
         {
+            if (TryGetRedirectUrlWhereAdmin(RedirectToAction("OpisSisalto", "OmaSisaltos"), //BaseControllerilta saadaan käyttäjätodennus
+            RedirectToAction("YritysSisalto", "OmaSisaltos"),
+            out var redirectResult))
+            {
+                return redirectResult;
+            }
             var opiskelija = db.Opiskelija.Include(o => o.Postitoimipaikka);
             return View(opiskelija.ToList());
         }
 
-        // GET: Opiskelijas/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Opiskelija opiskelija = db.Opiskelija.Find(id);
-            if (opiskelija == null)
-            {
-                return HttpNotFound();
-            }
-            return View(opiskelija);
-        }
 
         // GET: Opiskelijas/Create
-        public ActionResult Create()
+        public ActionResult Create() //admin
         {
+            if (TryGetRedirectUrlWhereAdmin(RedirectToAction("OpisSisalto", "OmaSisaltos"), //BaseControllerilta saadaan käyttäjätodennus
+            RedirectToAction("YritysSisalto", "OmaSisaltos"),
+            out var redirectResult))
+            {
+                return redirectResult;
+            }
+
             ViewBag.postitoimipaikka_Id = new SelectList(db.Postitoimipaikka, "postitoimipaikka_Id", "postinumero");
             return View();
         }
@@ -98,8 +97,15 @@ namespace CareeriaDevsApp.Controllers
 
         // GET: Opiskelijas/Edit/5
         [PreventFromUrl]
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? id) //admin
         {
+            if (TryGetRedirectUrlWhereAdmin(RedirectToAction("OpisSisalto", "OmaSisaltos"), //BaseControllerilta saadaan käyttäjätodennus
+            RedirectToAction("YritysSisalto", "OmaSisaltos"),
+            out var redirectResult))
+            {
+                return redirectResult;
+            }
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -132,8 +138,15 @@ namespace CareeriaDevsApp.Controllers
 
         // GET: Opiskelijas/Delete/5
         [PreventFromUrl]
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? id) //admin
         {
+
+            if (TryGetRedirectUrlWhereAdmin(RedirectToAction("OpisSisalto", "OmaSisaltos"), //BaseControllerilta saadaan käyttäjätodennus
+            RedirectToAction("YritysSisalto", "OmaSisaltos"),
+            out var redirectResult))
+            {
+                return redirectResult;
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

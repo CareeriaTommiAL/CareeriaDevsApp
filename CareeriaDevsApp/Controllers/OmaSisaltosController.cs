@@ -148,7 +148,11 @@ namespace CareeriaDevsApp.Controllers
                 //käyttäjä ei pääse muokkaamaan omasisältöä, jos loginissa saatu Session["student_id"] ei vastaa edittiin menossa olevaa opiskelija_id:tä
                 if (Convert.ToInt32(Session["student_id"]) != id)
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    RedirectToAction("OpisSisalto", "OmaSisaltos", null);
+                }
+                if (Session["corporate_id"] != null)
+                {
+                    RedirectToAction("YritysSisalto", "OmaSisaltos", null);
                 }
             }
 
@@ -188,13 +192,13 @@ namespace CareeriaDevsApp.Controllers
 
 
 
-        // Omasisällön poisto-oikeus vain adminilla (taulujen linkkaukset tuo varmasti omat ongelmansa) EI TESTATTU
-        //**********************************************************************************************************
+        // Omasisällön poisto-oikeus vain adminilla ****************
+        //**********************************************************
         public ActionResult Delete(int? id)
         {
             if (Convert.ToInt32(Session["admin_id"]) != 1)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                RedirectToAction("Index", "Home", null);
             }
             if (id == null)
             {
