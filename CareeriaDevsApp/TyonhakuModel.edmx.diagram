@@ -15,7 +15,6 @@
         <EntityTypeShape EntityType="Stud1Model.Sahkoposti" Width="1.5" PointX="8.5" PointY="2.25" IsExpanded="true" />
         <EntityTypeShape EntityType="Stud1Model.Viesti" Width="1.5" PointX="8.25" PointY="14.125" IsExpanded="true" />
         <EntityTypeShape EntityType="Stud1Model.Yritys" Width="1.5" PointX="3" PointY="11.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="Stud1Model.database_firewall_rules" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
         <AssociationConnector Association="Stud1Model.R_30" ManuallyRouted="false" />
         <AssociationConnector Association="Stud1Model.R_39" ManuallyRouted="false" />
         <AssociationConnector Association="Stud1Model.R_42" ManuallyRouted="false" />

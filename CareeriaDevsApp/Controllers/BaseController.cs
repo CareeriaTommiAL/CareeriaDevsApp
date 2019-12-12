@@ -96,6 +96,58 @@ namespace CareeriaDevsApp.Controllers
         //***********************************************
         //Jos kyseessä pelkkä admin
         //***********************************************
+        protected bool TryGetRedirectUrlWhereAdmin(ActionResult studentStudent, ActionResult corporateStudent, out ActionResult redirectResultAdmin)
+        {
+
+            //tarkastetaan kuka actionia kutsuu
+            if (Convert.ToInt32(Session["admin_id"]) != 1)
+            {
+                var opislogid = Session["student_id"];
+                if (opislogid == null)
+                {
+                    redirectResultAdmin = studentStudent;
+                    return true;
+                }
+                var yrityslogid = Session["corporate_id"];
+                if (yrityslogid == null)
+                {
+                    redirectResultAdmin = corporateStudent;
+                    return true;
+                }
+            }
+            redirectResultAdmin = null;
+            return false;
+        }
+
+        //***********************************************
+        //Jos kyseessä pelkkä admin
+        //***********************************************
+        protected bool TryGetRedirectDefault(ActionResult student, ActionResult corporate, out ActionResult redirectResult)
+        {
+            if (Convert.ToInt32(Session["admin_id"]) != 1) //muista muuttaa Session["admin_id"]) != 1 kaikkialle jos muutetaan paakayttaja_id Login-tauluun,
+                                                           //tämä on databasessa kiinteänä id:nä (eli vain 1 admin tällä hetkellä)!!!!!!!!!!!!!!!!!!!
+            {
+
+                //jos käyttäjällä on Session["student_id"], niin opiskelija ohjataan suoraan omaan profiiliin
+                var opislogid = Session["student_id"];
+                if (opislogid != null)
+                {
+                    redirectResult = student;
+                    return true;
+                }
+                //jos käyttäjällä on Session["corporate_id"], niin yritys ohjataan suoraan samanlaiseen näkymään kuin adminilla, mutta ilman toimintoja
+                var yrityslogid = Session["corporate_id"];
+                if (yrityslogid != null)
+                {
+                    redirectResult = corporate;
+                    return true;
+                }
+            }
+
+            redirectResult = null;
+            return false;
+        }
+
 
     }
 }

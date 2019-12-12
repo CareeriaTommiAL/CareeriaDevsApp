@@ -14,6 +14,8 @@ namespace CareeriaDevsApp.Models
         [Display(Name = "Email ID")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Sähköposti puuttuu")]
         [DataType(DataType.EmailAddress)]
+        [EmailAddress(ErrorMessage = "Syötä kelvollinen sähköpostiosoite")]
+
         public string kayttajaNimi { get; set; }
 
         [Required(AllowEmptyStrings = false, ErrorMessage = "Salasana vaaditaan")]

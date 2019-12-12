@@ -237,50 +237,50 @@ namespace CareeriaDevsApp.Controllers
         //Admin viestiedit
         //************************************************************************
 
-        // GET: Viestis/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            //BaseControllerilta saadaan käyttäjätodennus (vain admin)
-            if (TryGetRedirectUrl(RedirectToAction("OpisSisalto", "OmaSisaltos"), 
-                      RedirectToAction("YritysSisalto", "OmaSisaltos"),
-                      out var redirectResult))
-            {
-                return redirectResult;
-            }
+        //// GET: Viestis/Edit/5
+        //public ActionResult Edit(int? id)
+        //{
+        //    //BaseControllerilta saadaan käyttäjätodennus (vain admin)
+        //    if (TryGetRedirectUrl(RedirectToAction("OpisSisalto", "OmaSisaltos"), 
+        //              RedirectToAction("YritysSisalto", "OmaSisaltos"),
+        //              out var redirectResult))
+        //    {
+        //        return redirectResult;
+        //    }
 
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Viesti viesti = db.Viesti.Find(id);
-            if (viesti == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.opiskelija_Id = new SelectList(db.Opiskelija, "opiskelija_Id", "etunimi", viesti.opiskelija_Id);
-            ViewBag.paaKayttaja_Id = new SelectList(db.PaaKayttaja, "paaKayttaja_Id", "nimi", viesti.paaKayttaja_Id);
-            ViewBag.yritys_Id = new SelectList(db.Yritys, "yritys_Id", "yrityksenNimi", viesti.yritys_Id);
-            return View(viesti);
-        }
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Viesti viesti = db.Viesti.Find(id);
+        //    if (viesti == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    ViewBag.opiskelija_Id = new SelectList(db.Opiskelija, "opiskelija_Id", "etunimi", viesti.opiskelija_Id);
+        //    ViewBag.paaKayttaja_Id = new SelectList(db.PaaKayttaja, "paaKayttaja_Id", "nimi", viesti.paaKayttaja_Id);
+        //    ViewBag.yritys_Id = new SelectList(db.Yritys, "yritys_Id", "yrityksenNimi", viesti.yritys_Id);
+        //    return View(viesti);
+        //}
 
-        // POST: Viestis/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "viesti_Id,inbox,viestiLoki,opiskelija_Id,yritys_Id,paaKayttaja_Id")] Viesti viesti)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(viesti).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.opiskelija_Id = new SelectList(db.Opiskelija, "opiskelija_Id", "etunimi", viesti.opiskelija_Id);
-            ViewBag.paaKayttaja_Id = new SelectList(db.PaaKayttaja, "paaKayttaja_Id", "nimi", viesti.paaKayttaja_Id);
-            ViewBag.yritys_Id = new SelectList(db.Yritys, "yritys_Id", "yrityksenNimi", viesti.yritys_Id);
-            return View(viesti);
-        }
+        //// POST: Viestis/Edit/5
+        //// To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        //// more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Edit([Bind(Include = "viesti_Id,inbox,viestiLoki,opiskelija_Id,yritys_Id,paaKayttaja_Id")] Viesti viesti)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.Entry(viesti).State = EntityState.Modified;
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+        //    ViewBag.opiskelija_Id = new SelectList(db.Opiskelija, "opiskelija_Id", "etunimi", viesti.opiskelija_Id);
+        //    ViewBag.paaKayttaja_Id = new SelectList(db.PaaKayttaja, "paaKayttaja_Id", "nimi", viesti.paaKayttaja_Id);
+        //    ViewBag.yritys_Id = new SelectList(db.Yritys, "yritys_Id", "yrityksenNimi", viesti.yritys_Id);
+        //    return View(viesti);
+        //}
 
         // GET: Viestis/Delete/5
         public ActionResult Delete(int? id)
@@ -334,6 +334,12 @@ namespace CareeriaDevsApp.Controllers
         //****************************************************************************
         public ActionResult HaeOpiskelijanViestit()
         {
+            if (TryGetRedirectUrlWhereStudent(RedirectToAction("OpisSisalto", "OmaSisaltos"), //opiskelija
+            RedirectToAction("YritysSisalto", "OmaSisaltos"),
+            out var redirectResult))
+            {
+                return redirectResult;
+            }
             var opislogid = Session["student_id"];
             //opiskelijalle näkyy vain omat viestit
             var opisViestit = (from m in db.Viesti
@@ -351,6 +357,13 @@ namespace CareeriaDevsApp.Controllers
         //****************************************************************************
         public ActionResult HaeYrityksenViestit()
         {
+            if (TryGetRedirectUrlWhereYritys(RedirectToAction("YritysSisalto", "OmaSisaltos"), //BaseControllerilta saadaan käyttäjätodennus
+            RedirectToAction("OpisSisalto", "OmaSisaltos"),
+            out var redirectResult))
+            {
+                return redirectResult;
+            }
+
             var yritysid = Session["corporate_id"];
             //opiskelijalle näkyy vain omat viestit
             var yritysViestit = (from m in db.Viesti
