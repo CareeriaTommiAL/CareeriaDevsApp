@@ -7,13 +7,29 @@ a {
     max-height: 110px;
 }
 
-.linkit a {
-    display: block;
-    margin: 10px;
-}
+    .linkit a {
+        display: block;
+        margin: 10px;
+    }
 
 .profiili-kuva {
     border-radius: 100%;
+}
+
+.profiili-kuva-small {
+    max-height: 200px;
+    max-width: 200px;
+}
+
+.muokkaa-yrityksesi {
+    position: absolute;
+    right: 0;
+    background: #fff3cd;
+    max-width: 250px;
+    padding: 10px 20px;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    margin-bottom: 20px;
 }
 
 /* nav */
@@ -24,6 +40,11 @@ a {
 .dropdown-item {
     cursor: pointer;
 }
+
+    .dropdown-item:active {
+        cursor: pointer;
+        background-color: #dfbe71;
+    }
 
 /* login */
 .form-check {
@@ -40,6 +61,20 @@ a {
 .login-h {
     border-bottom: 1px dashed rgba(0,0,0,0.2);
 }
+
+.bg-yellow {
+    background: #fff3cd;
+}
+
+.btn-notsodanger {
+    background: hsla(359,98%,68%,0.8);
+    color: #fff;
+}
+
+    .btn-notsodanger:hover {
+        background: hsla(359,98%,68%,1);
+        color: #fff;
+    }
 
 #students {
     background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('../Content/Images/tyonhakijoille.jpg') center center;
@@ -81,39 +116,25 @@ a {
 
 #chapters {
     margin: 100px;
-    color: #4b4b4b;
 }
 
-#chapters .pallo-1 {
-    background: url('img/pallo-1.png') center center;
-    background-size: contain;
-    background-repeat: no-repeat;
-    height: 200px;
+.badge-primary {
     color: #fff;
+    background-color: #d7be71;
 }
 
-#chapters .pallo-2 {
-    background: url('../Content/Images/pallo-2.png') center center;
-    background-size: contain;
-    background-repeat: no-repeat;
-    height: 200px;
-    color: #fff;
+.badge-pill {
+    padding: 1.2em;
+    border-radius: 100px;
+    position: absolute;
+    top: -30px;
+    left: 120px;
 }
 
-#chapters .pallo-3 {
-    background: url('../Content/Images/pallo-3.png') center center;
-    background-size: contain;
-    background-repeat: no-repeat;
-    height: 200px;
-    color: #fff;
-}
-
-#chapters .pallo-4 {
-    background: url('../Content/Images/pallo-4.png') center center;
-    background-size: contain;
-    background-repeat: no-repeat;
-    height: 200px;
-    color: #fff;
+.vaihelista li {
+    border: none;
+    background: transparent;
+    margin: 0 auto;
 }
 
 #employers-reg {
@@ -125,51 +146,56 @@ a {
 #students-reg {
     margin: 100px;
     color: #4b4b4b;
-    background: url('../Content/Images/footerbg.png') right bottom;
+    background: url('../Content/Images/footerbg.png') center center;
     background-size: 800px 534px;
     background-repeat: no-repeat;
     min-height: 500px;
 }
 
-#students-reg .students-reg-content {
-    margin-left: 150px;
-}
+    #students-reg .students-reg-content {
+        margin-left: 150px;
+    }
 
 #sponsors {
     margin: 100px;
     color: #4b4b4b;
 }
 
+    #sponsors p {
+        font-weight: bold;
+        font-size: 1.2rem;
+    }
+
 #footer {
     margin: 100px;
     color: #4b4b4b;
 }
 
-#footer ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
+    #footer ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
 
 .btn-outline-yellow {
     color: #dfbe71;
     border-color: #dfbe71;
 }
 
-.btn-outline-yellow:hover {
-    color: #d7af4d;
-    border-color: #dfbe71;
-}
+    .btn-outline-yellow:hover {
+        color: #d7af4d;
+        border-color: #dfbe71;
+    }
 
 .btn-yellow {
     color: #fff;
     background-color: #dfbe71;
 }
 
-.btn-yellow:hover {
-    color: #fff;
-    background-color: #d7af4d;
-}
+    .btn-yellow:hover {
+        color: #fff;
+        background-color: #d7af4d;
+    }
 
 /*SignalR*/
 
@@ -193,8 +219,6 @@ a {
         color: lawngreen;
         margin: 10px;
     }
-
-
 
 .chat-container {
     display: flex;

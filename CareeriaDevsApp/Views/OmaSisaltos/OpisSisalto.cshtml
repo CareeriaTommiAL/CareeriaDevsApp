@@ -17,13 +17,15 @@
     <div>
         @if (success != null)
         {
+        <div class="alert alert-success text-center" role="alert">
             <h2> @TempData["tallennusonnistui"]</h2>
-
-        }
-        @if (unsuccess != null)
-        {
+        </div>
+            }
+            @if (unsuccess != null)
+            {
+        <div class="alert alert-danger text-center" role="alert">
             <h2> @TempData["tallennusepaonnistui"]</h2>
-
+        </div>
         }
     </div>
 
@@ -40,7 +42,7 @@
                         </div>
 
                         <div class="col-6">
-                            <h5>@ViewBag.opiskelijanimi</h5>
+                            <h5 class="bg-yellow p-2">@ViewBag.opiskelijanimi</h5>
                             @*Näytetään opiskelijan itsemuokkaama "profiili":*@
                             <script type="text/javascript">
                                 var naytaTeksti = @Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(item.omaTeksti)) /*Sanotaan notta eläpä suorita scriptejä*/
@@ -55,7 +57,7 @@
                             }
                             </div>
 
-                        <div class="col-3 bg-light p-3 linkit">
+                        <div class="col-3 bg-yellow p-3 linkit">
                             @Html.ActionLink("Muokkaa osaajaprofiilia", "Edit", new { id = Session["student_id"] })
                             @Html.ActionLink("Muokkaa omia tietoja", "OppilasTiedotUpdate", "Logins", new { id = Session["student_id"] }, null)
                         </div>
