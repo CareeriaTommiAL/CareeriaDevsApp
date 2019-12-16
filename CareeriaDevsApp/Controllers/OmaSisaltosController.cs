@@ -8,6 +8,9 @@ using System.Web;
 using System.Web.Mvc;
 using CareeriaDevsApp;
 using CareeriaDevsApp.Models;
+using PagedList;
+using PagedList.Mvc;
+
 
 namespace CareeriaDevsApp.Controllers
 {
@@ -17,18 +20,17 @@ namespace CareeriaDevsApp.Controllers
 
         public ActionResult Index()
         {
+
             //****HOX!**** tätä voit kutsua BaseControllerista ja muuttaa redirectit mieluiseksi ks. Controllers -> Basecontroller ****HOX!****
             if (TryGetRedirectUrl(RedirectToAction("OpisSisalto", "OmaSisaltos"), //BaseControllerilta saadaan käyttäjätodennus
                                   RedirectToAction("YritysSisalto", "OmaSisaltos"),
                                   out var redirectResult))
-            {
+            { 
                 return redirectResult;
             }
-
             var omaSisalto = db.OmaSisalto.Include(o => o.Opiskelija);
             return View(omaSisalto.ToList());
         }
-
 
 
 
@@ -90,7 +92,7 @@ namespace CareeriaDevsApp.Controllers
 
         //haetaan tietty yritys_id ja listataan ko. id:n näkymä YritysSisalto.cshtml
         //**************************************************************************
-        public ActionResult YritysSisalto(string search)  //Tommi, hakumetodi
+        public ActionResult YritysSisalto(string searchBy, string search, int? page)  //Tommi, hakumetodi
         {
 
             if (TryGetRedirectUrlWhereYritys(RedirectToAction("Login", "Logins"), //BaseControllerilta saadaan käyttäjätodennus
@@ -134,7 +136,9 @@ namespace CareeriaDevsApp.Controllers
 
             //var omaSisalto = db.OmaSisalto.Include(o => o.Opiskelija);
             //return View(omaSisalto.ToList());
-            return View(db.OmaSisalto.Where(x => x.omaTeksti.Contains(search) || search == null).ToList());  //Tommi, listaa profiilit joiden omaTeksti sisältää hakusanan tai sen osan. Jos haku = null, näytetään kaikki profiilit.
+            int pageSize = 15;
+            int pageNumber = (page ?? 1);
+            return View(db.OmaSisalto.Where(x => x.omaTeksti.Contains(search) || search == null).OrderBy(x => x.opiskelija_Id).ToPagedList(pageNumber, pageSize));  //Tommi, listaa profiilit joiden omaTeksti sisältää hakusanan tai sen osan. Jos haku = null, näytetään kaikki profiilit.
 
         }
 
