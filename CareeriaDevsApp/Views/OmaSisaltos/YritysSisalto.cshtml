@@ -1,9 +1,4 @@
-﻿@using PagedList.Mvc;
-@using PagedList;
-@model PagedList.IPagedList<CareeriaDevsApp.OmaSisalto>
-<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
-
-
+﻿@model IEnumerable<CareeriaDevsApp.OmaSisalto>
 
 
 @{
@@ -12,21 +7,23 @@
 }
 
 
+    <div class="alert alert-warning text-center" role="alert">
+        Tervetuloa <strong>@ViewBag.yritysnimi</strong>.
+        Sinulle on <span class="badge badge-primary">@ViewBag.lukemattomatViestit</span> uutta viestiä. @Html.ActionLink("Lue saapuneet viestit", "HaeYrityksenViestit", "Viestis", new { id = Session["corporate_id"] }, null) 
+    </div>
 
-<div class="alert alert-warning text-center" role="alert">
-    Tervetuloa <strong>@ViewBag.yritysnimi</strong>.
-    Sinulle on <span class="badge badge-primary">@ViewBag.lukemattomatViestit</span> uutta viestiä. @Html.ActionLink("Lue saapuneet viestit", "HaeYrityksenViestit", "Viestis", new { id = Session["corporate_id"] }, null) || @Html.ActionLink("Muokkaa omia tietoja", "YritysTiedotUpdate", "Logins", new { id = Session["corporate_id"], @class = "btn btn-light" }, null)
-</div>
+    <div class="muokkaa-yrityksesi">
+        <i class="fa fa-address-card"></i> @Html.ActionLink("Muokkaa omia tietoja", "YritysTiedotUpdate", "Logins", new { id = Session["corporate_id"], @class = "btn btn-light" }, null)
+    </div>
 
-
-
-<div>
-    @if (success != null)
-    {
-        <h2> @TempData["tallennusonnistui"]</h2>
-
-    }
-</div>
+    <div>
+        @if (success != null)
+        {
+        <div class="alert alert-success text-center" role="alert">
+            <h2> @TempData["tallennusonnistui"]</h2>
+        </div>
+        }
+    </div>
 
 <div class="container">
     <div class="row mb-5 mt-5">
@@ -37,32 +34,19 @@
 
             @using (Html.BeginForm("YritysSisalto", "OmaSisaltos", FormMethod.Get))  //Tommi, tägää OmaSisaltos controllerin YritysSisalto metodin avainsanahakua varten
             {
-                <div>@Html.TextBox("search", null, new { @class = "form-control search-bar" }) </div><div><button class="btn btn-yellow" type="submit">Hae</button></div>
-            }
+            <div class="input-group mb-5">
+                @Html.TextBox("search", null, new { @class = "form-control search-bar" })        
+                <div class="input-group-append">
+                    <button class="btn btn-yellow" type="submit">Hae</button>
+                </div>
+            </div>
+                }
 
-        </div>
+            </div>
 
 
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">
-                        Kuva
-                    </th>
-                    <th scope="col">
-                        Nimi
-                    </th>
-                    <th scope="col">
-                        Paikkakunta
-                    </th>
-                    <th scope="col">
-                        Opiskelijan omaesittely
-                    </th>
-
-                    <th scope="col"></th>
-                </tr>
-            </thead>
+        <table class="table table-hover">
             @if (Model.Count() == 0)  //Tommi, Jos avainsanalla ei tule osumia
             {
                 <tr>
@@ -84,7 +68,7 @@
                     <td>
                         @*@Html.DisplayFor(modelItem => item.omaKuva)*@
                         @*Näytetään opiskelijan omaKuva -tietokannasta <img> sisään:*@
-                        <p><img src="@Html.Raw(HttpUtility.HtmlDecode(item.omaKuva))" width="200"></p>
+                        <img src="@Html.Raw(HttpUtility.HtmlDecode(item.omaKuva))" class="img-fluid profiili-kuva-small">
                     </td>
                     <td>
                         @*Näytetään opiskelijan koko nimi:*@
@@ -98,7 +82,7 @@
                         @Html.Raw(HttpUtility.HtmlDecode(item.omaTeksti))
                     </td>
                     <td>
-                        @Html.ActionLink("Lähetä viesti", "CreateOffer", "Viestis", new { opisId = item.opiskelija_Id }, null)
+                        @Html.ActionLink("Lähetä viesti", "CreateOffer", "Viestis", new { opisId = item.opiskelija_Id }, new { @class = "btn btn-light" })
                     </td>
 
                 </tr>
@@ -106,10 +90,7 @@
             }
 
         </table>
-        Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
-
-        @Html.PagedListPager(Model, page => Url.Action("YritysSisalto",
-            new { page, searchBy = Request.QueryString["searchBy"], search = Request.QueryString["search"] }))
 
     </div>
+
 </div>

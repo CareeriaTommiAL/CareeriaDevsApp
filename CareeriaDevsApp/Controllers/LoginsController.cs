@@ -259,7 +259,7 @@ namespace CareeriaDevsApp.Controllers
 
                     OmaSisalto uusiOmasis = new OmaSisalto();
                     uusiOmasis.opiskelija_Id = opiskelija.opiskelija_Id;
-                    //muistetaas tähän lisätä se default-kuva myös
+                    uusiOmasis.omaKuva = "/Content/Images/avatar.png";
 
 
                     dc.Opiskelija.Add(uusiOpis);

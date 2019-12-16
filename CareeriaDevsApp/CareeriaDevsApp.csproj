@@ -363,6 +363,7 @@
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Images\avatar.jpg" />
+    <Content Include="Content\Images\avatar.png" />
     <Content Include="Content\Images\careeria-logo.png" />
     <Content Include="Content\Images\footerbg.png" />
     <Content Include="Content\Images\Loader.gif" />
