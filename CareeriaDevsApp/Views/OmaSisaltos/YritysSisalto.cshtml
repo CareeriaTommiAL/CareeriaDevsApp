@@ -9,25 +9,41 @@
     ViewBag.Title = "YritysSisalto";
     var success = TempData["tallennusonnistui"];
 }
+@{
+    if (TempData["viestiOnnistui"] != null)
+    {
+        <script type="text/javascript">
+        alert(@Html.Raw(Json.Encode(TempData["viestiOnnistui"])));
+        </script>
+    }
+}
+@{
+    if (TempData["viestiEpaonnistui"] != null)
+    {
+        <script type="text/javascript">
+        alert(@Html.Raw(Json.Encode(TempData["viestiEpaonnistui"])));
+        </script>
+    }
+}
 
 
-    <div class="alert alert-warning text-center" role="alert">
-        Tervetuloa <strong>@ViewBag.yritysnimi</strong>.
-        Sinulle on <span class="badge badge-primary">@ViewBag.lukemattomatViestit</span> uutta viestiä. @Html.ActionLink("Lue saapuneet viestit", "HaeYrityksenViestit", "Viestis", new { id = Session["corporate_id"] }, null) 
-    </div>
+<div class="alert alert-warning text-center" role="alert">
+    Tervetuloa <strong>@ViewBag.yritysnimi</strong>.
+    Sinulle on <span class="badge badge-primary">@ViewBag.lukemattomatViestit</span> uutta viestiä. @Html.ActionLink("Lue saapuneet viestit", "HaeYrityksenViestit", "Viestis", new { id = Session["corporate_id"] }, null)
+</div>
 
-    <div class="muokkaa-yrityksesi">
-        <i class="fa fa-address-card"></i> @Html.ActionLink("Muokkaa omia tietoja", "YritysTiedotUpdate", "Logins", new { id = Session["corporate_id"], @class = "btn btn-light" }, null)
-    </div>
+<div class="muokkaa-yrityksesi">
+    <i class="fa fa-address-card"></i> @Html.ActionLink("Muokkaa omia tietoja", "YritysTiedotUpdate", "Logins", new { id = Session["corporate_id"], @class = "btn btn-light" }, null)
+</div>
 
-    <div>
-        @if (success != null)
-        {
+<div>
+    @if (success != null)
+    {
         <div class="alert alert-success text-center" role="alert">
             <h2> @TempData["tallennusonnistui"]</h2>
         </div>
-        }
-    </div>
+    }
+</div>
 
 <div class="container">
     <div class="row mb-5 mt-5">
@@ -67,8 +83,8 @@
             {
                 <tr>
                     @*<td>
-                        @Html.DisplayFor(modelItem => item.omatAsetukset)
-                    </td>*@
+                            @Html.DisplayFor(modelItem => item.omatAsetukset)
+                        </td>*@
                     <td>
                         @*@Html.DisplayFor(modelItem => item.omaKuva)*@
                         @*Näytetään opiskelijan omaKuva -tietokannasta <img> sisään:*@

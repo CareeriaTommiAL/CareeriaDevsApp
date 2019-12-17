@@ -23,24 +23,25 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.inbox)
-        </td>
-        <td>
-            @Html.Raw(HttpUtility.HtmlDecode(item.viestiLoki))
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Opiskelija.etunimi) @Html.DisplayFor(modelItem => item.Opiskelija.sukunimi)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Yritys.yrityksenNimi)
-        </td>
-        <td>
-            @Html.ActionLink("Poista", "Delete", new { id=item.viesti_Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.inbox)
+            </td>
+            <td>
+                @Html.Raw(HttpUtility.HtmlDecode(item.viestiLoki))
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Opiskelija.etunimi) @Html.DisplayFor(modelItem => item.Opiskelija.sukunimi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Yritys.yrityksenNimi)
+            </td>
+            <td>
+                @Html.ActionLink("Poista", "Delete", new { id = item.viesti_Id })
+            </td>
+        </tr>
+    }
 
 </table>

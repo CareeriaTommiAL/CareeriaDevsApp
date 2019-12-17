@@ -73,12 +73,20 @@ namespace CareeriaDevsApp.Controllers
                     uusiViesti.onkoVastaus = false;
                     uusiViesti.onkoLuettu = false;
                     uusiViesti.viestinPaivays = DateTime.Now;
-
+                    try
+                    {
                     db.Viesti.Add(uusiViesti);
                     db.SaveChanges();
-                }
+                    TempData["viestiOnnistui"] = "Viesti lähetetty!";
+                    return RedirectToAction("Index");
+                    }
+                    catch
+                    {
+                    TempData["viestiEpaonnistui"] = "Viestin lähetys epäonnistui!";
+                    return RedirectToAction("Index");
+                    }
 
-                return RedirectToAction("Index");
+                }
             }
 
             ViewBag.opiskelija_Id = new SelectList(db.Opiskelija, "opiskelija_Id", "etunimi", viesti.opiskelija_Id);
