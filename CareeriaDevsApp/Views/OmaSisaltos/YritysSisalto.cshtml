@@ -1,4 +1,8 @@
-﻿@model IEnumerable<CareeriaDevsApp.OmaSisalto>
+﻿@model PagedList.IPagedList<CareeriaDevsApp.OmaSisalto>
+@using PagedList;
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
 
 
 @{
@@ -34,15 +38,15 @@
 
             @using (Html.BeginForm("YritysSisalto", "OmaSisaltos", FormMethod.Get))  //Tommi, tägää OmaSisaltos controllerin YritysSisalto metodin avainsanahakua varten
             {
-            <div class="input-group mb-5">
-                @Html.TextBox("search", null, new { @class = "form-control search-bar" })        
-                <div class="input-group-append">
-                    <button class="btn btn-yellow" type="submit">Hae</button>
+                <div class="input-group mb-5">
+                    @Html.TextBox("search", null, new { @class = "form-control search-bar" })
+                    <div class="input-group-append">
+                        <button class="btn btn-yellow" type="submit">Hae</button>
+                    </div>
                 </div>
-            </div>
-                }
+            }
 
-            </div>
+        </div>
 
 
 
@@ -63,8 +67,8 @@
             {
                 <tr>
                     @*<td>
-                            @Html.DisplayFor(modelItem => item.omatAsetukset)
-                        </td>*@
+                        @Html.DisplayFor(modelItem => item.omatAsetukset)
+                    </td>*@
                     <td>
                         @*@Html.DisplayFor(modelItem => item.omaKuva)*@
                         @*Näytetään opiskelijan omaKuva -tietokannasta <img> sisään:*@
@@ -90,6 +94,11 @@
             }
 
         </table>
+        <br />
+        Sivu @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+
+        @Html.PagedListPager(Model, page => Url.Action("YritysSisalto",
+            new {page, search = Request.QueryString["search"]}))
 
     </div>
 

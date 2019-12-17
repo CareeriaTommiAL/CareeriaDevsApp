@@ -138,7 +138,11 @@ namespace CareeriaDevsApp.Controllers
             //return View(omaSisalto.ToList());
             int pageSize = 15;
             int pageNumber = (page ?? 1);
-            return View(db.OmaSisalto.Where(x => x.omaTeksti.Contains(search) || search == null).OrderBy(x => x.opiskelija_Id).ToPagedList(pageNumber, pageSize));  //Tommi, listaa profiilit joiden omaTeksti sisältää hakusanan tai sen osan. Jos haku = null, näytetään kaikki profiilit.
+            if (search== "")
+            {
+                return View(db.OmaSisalto.OrderBy(x => x.opiskelija_Id).ToPagedList(pageNumber, pageSize));
+            }
+            else return View(db.OmaSisalto.Where(x => x.omaTeksti.Contains(search) || search == null).OrderBy(x => x.opiskelija_Id).ToPagedList(pageNumber, pageSize));  //Tommi, listaa profiilit joiden omaTeksti sisältää hakusanan tai sen osan. Jos haku = null, näytetään kaikki profiilit.
 
         }
 
