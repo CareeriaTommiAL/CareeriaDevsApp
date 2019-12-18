@@ -2,12 +2,27 @@
 
 @{
     ViewBag.Title = "Kirjautuminen";
+    var registerSuccess = TempData["rekisterointiOnnistui"];
+    var registerError = TempData["rekisterointiEpaonnistui"];
 }
 
 <div class="container">
 
     <div class="row">
-
+        <div>
+            @if (registerSuccess != null)
+            {
+                <div class="alert alert-success text-center" role="alert">
+                    <h2> @TempData["rekisterointiOnnistui"]</h2>
+                </div>
+            }
+            @if (registerError != null)
+            {
+                <div class="alert alert-danger text-center" role="alert">
+                    <h2> @TempData["rekisterointiEpaonnistui"]</h2>
+                </div>
+            }
+        </div>
         <div class="col-6 login-form text-center">
 
             <h1 class="mb-5 pb-4 login-h">Kirjaudu sisään</i></h1>

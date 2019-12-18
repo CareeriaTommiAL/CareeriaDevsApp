@@ -268,6 +268,7 @@ namespace CareeriaDevsApp.Controllers
                     dc.OmaSisalto.Add(uusiOmasis);
                     dc.Login.Add(uusiKirj);
                     dc.SaveChanges();
+                    TempData["rekisterointiOnnistui"] = "Rekisteröinti onnistui! Voit nyt kirjautua sisään.";
 
                     ////Kutsutaan aktivointisähköpostin lähetysmetodia...
                     //SendVerificationLinkEmail(user.kayttajaNimi, user.aktivointiKoodi.ToString());
@@ -280,6 +281,7 @@ namespace CareeriaDevsApp.Controllers
             }
             else
             {
+                TempData["rekisterointiEpaonnistui"] = "Rekisteröinti epäonnistui! Virheen jatkuessa ota yhteyttä tukeemme.";
                 message = "Virhe käsiteltäessä pyyntöä!";
             }
 
@@ -380,6 +382,7 @@ namespace CareeriaDevsApp.Controllers
                     dc.Sahkoposti.Add(uusiSpostiY);
                     dc.Login.Add(uusiKirjY);
                     dc.SaveChanges();
+                    TempData["rekisterointiOnnistui"] = "Rekisteröinti onnistui! Voit nyt kirjautua sisään.";
 
                     ////Kutsutaan aktivointisähköpostin lähetysmetodia...
                     //SendVerificationLinkEmail(user.kayttajaNimi, user.aktivointiKoodi.ToString());
@@ -391,6 +394,7 @@ namespace CareeriaDevsApp.Controllers
             }
             else
             {
+                TempData["rekisterointiEpaonnistui"] = "Rekisteröinti epäonnistui! Virheen jatkuessa ota yhteyttä tukeemme.";
                 message = "Virhe käsiteltäessä pyyntöä!";
             }
 
