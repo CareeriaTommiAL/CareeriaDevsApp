@@ -3,8 +3,10 @@
 
     @{
         ViewBag.Title = "OpisSisalto";
-        var success = TempData["tallennusonnistui"];
-        var unsuccess = TempData["tallennusepaonnistui"];
+        var success = TempData["tallennusOnnistui"];
+        var saveError = TempData["tallennusEpaonnistui"];
+        var updateSuccess = TempData["paivitysOnnistui"];
+        var updateError = TempData["paivitysEpaonnistui"];
     }
 
     <div class="alert alert-warning text-center" role="alert">
@@ -17,15 +19,27 @@
     <div>
         @if (success != null)
         {
-        <div class="alert alert-success text-center" role="alert">
-            <h2> @TempData["tallennusonnistui"]</h2>
-        </div>
-            }
-            @if (unsuccess != null)
-            {
-        <div class="alert alert-danger text-center" role="alert">
-            <h2> @TempData["tallennusepaonnistui"]</h2>
-        </div>
+            <div class="alert alert-success text-center" role="alert">
+                <h2> @TempData["tallennusOnnistui"]</h2>
+            </div>
+        }
+        @if (saveError != null)
+        {
+            <div class="alert alert-danger text-center" role="alert">
+                <h2> @TempData["tallennusEpaonnistui"]</h2>
+            </div>
+        }
+        @if (updateSuccess != null)
+        {
+            <div class="alert alert-success text-center" role="alert">
+                <h2> @TempData["paivitysOnnistui"]</h2>
+            </div>
+        }
+        @if (updateError != null)
+        {
+            <div class="alert alert-danger text-center" role="alert">
+                <h2> @TempData["paivitysEpaonnistui"]</h2>
+            </div>
         }
     </div>
 

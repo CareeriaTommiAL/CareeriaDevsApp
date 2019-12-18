@@ -7,25 +7,9 @@
 
 @{
     ViewBag.Title = "YritysSisalto";
-    var success = TempData["tallennusonnistui"];
+    var success = TempData["tallennusOnnistui"];
+    var saveError = TempData["tallennusEpaonnistui"];
 }
-@{
-    if (TempData["viestiOnnistui"] != null)
-    {
-        <script type="text/javascript">
-        alert(@Html.Raw(Json.Encode(TempData["viestiOnnistui"])));
-        </script>
-    }
-}
-@{
-    if (TempData["viestiEpaonnistui"] != null)
-    {
-        <script type="text/javascript">
-        alert(@Html.Raw(Json.Encode(TempData["viestiEpaonnistui"])));
-        </script>
-    }
-}
-
 
 <div class="alert alert-warning text-center" role="alert">
     Tervetuloa <strong>@ViewBag.yritysnimi</strong>.
@@ -40,7 +24,13 @@
     @if (success != null)
     {
         <div class="alert alert-success text-center" role="alert">
-            <h2> @TempData["tallennusonnistui"]</h2>
+            <h2> @TempData["tallennusOnnistui"]</h2>
+        </div>
+    }
+    @if (saveError != null)
+    {
+        <div class="alert alert-danger text-center" role="alert">
+            <h2> @TempData["tallennusEpaonnistui"]</h2>
         </div>
     }
 </div>

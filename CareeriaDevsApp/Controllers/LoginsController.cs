@@ -723,10 +723,10 @@ namespace CareeriaDevsApp.Controllers
 
             else
             {
-                TempData["tallennusepaonnistui"] = "Virhe käsiteltäessä pyyntöä!";
+                TempData["tallennusEpaonnistui"] = "Virhe käsiteltäessä pyyntöä!";
             }
 
-            TempData["tallennusonnistui"] = "Tiedot tallennettiin onnistuneesti!";
+            TempData["tallennusOnnistui"] = "Tiedot tallennettiin onnistuneesti!";
             ViewBag.Status = Status;
             return RedirectToAction("OpisSisalto", "OmaSisaltos", null);
         }
@@ -841,10 +841,10 @@ namespace CareeriaDevsApp.Controllers
 
             else
             {
-                TempData["tallennusepaonnistui"] = "Virhe käsiteltäessä pyyntöä!";
+                TempData["tallennusEpaonnistui"] = "Virhe käsiteltäessä pyyntöä!";
             }
 
-            TempData["tallennusonnistui"] = "Tiedot tallennettiin onnistuneesti!";
+            TempData["tallennusOnnistui"] = "Tiedot tallennettiin onnistuneesti!";
             ViewBag.Status = Status;
             return RedirectToAction("YritysSisalto", "OmaSisaltos", null);
         }

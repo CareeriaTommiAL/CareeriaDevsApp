@@ -189,9 +189,19 @@ namespace CareeriaDevsApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(omaSisalto).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                try
+                {
+                    db.Entry(omaSisalto).State = EntityState.Modified;
+                    db.SaveChanges();
+                    TempData["paivitysOnnistui"] = "Profiili päivitetty onnistuneesti!";
+                    return RedirectToAction("OpisSisalto", "OmaSisaltos");
+                }
+                catch (Exception)
+                {
+                    TempData["paivitysEpaonnistui"] = "Profiilin päivityksessä ilmeni virhe. Yritä uudelleen tai ole yhteydessä tukeemme.";
+                    return RedirectToAction("OpisSisalto", "OmaSisaltos");
+                }
+
             }
             ViewBag.opiskelija_Id = new SelectList(db.Opiskelija, "opiskelija_Id", "etunimi", omaSisalto.opiskelija_Id);
             return View(omaSisalto);

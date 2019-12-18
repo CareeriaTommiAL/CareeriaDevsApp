@@ -78,12 +78,12 @@ namespace CareeriaDevsApp.Controllers
                     db.Viesti.Add(uusiViesti);
                     db.SaveChanges();
                     TempData["viestiOnnistui"] = "Viesti lähetetty!";
-                    return RedirectToAction("Index");
+                    return RedirectToAction("HaeYrityksenViestit", "Viestis");
                     }
                     catch
                     {
                     TempData["viestiEpaonnistui"] = "Viestin lähetys epäonnistui!";
-                    return RedirectToAction("Index");
+                    return RedirectToAction("HaeYrityksenViestit","Viestis");
                     }
 
                 }
@@ -134,12 +134,19 @@ namespace CareeriaDevsApp.Controllers
                     uusiVastausViesti.onkoVastaus = false;
                     uusiVastausViesti.onkoLuettu = false;
                     uusiVastausViesti.viestinPaivays = DateTime.Now;
-
-                    db.Viesti.Add(uusiVastausViesti);
-                    db.SaveChanges();
+                    try
+                    {
+                        db.Viesti.Add(uusiVastausViesti);
+                        db.SaveChanges();
+                        TempData["viestiOnnistui"] = "Viesti lähetetty!";
+                        return RedirectToAction("HaeYrityksenViestit", "Viestis");
+                    }
+                    catch
+                    {
+                        TempData["viestiEpaonnistui"] = "Viestin lähetys epäonnistui!";
+                        return RedirectToAction("HaeYrityksenViestit", "Viestis");
+                    }
                 }
-
-                return RedirectToAction("HaeYrityksenViestit", "Viestis");
             }
 
             ViewBag.opiskelija_Id = new SelectList(db.Opiskelija, "opiskelija_Id", "etunimi", viesti.opiskelija_Id);
@@ -188,12 +195,19 @@ namespace CareeriaDevsApp.Controllers
                     uusiVastausViesti.onkoLuettu = false;
                     uusiVastausViesti.onkoVastaus = true;
                     uusiVastausViesti.viestinPaivays = DateTime.Now;
-
-                    db.Viesti.Add(uusiVastausViesti);
-                    db.SaveChanges();
+                    try
+                    {
+                        db.Viesti.Add(uusiVastausViesti);
+                        db.SaveChanges();
+                        TempData["viestiOnnistui"] = "Viesti lähetetty!";
+                        return RedirectToAction("HaeOpiskelijanViestit", "Viestis");
+                    }
+                    catch
+                    {
+                        TempData["viestiEpaonnistui"] = "Viestin lähetys epäonnistui!";
+                        return RedirectToAction("HaeOpiskelijanViestit", "Viestis");
+                    }
                 }
-
-                return RedirectToAction("HaeOpiskelijanViestit", "Viestis");
             }
 
             ViewBag.opiskelija_Id = new SelectList(db.Opiskelija, "opiskelija_Id", "etunimi", viesti.opiskelija_Id);

@@ -2,12 +2,27 @@
 
 @{
     ViewBag.Title = "HaeYrityksenViestit";
+    var msgSuccess = TempData["viestiOnnistui"];
+    var msgError = TempData["viestiEpaonnistui"];
 }
 
 <div class="container">
     <div class="row">
         <div class="col">
-
+            <div>
+                @if (msgSuccess != null)
+                {
+                    <div class="alert alert-success text-center" role="alert">
+                        <h2> @TempData["viestiOnnistui"]</h2>
+                    </div>
+                }
+                @if (msgError != null)
+                {
+                    <div class="alert alert-success text-center" role="alert">
+                        <h2> @TempData["viestiEpaonnistui"]</h2>
+                    </div>
+                }
+            </div>
             <h1 class="m-5 text-center">Saapuneet viestit</h1>
 
             @Html.ActionLink("Takaisin", "YritysSisalto", "OmaSisaltos", null, new { @class = "btn btn-light mb-3" })
