@@ -719,8 +719,16 @@ namespace CareeriaDevsApp.Controllers
                 using (Stud1Entities dcc = new Stud1Entities())
                 {
                     var paivitaSa = dcc.Login.Where(d => d.opiskelija_Id == id).FirstOrDefault();
-                    paivitaSa.salasana = oppkirjautuminen.salasana;
-
+                    if (oppkirjautuminen.salasana == null)
+                    {
+                        TempData["tallennusEpaonnistui"] = "Virhe käsiteltäessä pyyntöä! Salasana vaaditaan.";
+                        return RedirectToAction("OpisSisalto", "OmaSisaltos", null);
+                    }
+                    else
+                    {
+                        paivitaSa.salasana = oppkirjautuminen.salasana;
+                    }
+                    
                     dcc.Entry(paivitaSa).State = EntityState.Modified;
                     dcc.SaveChanges();
                     dcc.Entry(paivitaSa).State = EntityState.Detached; //en tiedä onko tarpeellinen, mutta toimii
@@ -837,7 +845,15 @@ namespace CareeriaDevsApp.Controllers
                 using (Stud1Entities dcc = new Stud1Entities())
                 {
                     var paivitaSaY = dcc.Login.Where(d => d.yritys_Id == id).FirstOrDefault();
-                    paivitaSaY.salasana = yrityskirjautuminen.salasana;
+                    if (yrityskirjautuminen.salasana == null)
+                    {
+                        TempData["tallennusEpaonnistui"] = "Virhe käsiteltäessä pyyntöä! Salasana vaaditaan.";
+                        return RedirectToAction("YritysSisalto", "OmaSisaltos", null);
+                    }
+                    else
+                    {
+                        paivitaSaY.salasana = yrityskirjautuminen.salasana;
+                    }
 
                     dcc.Entry(paivitaSaY).State = EntityState.Modified;
                     dcc.SaveChanges();
