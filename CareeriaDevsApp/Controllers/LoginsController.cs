@@ -706,8 +706,18 @@ namespace CareeriaDevsApp.Controllers
                     paivitaOpis.sukunimi = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(paivitaOpis.sukunimi.ToLower());
 
                     string opiskelijanpostinumero = pstmp.postinumero;
-                    //Postitoimipaikka id:n haku postinumeron perusteella
-                    paivitaOpis.postitoimipaikka_Id = (from x in db.Postitoimipaikka where x.postinumero == opiskelijanpostinumero select x.postitoimipaikka_Id).First();
+
+                    try
+                    {
+                        //Postitoimipaikka id:n haku postinumeron perusteella
+                        paivitaOpis.postitoimipaikka_Id = (from x in db.Postitoimipaikka where x.postinumero == opiskelijanpostinumero select x.postitoimipaikka_Id).First();
+                    }
+                    catch (Exception)
+                    {
+                        TempData["tallennusEpaonnistui"] = "Virhe käsiteltäessä pyyntöä! Postinumero on viallinen.";
+                        return RedirectToAction("OpisSisalto", "OmaSisaltos", null);
+                    }
+
 
                     dc.Entry(paivitaOpis).State = EntityState.Modified;
                     dc.SaveChanges();
@@ -832,8 +842,17 @@ namespace CareeriaDevsApp.Controllers
                     paivitaYritys.lahiosoite = yritys.lahiosoite;
 
                     string yrityksenpostinumero = pstmp.postinumero;
-                    //Postitoimipaikka id:n haku postinumeron perusteella
-                    paivitaYritys.postitoimipaikka_Id = (from x in db.Postitoimipaikka where x.postinumero == yrityksenpostinumero select x.postitoimipaikka_Id).First();
+                    try
+                    {
+                        //Postitoimipaikka id:n haku postinumeron perusteella
+                        paivitaYritys.postitoimipaikka_Id = (from x in db.Postitoimipaikka where x.postinumero == yrityksenpostinumero select x.postitoimipaikka_Id).First();
+                    }
+                    catch (Exception)
+                    {
+                        TempData["tallennusEpaonnistui"] = "Virhe käsiteltäessä pyyntöä! Postitoimipaikka viallinen.";
+                        return RedirectToAction("YritysSisalto", "OmaSisaltos", null);
+                    }
+
 
                     dc.Entry(paivitaYritys).State = EntityState.Modified;
                     dc.SaveChanges();
