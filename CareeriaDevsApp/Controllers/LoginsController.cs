@@ -239,8 +239,17 @@ namespace CareeriaDevsApp.Controllers
                     uusiOpis.opiskelija_Id = opiskelija.opiskelija_Id;
 
                     string opiskelijanpostinumero = pstmp.postinumero;
-                    //Postitoimipaikka id:n haku postinumeron perusteella
-                    uusiOpis.postitoimipaikka_Id = (from x in db.Postitoimipaikka where x.postinumero == opiskelijanpostinumero select x.postitoimipaikka_Id).First();
+                    try
+                    {
+                        //Postitoimipaikka id:n haku postinumeron perusteella
+                        uusiOpis.postitoimipaikka_Id = (from x in db.Postitoimipaikka where x.postinumero == opiskelijanpostinumero select x.postitoimipaikka_Id).First();
+                    }
+                    catch (Exception)
+                    {
+                        TempData["rekisterointiEpaonnistui"] = "Rekisteröinti epäonnistui! Virheen jatkuessa ota yhteyttä tukeemme.";
+                        return RedirectToAction("Login");
+                    }
+
 
                     Login uusiKirj = new Login();
                     uusiKirj.opiskelija_Id = opiskelija.opiskelija_Id;
@@ -356,8 +365,16 @@ namespace CareeriaDevsApp.Controllers
                     uusiYrit.lahiosoite = yritys.lahiosoite;
 
                     string yrityksenpostinumero = pstmp.postinumero;
-
-                    uusiYrit.postitoimipaikka_Id = (from x in db.Postitoimipaikka where x.postinumero == yrityksenpostinumero select x.postitoimipaikka_Id).First(); //Postitoimipaikka id:n haku postinumeron perusteella
+                    try
+                    {
+                        uusiYrit.postitoimipaikka_Id = (from x in db.Postitoimipaikka where x.postinumero == yrityksenpostinumero select x.postitoimipaikka_Id).First(); //Postitoimipaikka id:n haku postinumeron perusteella
+                    }
+                    catch (Exception)
+                    {
+                        TempData["rekisterointiEpaonnistui"] = "Rekisteröinti epäonnistui! Virheen jatkuessa ota yhteyttä tukeemme.";
+                        return RedirectToAction("Login");
+                    }
+                   
 
 
 

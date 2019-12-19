@@ -54,7 +54,7 @@
                     @Html.ActionLink("Vastaa viestiin", "Reply", "Viestis", new { yritysId = item.yritys_Id, vastausAihe = item.inbox }, null)
                     if (item.onkoLuettu == false)
                     {
-                        <div id="id=" viestiLuetuksi""><a href="~/Viestis/ViestiLuetuksi?id=@item.viesti_Id" onclick="viestiLuettu()">Merkitse viesti luetuksi</a></div>
+                        <div><a href="~/Viestis/ViestiLuetuksi?id=@item.viesti_Id" onclick="viestiLuettu()">Merkitse viesti luetuksi</a></div>
                     }
                     <script>
                         function viestiLuettu() { //
