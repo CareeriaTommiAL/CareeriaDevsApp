@@ -290,7 +290,7 @@ namespace CareeriaDevsApp.Controllers
             }
             else
             {
-                TempData["rekisterointiEpaonnistui"] = "Rekisteröinti epäonnistui! Virheen jatkuessa ota yhteyttä tukeemme.";
+                TempData["rekisterointiEpaonnistui"] = "Rekisteröinti epäonnistui! Tarkista postinumero, virheen jatkuessa ota yhteyttä tukeemme.";
                 message = "Virhe käsiteltäessä pyyntöä!";
             }
 

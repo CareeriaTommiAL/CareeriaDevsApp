@@ -892,6 +892,7 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\tietosuojaseloste\Tietosuojaseloste.pdf" />
     <None Include="Properties\PublishProfiles\CareeriaDevApp - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\CareeriaDevApp - Web Deploy1.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
